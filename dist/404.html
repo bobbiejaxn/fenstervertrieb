@@ -1,0 +1,77 @@
+<!DOCTYPE html><html lang="de" class=""> <head><title>404 — Seite nicht gefunden</title>
+<meta name="description" content="Die angeforderte Seite existiert nicht.">
+<link rel="canonical" href="https://fenstervertrieb.debored.ai/404/">
+<meta property="og:title" content="404 — Seite nicht gefunden">
+<meta property="og:description" content="Die angeforderte Seite existiert nicht.">
+<meta property="og:url" content="https://fenstervertrieb.debored.ai/404/">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://images.unsplash.com/photo-1497366216548-3d2607d9b7b8?w=1200&amp;q=80">
+<meta property="og:image:alt" content="Fenstervertrieb — Premium Schüco Systeme">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+
+<meta property="og:locale" content="de_DE">
+<meta property="og:site_name" content="Fenstervertrieb GmbH">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@fenstervertrieb">
+<meta name="twitter:creator" content="@fenstervertrieb"> <!-- Meta Tags --><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="theme-color" content="#ffffff"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="robots" content="index, follow"><meta name="googlebot" content="index, follow"><meta name="robots" content="index, follow"><meta name="googlebot" content="index, follow"> <!------
+// Inter from: https://rsms.me/inter/
+--- --><link rel="preconnect" href="https://rsms.me/" crossorigin><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://rsms.me/inter/inter.css" media="print" onload="this.media='all'"><noscript><link rel="stylesheet" href="https://rsms.me/inter/inter.css"></noscript><!-- Instrument Serif: From Google Fonts --><link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" media="print" onload="this.media='all'"><noscript><link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet"></noscript> <!-- Favicons --><link rel="icon" href="/favicon.ico" sizes="any"><link rel="icon" href="/icon.svg" type="image/svg+xml"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="manifest" href="/manifest.webmanifest"><!-- Favicon for IE --><link rel="shortcut icon" href="/favicon.ico" type="image/x-icon"><!-- Favicons for different sizes --><link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png"><link rel="icon" type="image/png" sizes="48x48" href="/favicon-48x48.png"><!-- Apple Touch Icon (for backwards compatibility) --><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"> <!-- Scripts --> <!-- FuseJS: https://fusejs.io/ --><script type="module" src="/_astro/FuseJS.astro_astro_type_script_index_0_lang.CWUOEIUq.js"></script> <script type="module">
+  document.addEventListener("DOMContentLoaded", function () {
+    document.querySelectorAll("#tab-section").forEach((tabSection) => {
+      // Select all the tab links inside the current #tab-section
+      const tabs = tabSection.querySelectorAll("button");
+      // Select all the tab content sections within the current #tab-section
+      const tabContents = tabSection.querySelectorAll(".tab-content");
+
+      if (tabs.length > 0 && tabContents.length > 0) {
+        // Set the first tab as active and its content visible by default
+        tabs[0].classList.add(
+          "text-base-900",
+          "border-b-2",
+          "border-base-500",
+         
+        );
+        tabContents[0].classList.remove("hidden"); // Show the first tab content by default
+      }
+
+      // Add a click event listener to each tab link
+      tabs.forEach((tab) => {
+        tab.addEventListener("click", function (e) {
+          e.preventDefault();
+
+          // Remove the active class from all tabs in this section
+          tabs.forEach((t) =>
+            t.classList.remove(
+              "border-b-2",
+              "border-base-500",
+              "text-base-900",
+              
+            )
+          );
+          // Add the active class to the clicked tab
+          tab.classList.add(
+            "text-base-900",
+            "border-b-2",
+            "border-base-500",
+            
+          );
+
+          // Hide all tab contents in this section
+          tabContents.forEach((content) => content.classList.add("hidden"));
+
+          // Show the corresponding content in this section
+          const targetTab = tab.getAttribute("data-tab");
+          tabSection.querySelector(`#${targetTab}`).classList.remove("hidden");
+        });
+      });
+    });
+  });
+</script> <!--- Keen Slider --><link href="https://cdn.jsdelivr.net/npm/keen-slider@6.8.6/keen-slider.min.css" rel="stylesheet" media="print" onload="this.media='all'"><noscript><link href="https://cdn.jsdelivr.net/npm/keen-slider@6.8.6/keen-slider.min.css" rel="stylesheet"></noscript><link rel="stylesheet" href="/_astro/BaseLayout.TM3B58Jx.css"></head> <body class="flex flex-col bg-white min-h-svh">  <main class="grow"> <div class="flex flex-col items-center justify-center min-h-svh bg-[#0a0a0a] text-white"> <div class="mx-auto max-w-screen 2xl:max-w-[1400px] px-8 lg:px-20  text-center py-24">  <div class="text-8xl font-serif italic font-medium text-[#1c69d4]">404</div> <h1 class="mt-4 font-serif italic text-2xl md:text-3xl font-medium">
+Seite nicht gefunden
+</h1> <p class="mt-4 text-gray-400 max-w-md mx-auto text-sm">
+Die angeforderte Seite existiert nicht. Möglicherweise wurde sie verschoben oder gelöscht.
+</p> <a href="/" class="mt-8 inline-block bg-[#1c69d4] text-white px-6 py-3 rounded text-sm font-medium hover:bg-[#1557b0] transition-colors">
+Zur Startseite
+</a>  </div> </div> </main>  </body></html>

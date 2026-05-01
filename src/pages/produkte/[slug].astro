@@ -14,7 +14,7 @@ export async function getStaticPaths() {
 const { product } = Astro.props;
 ---
 
-<BaseLayout>
+<BaseLayout title={`${product.data.title} — Fenstervertrieb`} description={product.data.description?.slice(0, 160) || "Schüco Premium-Systeme"}>
   <section class="bg-[#0a0a0a] text-white">
     <Wrapper variant="standard" class="py-16 lg:py-24">
       <a href="/produkte" class="text-sm text-gray-400 hover:text-white transition-colors">
