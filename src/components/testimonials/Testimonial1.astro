@@ -1,0 +1,236 @@
+---
+// Assets
+import { Image } from "astro:assets";
+import One from "@/images/testimonials/1.jpeg";
+import Two from "@/images/testimonials/2.jpeg";
+import Three from "@/images/testimonials/3.jpeg";
+import Four from "@/images/testimonials/4.jpeg";
+import Five from "@/images/testimonials/5.jpeg";
+import Six from "@/images/testimonials/6.jpeg";
+import Seven from "@/images/testimonials/7.jpeg";
+import Eight from "@/images/testimonials/8.jpeg";
+import Nine from "@/images/testimonials/9.jpeg";
+import Ten from "@/images/testimonials/10.jpeg";
+import Eleven from "@/images/testimonials/11.jpeg";
+import Twelve from "@/images/testimonials/12.jpeg";
+import Thirteen from "@/images/testimonials/13.jpeg";
+// Icons
+import ChevronRight from "@/components/fundations/icons/ChevronRight.astro";
+import ChevronLeft from "@/components/fundations/icons/ChevronLeft.astro";
+
+// Fundations
+import Text from "@/components/fundations/elements/Text.astro";
+import Button from "@/components/fundations/elements/Button.astro";
+import Wrapper from "@/components/fundations/containers/Wrapper.astro";
+
+const testimonials = [
+  {
+    image: One,
+    name: "Kaito Nakamura",
+    role: "Sound Artist",
+    company: "KND Studio",
+    text: "Working with the OP–1 and TX–6 changed the way I approach sound. The tools are strange in all the right ways — intuitive, inspiring, and beautifully built.",
+  },
+  {
+    image: Two,
+    name: "Lina Rosenthal",
+    role: "Creative Technologist",
+    company: "Modulo Systems",
+    text: "Teenage Engineering’s gear feels like it was made by aliens who really understand musicians. Every piece unlocks something new in my workflow.",
+  },
+  {
+    image: Three,
+    name: "Jules Arvid",
+    role: "Live Visuals Engineer",
+    company: "No Signal",
+    text: "It’s not just the hardware — it’s the whole vibe. The design, the ecosystem, the updates. Using this gear feels like collaborating with a design studio, not just using a product.",
+  },
+  {
+    image: Four,
+    name: "Amar Boyd",
+    role: "Producer & Educator",
+    company: "Wavecamp",
+    text: "I use TE gear to teach creativity through limitation. There’s nothing more rewarding than seeing someone light up when they realize what’s possible with just a few buttons.",
+  },
+  {
+    image: Five,
+    name: "Leona Martens",
+    role: "Modular Synth Explorer",
+    company: "Self-employed",
+    text: "There’s something magical about gear that surprises you. The OP–Z has become part instrument, part sketchbook, part therapist.",
+  },
+  {
+    image: Six,
+    name: "Daniel Reyes",
+    role: "AV Performer",
+    company: "Indigo Pulse",
+    text: "I use the OB–4 on stage more than I expected. It’s not a speaker — it’s a collaborator. The loop feature alone is genius.",
+  },
+  {
+    image: Seven,
+    name: "Jonah Beck",
+    role: "Interface Designer",
+    company: "Studio Twenty",
+    text: "The TE aesthetic taught me that hardware UI can feel human. I bring that philosophy into my digital design work now.",
+  },
+  {
+    image: Eight,
+    name: "Sylvio Park",
+    role: "Composer",
+    company: "Freelance",
+    text: "I’ve scored entire short films using just a PO–33 and a field recorder. Constraint isn’t a limitation — it’s a playground.",
+  },
+  {
+    image: Nine,
+    name: "Mikaela Johansson",
+    role: "Firmware Developer",
+    company: "Noir Systems",
+    text: "I expected to tinker. I didn’t expect to be inspired. The TX–6’s precision and weirdness make it one of my favorite tools.",
+  },
+  {
+    image: Ten,
+    name: "Sasha Li",
+    role: "Creative Director",
+    company: "Waveform Studio",
+    text: "TE products blur the line between tool and toy — and that’s what makes them so powerful in the hands of artists.",
+  },
+  {
+    image: Eleven,
+    name: "Rachel Ferreira",
+    role: "Multimedia Educator",
+    company: "Takt Academy",
+    text: "The way students engage with Pocket Operators is incredible. It lowers the barrier and raises curiosity. That’s design done right.",
+  },
+  {
+    image: Twelve,
+    name: "Elo Gruber",
+    role: "Installation Artist",
+    company: "Freelance",
+    text: "TX–6 + field recorder + duct tape = a sonic sculpture in Berlin. It’s not about what the gear does — it’s what it lets me imagine.",
+  },
+  {
+    image: Thirteen,
+    name: "Julia Mendez",
+    role: "Experimental Musician",
+    company: "DreamSignal",
+    text: "The OP–XY isn’t just a synth — it’s a mindset. Every knob feels like a question, not an answer. That’s rare.",
+  },
+];
+---
+
+<style>
+  .keen-slider__slide {
+    overflow: visible;
+  }
+</style>
+<section class="overflow-hidden">
+  <div
+    class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3 w-full py-12 lg:py-24"
+  >
+    <div class="px-8 lg:px-20">
+      <Text
+        tag="h2"
+        variant="displayLG"
+        class="font-serif italic text-base-900"
+      >
+        What creators are saying
+      </Text>
+      <Text
+        tag="p"
+        variant="textBase"
+        class="text-base-500 max-w-xl mx-auto mt-2"
+      >
+        Real stories from artists, engineers, and dreamers using our gear every
+        day.
+      </Text>
+      <div class="flex gap-2 mt-8">
+        <Button
+          iconOnly
+          size="base"
+          variant="muted"
+          aria-label="Previous slide"
+          id="keen-slider-previous"
+          ><ChevronLeft slot="icon" size="sm" />
+        </Button>
+        <Button
+          iconOnly
+          size="base"
+          variant="muted"
+          aria-label="Next slide"
+          id="keen-slider-next"
+        >
+          <ChevronRight slot="icon" size="sm" />
+        </Button>
+      </div>
+    </div>
+    <div id="keen-slider" class="keen-slider lg:col-span-2 w-max">
+      {
+        testimonials.map((testimonial) => (
+          <article class="relative isolate keen-slider__slide overflow-hidden">
+            <Image
+              width={800}
+              height={800}
+              src={testimonial.image}
+              alt={testimonial.name}
+              loading="eager"
+              decoding="async"
+              class="aspect-square object-cover w-full "
+            />
+
+            <div class="  flex flex-col justify-end  text-base-900 mt-4">
+              <blockquote class="text-sm">
+                <Text tag="p" variant="textSM" class=" italic text-base-500">
+                  “{testimonial.text}”
+                </Text>
+              </blockquote>
+              <footer class="mt-4 text-right">
+                <Text
+                  tag="h3"
+                  variant="textSM"
+                  class="text-base-900 font-semibold"
+                >
+                  {testimonial.name}
+                </Text>
+                <Text
+                  tag="p"
+                  variant="textXS"
+                  class="text-base-500 font-medium"
+                >
+                  {testimonial.role}, {testimonial.company}
+                </Text>
+              </footer>
+            </div>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>
+<script type="module">
+  import KeenSlider from "https://cdn.jsdelivr.net/npm/keen-slider@6.8.6/+esm";
+  const keenSlider = new KeenSlider(
+    "#keen-slider",
+    {
+      loop: true,
+      slides: {
+        origin: "center",
+        perView: 1.25,
+        spacing: 16,
+      },
+      breakpoints: {
+        "(min-width: 1024px)": {
+          slides: {
+            origin: "auto",
+            perView: 2.2,
+            spacing: 32,
+          },
+        },
+      },
+    },
+    []
+  );
+  const keenSliderPrevious = document.getElementById("keen-slider-previous");
+  const keenSliderNext = document.getElementById("keen-slider-next");
+  keenSliderPrevious.addEventListener("click", () => keenSlider.prev());
+  keenSliderNext.addEventListener("click", () => keenSlider.next());
+</script>

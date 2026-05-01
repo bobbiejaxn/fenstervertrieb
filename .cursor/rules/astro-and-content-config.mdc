@@ -1,0 +1,29 @@
+---
+description: astro.config and content.config — site URL, integrations, Zod schemas; coordinated edits
+globs:
+  - astro.config.mjs
+  - src/content.config.ts
+alwaysApply: false
+---
+
+# `astro.config.mjs` & `src/content.config.ts`
+
+Apply the relevant bullets when editing **either** `astro.config.mjs` or `src/content.config.ts`.
+
+## `astro.config.mjs`
+
+- **`site`:** Canonical origin (e.g. `https://yourdomain.com`). Affects sitemap, RSS `context.site`, and `Astro.site`. Update placeholder URLs in `src/components/fundations/head/Seo.astro` for production.
+- **Stack:** Vite plugin `tailwindcss()`; integrations `mdx()`, `sitemap()`. Match existing patterns when adding or removing integrations.
+- **`markdown` / Shiki:** Options here affect MD/MDX rendering globally.
+
+## `src/content.config.ts`
+
+- **Loaders:** `glob` loaders under `src/content/<collection>/`.
+- **Zod:** Changing fields impacts all `getCollection` / `render` consumers in `src/pages/**` and `src/layouts/**` — update them in the same change.
+- **`image()`:** Keep `store.thumbnail`, optional `store.images`, and `posts.image` aligned with layouts unless you refactor image handling everywhere.
+
+## Coordination
+
+- Most schema-only work touches **only** `src/content.config.ts` and consuming Astro files — not `astro.config.mjs`.
+- Touch **both** when a feature needs build integration **and** content shape (e.g. new content loader type, markdown config tied to MDX).
+- Do not widen content schemas without updating every page that reads those fields.

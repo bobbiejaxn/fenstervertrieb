@@ -1,0 +1,66 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Wrapper from "@/components/fundations/containers/Wrapper.astro";
+---
+
+<BaseLayout>
+  <section class="bg-white">
+    <Wrapper variant="standard" class="py-16 lg:py-24">
+      <h1 class="font-serif italic text-3xl md:text-4xl text-base-900 font-medium">
+        Impressum
+      </h1>
+      <div class="mt-8 space-y-6 text-sm text-base-500 leading-relaxed max-w-2xl">
+        <div>
+          <h2 class="text-lg font-medium text-base-900">Angaben gemäß § 5 TMG</h2>
+          <p class="mt-2">
+            Fenstervertrieb GmbH<br />
+            Avda. de la Libertad 42<br />
+            30009 Murcia, Spanien
+          </p>
+        </div>
+
+        <div>
+          <h2 class="text-lg font-medium text-base-900">Kontakt</h2>
+          <p class="mt-2">
+            Telefon: +34 968 000 000<br />
+            E-Mail: info@fenstervertrieb.com
+          </p>
+        </div>
+
+        <div>
+          <h2 class="text-lg font-medium text-base-900">Geschäftsführung</h2>
+          <p class="mt-2">Geschäftsführer: [Name]</p>
+        </div>
+
+        <div>
+          <h2 class="text-lg font-medium text-base-900">Registereintrag</h2>
+          <p class="mt-2">
+            Handelsregister: [Registernummer]<br />
+            Registergericht: [Gericht]
+          </p>
+        </div>
+
+        <div>
+          <h2 class="text-lg font-medium text-base-900">Umsatzsteuer-ID</h2>
+          <p class="mt-2">
+            Umsatzsteuer-Identifikationsnummer gemäß § 27a UStG: [USt-IdNr.]
+          </p>
+        </div>
+
+        <div>
+          <h2 class="text-lg font-medium text-base-900">Streitschlichtung</h2>
+          <p class="mt-2">
+            Die Europäische Kommission stellt eine Plattform zur Online-Streitbeilegung (OS) bereit: <a href="https://ec.europa.eu/consumers/odr" class="text-[#1c69d4] hover:underline">https://ec.europa.eu/consumers/odr</a>
+          </p>
+        </div>
+
+        <div>
+          <h2 class="text-lg font-medium text-base-900">Haftungsausschluss</h2>
+          <p class="mt-2">
+            Die Inhalte unserer Seiten wurden mit größter Sorgfalt erstellt. Für die Richtigkeit, Vollständigkeit und Aktualität der Inhalte können wir jedoch keine Gewähr übernehmen.
+          </p>
+        </div>
+      </div>
+    </Wrapper>
+  </section>
+</BaseLayout>

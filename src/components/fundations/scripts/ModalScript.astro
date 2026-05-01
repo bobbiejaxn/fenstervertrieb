@@ -1,0 +1,31 @@
+<script type="module">
+  document.addEventListener("DOMContentLoaded", function () {
+    // Select the button to open the modal
+    const reviewButton = document.querySelector("#modalButton");
+    if (!reviewButton) return; // If the button isn't found, stop the script
+    // Select the modal and cancel button
+    const reviewModal = document.getElementById("reviewModal");
+    const cancelButton = document.getElementById("cancelButton");
+    // Open modal when 'Write a Review' button is clicked
+    reviewButton.addEventListener("click", function () {
+      reviewModal.style.display = "flex"; // Show the modal by setting display to flex
+    });
+    // Close modal when cancel button is clicked
+    cancelButton.addEventListener("click", function () {
+      reviewModal.style.display = "none"; // Hide the modal by setting display to none
+    });
+    // Close modal when clicking outside the modal content
+    reviewModal.addEventListener("click", function (e) {
+      // Check if the click was outside the modal content (which has the "bg-white" class)
+      if (e.target === reviewModal) {
+        reviewModal.style.display = "none"; // Hide the modal if clicked outside
+      }
+    });
+    // Close modal when pressing Escape key
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape") {
+        reviewModal.style.display = "none"; // Hide the modal when Escape is pressed
+      }
+    });
+  });
+</script>

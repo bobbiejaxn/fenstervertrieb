@@ -1,0 +1,249 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Wrapper from "@/components/fundations/containers/Wrapper.astro";
+
+const products = [
+  {
+    title: "AWS 70.HI",
+    subtitle: "Fenstersystem",
+    uwert: "0,80 W/m²K",
+    href: "/produkte/aws-70-hi",
+    image: "https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=800&q=80",
+  },
+  {
+    title: "AWS 90.SI+",
+    subtitle: "Premium-Fenster",
+    uwert: "0,64 W/m²K",
+    href: "/produkte/aws-90-si-plus",
+    image: "https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=800&q=80",
+  },
+  {
+    title: "ADS 90",
+    subtitle: "Türsystem",
+    uwert: "0,79 W/m²K",
+    href: "/produkte/ads-90",
+    image: "https://images.unsplash.com/photo-1555443805-658637492dd3?w=800&q=80",
+  },
+  {
+    title: "ASS 77 PD.HI",
+    subtitle: "Schiebesystem",
+    uwert: "0,89 W/m²K",
+    href: "/produkte/ass-77-pd-hi",
+    image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&q=80",
+  },
+  {
+    title: "FWS 50",
+    subtitle: "Fassadensystem",
+    uwert: "",
+    href: "/produkte/fws-50",
+    image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&q=80",
+  },
+  {
+    title: "TipTronic",
+    subtitle: "Smart Home",
+    uwert: "",
+    href: "/produkte/schueco-tiptronic",
+    image: "https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=800&q=80",
+  },
+];
+
+const audiences = [
+  {
+    title: "Privatkunden",
+    description: "Premium-Fenster und Türen für Ihr Zuhause. Energieeffizienz, Sicherheit und Design.",
+    href: "/produkte",
+    icon: "🏠",
+  },
+  {
+    title: "Fachhandel",
+    description: "Schüco Systeme für den Einbau. Kompetente Beratung und Partner-Service.",
+    href: "/kontakt",
+    icon: "🏗️",
+  },
+  {
+    title: "Architekten",
+    description: "Innovative Fassaden- und Fenstersysteme für anspruchsvolle Architekturprojekte.",
+    href: "/produkte",
+    icon: "📐",
+  },
+];
+---
+
+<BaseLayout>
+  <!-- Hero Section -->
+  <section class="relative overflow-hidden bg-[#0a0a0a] text-white">
+    <div class="absolute inset-0 z-0">
+      <img
+        src="https://images.unsplash.com/photo-1497366216548-3d2607d9b7b8?w=1920&q=80"
+        alt="Modern architecture with windows"
+        class="w-full h-full object-cover opacity-40"
+      />
+      <div class="absolute inset-0 bg-gradient-to-b from-[#0a0a0a] via-[#0a0a0a]/60 to-[#0a0a0a]"></div>
+    </div>
+    <Wrapper variant="standard" class="relative z-10 py-24 lg:py-40">
+      <div class="max-w-4xl">
+        <div class="inline-block bg-[#1c69d4] text-white text-xs font-medium px-3 py-1 rounded mb-6">
+          Offizieller Schüco Partner
+        </div>
+        <h1 class="font-serif italic font-medium tracking-tight text-4xl md:text-6xl lg:text-7xl">
+          Fenster. Türen.<br />Perfektion.
+        </h1>
+        <p class="mt-6 text-lg md:text-xl text-gray-300 max-w-2xl">
+          Premium Schüco Systeme für Spanien und Italien. Energieeffiziente Aluminium-Fenster und -Türen von höchster Qualität.
+        </p>
+        <div class="mt-8 flex flex-wrap gap-4">
+          <a
+            href="/produkte"
+            class="inline-block bg-[#1c69d4] text-white px-6 py-3 rounded text-sm font-medium hover:bg-[#1557b0] transition-colors"
+          >
+            Produkte entdecken
+          </a>
+          <a
+            href="/kontakt"
+            class="inline-block border border-gray-500 text-gray-300 px-6 py-3 rounded text-sm font-medium hover:border-white hover:text-white transition-colors"
+          >
+            Kontakt aufnehmen
+          </a>
+        </div>
+      </div>
+    </Wrapper>
+  </section>
+
+  <!-- Audience Router -->
+  <section class="bg-white">
+    <Wrapper variant="standard" class="py-16">
+      <h2 class="font-serif italic text-2xl md:text-3xl text-base-900 font-medium">
+        Für wen sind wir da?
+      </h2>
+      <p class="mt-2 text-base-500 text-sm max-w-xl">
+        Maßgeschneiderte Lösungen für jeden Anspruch — vom Eigenheim bis zum Großprojekt.
+      </p>
+      <div class="mt-8 grid gap-6 md:grid-cols-3">
+        {audiences.map((a) => (
+          <a
+            href={a.href}
+            class="group block p-8 border border-base-200 rounded-lg hover:border-[#1c69d4] transition-colors"
+          >
+            <div class="text-3xl mb-4">{a.icon}</div>
+            <h3 class="font-serif italic text-lg text-base-900 font-medium">{a.title}</h3>
+            <p class="mt-2 text-sm text-base-500">{a.description}</p>
+            <span class="mt-4 inline-block text-xs text-[#1c69d4] font-medium">
+              Mehr erfahren →
+            </span>
+          </a>
+        ))}
+      </div>
+    </Wrapper>
+  </section>
+
+  <!-- Schüco Partner Banner -->
+  <section class="bg-[#0a0a0a] text-white">
+    <Wrapper variant="standard" class="py-16">
+      <div class="flex flex-col md:flex-row items-center gap-8">
+        <div class="flex-1">
+          <div class="inline-block bg-[#1c69d4] text-white text-xs font-medium px-3 py-1 rounded mb-4">
+            Schüco Partner
+          </div>
+          <h2 class="font-serif italic text-2xl md:text-3xl font-medium">
+            Offizieller Schüco Partner<br />für Spanien und Italien
+          </h2>
+          <p class="mt-4 text-gray-400 text-sm max-w-xl">
+            Als zertifizierter Schüco Partner stehen wir für höchste Qualität in der Fenster- und Türtechnologie. Unsere Systeme erfüllen die strengsten europäischen Energieeffizienzstandards und bieten einlösige Ästhetik für jedes Projekt.
+          </p>
+          <div class="mt-6 grid grid-cols-3 gap-4">
+            <div>
+              <div class="text-2xl font-medium text-[#1c69d4]">10+</div>
+              <div class="text-xs text-gray-500 mt-1">Schüco Systeme</div>
+            </div>
+            <div>
+              <div class="text-2xl font-medium text-[#1c69d4]">2</div>
+              <div class="text-xs text-gray-500 mt-1">Showrooms</div>
+            </div>
+            <div>
+              <div class="text-2xl font-medium text-[#1c69d4]">100%</div>
+              <div class="text-xs text-gray-500 mt-1">Schüco Qualität</div>
+            </div>
+          </div>
+        </div>
+        <div class="flex-1 text-center">
+          <div class="inline-block border-2 border-[#1c69d4] rounded-xl px-10 py-8">
+            <div class="text-4xl font-serif italic font-bold text-[#1c69d4]">SCHÜCO</div>
+            <div class="text-xs text-gray-400 mt-2">Premium Partner</div>
+          </div>
+        </div>
+      </div>
+    </Wrapper>
+  </section>
+
+  <!-- Product Highlights -->
+  <section class="bg-white">
+    <Wrapper variant="standard" class="py-16">
+      <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
+        <div>
+          <h2 class="font-serif italic text-2xl md:text-3xl text-base-900 font-medium">
+            Unsere Schüco Systeme
+          </h2>
+          <p class="mt-2 text-base-500 text-sm max-w-xl">
+            Entdecken Sie unsere Auswahl an Premium-Fenstern, Türen und Fassaden.
+          </p>
+        </div>
+        <a
+          href="/produkte"
+          class="inline-block text-sm font-medium text-[#1c69d4] hover:underline"
+        >
+          Alle Produkte →
+        </a>
+      </div>
+      <div class="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {products.map((p) => (
+          <a href={p.href} class="group block">
+            <div class="aspect-[4/3] bg-base-100 overflow-hidden rounded-lg">
+              <img
+                src={p.image}
+                alt={p.title}
+                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+              />
+            </div>
+            <div class="mt-3">
+              <div class="flex items-center gap-2">
+                <h3 class="font-medium text-base-900">{p.title}</h3>
+                {p.uwert && (
+                  <span class="text-xs bg-[#1c69d4]/10 text-[#1c69d4] px-2 py-0.5 rounded">
+                    {p.uwert}
+                  </span>
+                )}
+              </div>
+              <p class="text-xs text-base-500 mt-1">{p.subtitle}</p>
+            </div>
+          </a>
+        ))}
+      </div>
+    </Wrapper>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="bg-[#1c69d4] text-white">
+    <Wrapper variant="standard" class="py-16 text-center">
+      <h2 class="font-serif italic text-2xl md:text-3xl font-medium">
+        Bereit für Premium-Fenster und Türen?
+      </h2>
+      <p class="mt-4 text-blue-100 max-w-xl mx-auto text-sm">
+        Kontaktieren Sie uns für eine unverbindliche Beratung. Wir beraten Sie gerne zu unseren Schüco Systemen und den verfügbaren Förderungen in Spanien und Italien.
+      </p>
+      <div class="mt-8 flex flex-wrap gap-4 justify-center">
+        <a
+          href="/kontakt"
+          class="inline-block bg-white text-[#1c69d4] px-6 py-3 rounded text-sm font-medium hover:bg-gray-100 transition-colors"
+        >
+          Beratung anfragen
+        </a>
+        <a
+          href="/foerderungen"
+          class="inline-block border border-white text-white px-6 py-3 rounded text-sm font-medium hover:bg-white/10 transition-colors"
+        >
+          Förderungen prüfen
+        </a>
+      </div>
+    </Wrapper>
+  </section>
+</BaseLayout>

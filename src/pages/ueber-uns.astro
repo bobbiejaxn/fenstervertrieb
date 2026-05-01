@@ -1,0 +1,142 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Wrapper from "@/components/fundations/containers/Wrapper.astro";
+
+const values = [
+  {
+    title: "Qualität",
+    description: "Wir vertreiben ausschließlich Schüco Premium-Systeme — Made in Germany, optimiert für Südeuropa.",
+    icon: "⭐",
+  },
+  {
+    title: "Expertise",
+    description: "Unser Team berät Sie kompetent zu Energieeffizienz, Förderungen und der optimalen Systemlösung.",
+    icon: "🎓",
+  },
+  {
+    title: "Nähe",
+    description: "Mit Showrooms in Murcia und Catania sind wir jederzeit für Sie erreichbar — persönlich und direkt.",
+    icon: "🤝",
+  },
+  {
+    title: "Nachhaltigkeit",
+    description: "Energieeffiziente Gebäudetechnik ist unser Beitrag zum Klimaschutz und zu Ihren sinkenden Energiekosten.",
+    icon: "🌱",
+  },
+];
+
+const team = [
+  { name: "Geschäftsführung", role: "Projektberatung & Vertrieb", icon: "👔" },
+  { name: "Technisches Büro", role: "Systemplanung & Angebotserstellung", icon: "📐" },
+  { name: "Kundenservice", role: "Betreuung & Nachservice", icon: "📞" },
+];
+---
+
+<BaseLayout>
+  <section class="bg-[#0a0a0a] text-white">
+    <Wrapper variant="standard" class="py-16 lg:py-24">
+      <h1 class="font-serif italic text-3xl md:text-5xl font-medium tracking-tight">
+        Über uns
+      </h1>
+      <p class="mt-4 text-gray-400 max-w-xl">
+        Fenstervertrieb GmbH — Ihr offizieller Schüco Partner für Premium-Fenster und Türen in Spanien und Italien.
+      </p>
+    </Wrapper>
+  </section>
+
+  <!-- Story -->
+  <section class="bg-white">
+    <Wrapper variant="standard" class="py-16">
+      <div class="grid gap-12 md:grid-cols-2">
+        <div>
+          <h2 class="font-serif italic text-2xl md:text-3xl text-base-900 font-medium">
+            Unsere Geschichte
+          </h2>
+          <div class="mt-6 space-y-4 text-sm text-base-500 leading-relaxed">
+            <p>
+              Die Fenstervertrieb GmbH wurde mit einer klaren Mission gegründet: Premium-Fenster- und Türsysteme nach Südeuropa zu bringen — mit der Qualität und Zuverlässigkeit, die man von einem Schüco Partner erwartet.
+            </p>
+            <p>
+              Als offizieller Schüco Partner bieten wir das gesamte Spektrum an Aluminium-Systemen an: von wärmedämmenden Fenstern über elegante Türsysteme bis hin zu hochmodernen Fassaden und smarten Gebäudeautomatisierungen.
+            </p>
+            <p>
+              Mit Standorten in Murcia (Spanien) und Catania (Sizilien) sind wir nah am Markt und verstehen die spezifischen Anforderungen des mediterranen Klimas und der lokalen Bauvorschriften.
+            </p>
+          </div>
+        </div>
+        <div class="aspect-square bg-base-100 rounded-lg overflow-hidden">
+          <img
+            src="https://images.unsplash.com/photo-1497366216548-3d2607d9b7b8?w=800&q=80"
+            alt="Modern building"
+            class="w-full h-full object-cover"
+          />
+        </div>
+      </div>
+    </Wrapper>
+  </section>
+
+  <!-- Values -->
+  <section class="bg-gray-50">
+    <Wrapper variant="standard" class="py-16">
+      <h2 class="font-serif italic text-2xl md:text-3xl text-base-900 font-medium text-center">
+        Unsere Werte
+      </h2>
+      <div class="mt-8 grid gap-6 md:grid-cols-4">
+        {values.map((v) => (
+          <div class="p-6 bg-white border border-base-200 rounded-lg text-center">
+            <div class="text-3xl mb-3">{v.icon}</div>
+            <h3 class="font-medium text-base-900">{v.title}</h3>
+            <p class="mt-2 text-sm text-base-500">{v.description}</p>
+          </div>
+        ))}
+      </div>
+    </Wrapper>
+  </section>
+
+  <!-- Team -->
+  <section class="bg-white">
+    <Wrapper variant="standard" class="py-16">
+      <h2 class="font-serif italic text-2xl md:text-3xl text-base-900 font-medium text-center">
+        Unser Team
+      </h2>
+      <p class="mt-2 text-base-500 text-sm text-center max-w-xl mx-auto">
+        Persönliche Beratung und kompetente Umsetzung — unser Team steht Ihnen zur Seite.
+      </p>
+      <div class="mt-8 grid gap-6 md:grid-cols-3">
+        {team.map((t) => (
+          <div class="p-6 border border-base-200 rounded-lg text-center">
+            <div class="text-4xl mb-4">{t.icon}</div>
+            <h3 class="font-medium text-base-900">{t.name}</h3>
+            <p class="text-sm text-base-500 mt-1">{t.role}</p>
+          </div>
+        ))}
+      </div>
+    </Wrapper>
+  </section>
+
+  <!-- CTA -->
+  <section class="bg-[#1c69d4] text-white">
+    <Wrapper variant="standard" class="py-16 text-center">
+      <h2 class="font-serif italic text-2xl md:text-3xl font-medium">
+        Lernen Sie uns kennen
+      </h2>
+      <p class="mt-4 text-blue-100 max-w-xl mx-auto text-sm">
+        Besuchen Sie einen unserer Showrooms oder kontaktieren Sie uns für eine persönliche Beratung.
+      </p>
+      <div class="mt-8 flex flex-wrap gap-4 justify-center">
+        <a
+          href="/showrooms"
+          class="inline-block bg-white text-[#1c69d4] px-6 py-3 rounded text-sm font-medium hover:bg-gray-100 transition-colors"
+        >
+          Showrooms besuchen
+        </a>
+        <a
+          href="/kontakt"
+          class="inline-block border border-white text-white px-6 py-3 rounded text-sm font-medium hover:bg-white/10 transition-colors"
+        >
+          Kontakt aufnehmen
+        </a>
+      </div>
+    </Wrapper>
+  </section>
+</BaseLayout>

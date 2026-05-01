@@ -1,0 +1,39 @@
+<script type="module">
+document.addEventListener("DOMContentLoaded", function () {
+    const thumbnails = document.querySelectorAll('#thumbnails button'); // Select all thumbnail buttons
+    const mainImageContainer = document.getElementById('main-image');
+    
+    // Collect images information (URL and ALT text) from all the thumbnails
+    const images = [
+      ...document.querySelectorAll('#thumbnails button')
+    ].map((button) => {
+      const img = button.querySelector('img');
+      return {
+        url: img.src,
+        alt: img.alt,
+      };
+    });
+
+    thumbnails.forEach((button, index) => {
+      button.addEventListener('click', function () {
+        // Get the corresponding image from the 'images' array
+        const selectedImage = images[index];
+
+        // Update the main image container with the new image
+        mainImageContainer.innerHTML = `<img src="${selectedImage.url}" alt="${selectedImage.alt}" class="object-cover size-full aspect-square" />`;
+
+        // Update the styling of the active thumbnail to show it's selected
+        thumbnails.forEach((btn, i) => {
+          if (i === index) {
+            // Add a ring around the selected thumbnail
+            btn.classList.add("ring-2", "ring-accent-500");
+          } else {
+            // Remove the ring from non-selected thumbnails
+            btn.classList.remove("ring-2", "ring-accent-500");
+          }
+        });
+      });
+    });
+});
+
+   </script>

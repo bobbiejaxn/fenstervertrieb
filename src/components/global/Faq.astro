@@ -1,0 +1,78 @@
+---
+// Fundations
+import Text from "@/components/fundations/elements/Text.astro";
+import Wrapper from "@/components/fundations/containers/Wrapper.astro";
+// Icons
+import Plus from "@/components/fundations/icons/Plus.astro";
+// Array with FAQ
+const faq = [
+  {
+    question: "What services does your creative agency offer?",
+    answer:
+      "Our creative agency specializes in a wide range of digital services including UI/UX Design, Product Design, Web Development, Branding and Identity, 3D Design, and Design Systems. We focus on delivering high-quality and innovative solutions tailored to meet our clients' unique needs.",
+  },
+  {
+    question: "How do we start a project with your agency?",
+    answer:
+      "Starting a project is simple. Reach out to us with your project idea or business challenge, and we'll schedule an initial consultation. During this meeting, we'll discuss your objectives, scope, timeline, and budget. Once we have all the details, we'll propose a tailored strategy and project plan.",
+  },
+  {
+    question: "What is your project development process?",
+    answer:
+      "Our project development process includes several key phases: Discovery and Research, Strategy and Planning, Design and Prototyping, Development and Implementation, Testing and Quality Assurance, and finally, Launch and Evaluation. Each phase is carefully managed to ensure alignment with project goals and client satisfaction.",
+  },
+  {
+    question: "Can you work with our existing brand guidelines?",
+    answer:
+      "Absolutely. We often work with clients who have existing brand guidelines to ensure consistency across all materials. Our team can adapt to your brand's aesthetic and voice, ensuring that all new designs or developments align seamlessly with your established brand identity.",
+  },
+  {
+    question: "How long does it typically take to complete a project?",
+    answer:
+      "The duration of a project can vary significantly depending on its complexity, scope, and your specific requirements. After our initial consultation and once we've defined the project's scope, we'll provide a more accurate timeline. Our goal is to work efficiently while ensuring the highest quality of our deliverables.",
+  },
+  {
+    question: "How do you handle revisions and feedback?",
+    answer:
+      "We view revisions and feedback as an integral part of the creative process. During the project, we'll have scheduled checkpoints to review progress and gather your feedback. Our policy typically includes a set number of revision rounds to ensure your complete satisfaction with the final outcome, with the option for additional revisions if needed.",
+  },
+];
+---
+
+<section>
+  <Wrapper variant="standard" class="py-12">
+    <div class="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+      <Text
+        tag="h2"
+        variant="displaySM"
+        class="font-medium text-base-900 font-serif italic"
+      >
+        FAQ
+      </Text>
+      <div class="space-y-4 lg:col-span-2">
+        {
+          faq.map((faq) => (
+            <>
+              <details class="group selection:none ">
+                <summary class="flex items-center justify-between text-base cursor-pointer text-base-900 text-balance selection:bg-transparent focus:text-accent-600">
+                  {faq.question}
+                  <Plus
+                    size="sm"
+                    class="transition-transform group-open:rotate-45"
+                  />
+                </summary>
+                <Text
+                  tag="p"
+                  variant="textSM"
+                  class="pb-8 mt-4 text-balance text-base-500"
+                >
+                  {faq.answer}
+                </Text>
+              </details>
+            </>
+          ))
+        }
+      </div>
+    </div>
+  </Wrapper>
+</section>

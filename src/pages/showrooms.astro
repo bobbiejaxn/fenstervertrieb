@@ -1,0 +1,97 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Wrapper from "@/components/fundations/containers/Wrapper.astro";
+
+const showrooms = [
+  {
+    city: "Murcia",
+    country: "Spanien",
+    address: "Avda. de la Libertad 42, 30009 Murcia",
+    phone: "+34 968 000 000",
+    email: "info@fenstervertrieb.com",
+    hours: [
+      "Montag – Freitag: 9:00 – 18:00",
+      "Samstag: 10:00 – 14:00",
+      "Sonntag: Geschlossen",
+    ],
+    image: "https://images.unsplash.com/photo-1604328698692-f76ea1504c61?w=800&q=80",
+  },
+  {
+    city: "Catania",
+    country: "Sizilien, Italien",
+    address: "Via dei Liotru 12, 95100 Catania",
+    phone: "+39 095 000 000",
+    email: "catania@fenstervertrieb.com",
+    hours: [
+      "Lunedì – Venerdì: 9:00 – 18:00",
+      "Sabato: 10:00 – 14:00",
+      "Domenica: Chiuso",
+    ],
+    image: "https://images.unsplash.com/photo-1604328698692-f76ea1504c61?w=800&q=80",
+  },
+];
+---
+
+<BaseLayout>
+  <section class="bg-[#0a0a0a] text-white">
+    <Wrapper variant="standard" class="py-16 lg:py-24">
+      <h1 class="font-serif italic text-3xl md:text-5xl font-medium tracking-tight">
+        Unsere Showrooms
+      </h1>
+      <p class="mt-4 text-gray-400 max-w-xl">
+        Besuchen Sie unsere Showrooms in Murcia und Catania. Erleben Sie unsere Schüco Systeme live und lassen Sie sich von unseren Experten beraten.
+      </p>
+    </Wrapper>
+  </section>
+
+  <section class="bg-white">
+    <Wrapper variant="standard" class="py-12">
+      <div class="grid gap-8 md:grid-cols-2">
+        {showrooms.map((s) => (
+          <div class="border border-base-200 rounded-lg overflow-hidden">
+            <div class="aspect-[16/9] bg-base-100">
+              <img src={s.image} alt={`Showroom ${s.city}`} class="w-full h-full object-cover" />
+            </div>
+            <div class="p-6">
+              <h2 class="font-serif italic text-xl text-base-900 font-medium">
+                {s.city}
+              </h2>
+              <p class="text-sm text-base-500">{s.country}</p>
+
+              <div class="mt-4 space-y-2">
+                <div class="flex items-start gap-2 text-sm text-base-700">
+                  <svg class="w-4 h-4 text-[#1c69d4] shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                  </svg>
+                  {s.address}
+                </div>
+                <div class="flex items-start gap-2 text-sm text-base-700">
+                  <svg class="w-4 h-4 text-[#1c69d4] shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
+                  </svg>
+                  <a href={`tel:${s.phone.replace(/\s/g, '')}`} class="hover:text-[#1c69d4]">{s.phone}</a>
+                </div>
+                <div class="flex items-start gap-2 text-sm text-base-700">
+                  <svg class="w-4 h-4 text-[#1c69d4] shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                  </svg>
+                  <a href={`mailto:${s.email}`} class="hover:text-[#1c69d4]">{s.email}</a>
+                </div>
+              </div>
+
+              <div class="mt-4">
+                <h3 class="text-xs font-medium text-base-900 uppercase tracking-wider">Öffnungszeiten</h3>
+                <ul class="mt-2 space-y-1">
+                  {s.hours.map((h) => (
+                    <li class="text-sm text-base-500">{h}</li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </Wrapper>
+  </section>
+</BaseLayout>

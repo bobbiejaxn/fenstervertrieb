@@ -1,0 +1,125 @@
+---
+// Assets
+import Logo from "@/components/assets/Logo.astro";
+// Fundations
+import Wrapper from "@/components/fundations/containers/Wrapper.astro";
+
+const navLinks = [
+  { text: "Produkte", href: "/produkte" },
+  { text: "Showrooms", href: "/showrooms" },
+  { text: "Über uns", href: "/ueber-uns" },
+  { text: "Förderungen", href: "/foerderungen" },
+  { text: "Referenzen", href: "/referenzen" },
+  { text: "Kontakt", href: "/kontakt" },
+];
+---
+
+<section id="navigation">
+  <Wrapper variant="standard">
+    <div class="pt-4">
+      <div class="w-full grid grid-cols-3 gap-4 lg:gap-12 lg:h-5">
+        <a href="/">
+          <span class="sr-only">Back to home</span>
+          <Logo class="h-6 text-base-900" />
+        </a>
+
+        <div class="hidden w-full lg:inline-block">
+          <nav class="flex items-center gap-6 justify-center">
+            {navLinks.map((link) => (
+              <a
+                href={link.href}
+                class="text-xs text-base-500 hover:text-base-900 transition-colors"
+              >
+                {link.text}
+              </a>
+            ))}
+          </nav>
+        </div>
+
+        <div class="flex items-center w-full col-span-2 gap-2 lg:col-span-auto lg:col-start-3 lg:justify-end">
+          <a
+            href="/kontakt"
+            class="hidden md:inline-block text-xs font-medium bg-[#1c69d4] text-white px-4 py-2 rounded hover:bg-[#1557b0] transition-colors"
+          >
+            Beratung anfragen
+          </a>
+
+          <button
+            id="menubutton"
+            type="button"
+            aria-controls="menu"
+            aria-expanded="false"
+            aria-label="Toggle menu"
+            class="text-base-900 lg:hidden"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="transition duration-300 ease-in-out fill-slate-400 size-6 shrink-0"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+              <path id="menuIcon" d="M4 8l16 0"></path>
+              <path d="M4 16l16 0"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <nav
+        id="menu"
+        role="navigation"
+        aria-labelledby="menubutton"
+        class="relative p-4 mt-8 bg-base-50 lg:hidden"
+      >
+        <ul class="space-y-4">
+          {navLinks.map((link) => (
+            <li>
+              <a
+                href={link.href}
+                class="text-sm text-base-500 hover:text-base-900 transition-colors"
+              >
+                {link.text}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+    </div>
+  </Wrapper>
+</section>
+
+<style>
+  #menu {
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    transition:
+      max-height 0.5s ease-out,
+      opacity 0.5s ease-out;
+  }
+  #menu.expanded {
+    max-height: 1000px;
+    opacity: 1;
+  }
+</style>
+
+<script type="module">
+  document.addEventListener("DOMContentLoaded", () => {
+    const menuButton = document.getElementById("menubutton");
+    const menu = document.getElementById("menu");
+    const menuIcon = document.getElementById("menuIcon");
+    let expanded = false;
+
+    menuButton.addEventListener("click", () => {
+      expanded = !expanded;
+      menuButton.setAttribute("aria-expanded", expanded);
+      menu.classList.toggle("expanded");
+      menuIcon.style.opacity = expanded ? "0" : "1";
+    });
+  });
+</script>

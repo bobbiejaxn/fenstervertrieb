@@ -1,0 +1,17 @@
+---
+description: Content collections — Zod schemas, frontmatter, image() vs string paths
+globs: src/content/**
+alwaysApply: false
+---
+
+# Content collections (`src/content/`)
+
+- **Single source of truth:** Field names and types are defined in `src/content.config.ts`. When adding or renaming frontmatter, update every consuming page/layout (store, blog, helpcenter, legal, tag routes).
+- **Collections and folders:**
+  - `store` → `src/content/store/**/*.md`
+  - `posts` → `src/content/posts/**/*.{md,mdx}`
+  - `helpcenter` → `src/content/helpcenter/**/*.md`
+  - `legal` → `src/content/legal/**/*.md`
+- **`image()` fields:** `store` uses `thumbnail.url` and optional `images[].url`; `posts` uses `image.url`. These must stay compatible with Astro’s content `image()` helper — use valid asset paths the build can resolve.
+- **Plain strings:** `store.testimonials[].img` is a **string** in the schema, not `image()`. Do not assume it behaves like optimized `image()` entries.
+- **Templates:** Mirror structure from real entries — e.g. `src/content/store/1.md`, `src/content/posts/1.md`, `src/content/helpcenter/1.md`, `src/content/legal/terms.md`.

@@ -1,0 +1,13 @@
+---
+description: Williamsburg theme — Lexington conventions, fundations path, imports, minimal diffs
+alwaysApply: true
+---
+
+# Williamsburg (Lexington Themes) — global
+
+- **Publisher:** Lexington Themes; human-facing links and support URLs follow the pattern in the root `README.md` (documentation, changelog, support — do not invent new domains).
+- **Package scope:** This repo is the **`@lexington/williamsburg`** Astro theme only; do not claim dependencies that are not in `package.json`.
+- **Imports:** Use the project alias `@/` → `src/` (see `tsconfig.json`). Prefer existing components over new duplicative UI.
+- **Design system folder:** The UI primitives live under `src/components/fundations/` (intentional spelling **fundations** — do not rename or “fix” to foundations).
+- **Layouts:** `BaseLayout` wraps most pages; domain layouts include `BlogLayout`, `StoreLayout`, `HelpcenterLayout`, `LegalLayout`. Respect their `frontmatter` prop contracts when touching pages.
+- **Change style:** Keep diffs small and consistent with existing patterns (e.g. `Wrapper`, `Text`, `Button` from fundations). Avoid drive-by refactors and unrelated files.

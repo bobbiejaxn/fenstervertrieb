@@ -1,0 +1,12 @@
+---
+description: Pages — file-based routing, dynamic slugs, which layout to use
+globs: src/pages/**
+alwaysApply: false
+---
+
+# Pages & routing (`src/pages/`)
+
+- **Dynamic routes:** `[...slug].astro` routes under `blog/posts/`, `store/products/`, `helpcenter/`, and `legal/` build paths from `getStaticPaths` using each entry’s **`id`** as `params.slug` (not a custom `slug` frontmatter field unless you add it consistently).
+- **Layout pairing:** Blog posts → `BlogLayout`; store products → `StoreLayout`; help center articles → `HelpcenterLayout`; legal → `LegalLayout`. Other pages typically use `BaseLayout` directly or via inner layouts.
+- **RSS:** `/rss.xml` is implemented in `src/pages/rss.xml.js`. It is **not** automatically synced with the `posts` content collection; editing blog content under `src/content/posts/` does not update that glob by itself.
+- **Design system pages:** `src/pages/system/*` are in-theme references (colors, typography, buttons, etc.) — keep them aligned with `src/styles/global.css` if you change tokens.

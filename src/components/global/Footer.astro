@@ -1,0 +1,62 @@
+---
+// Assets
+import Logo from "@/components/assets/Logo.astro";
+// Fundation
+import Wrapper from "@/components/fundations/containers/Wrapper.astro";
+---
+
+<footer class="border-t border-base-200">
+  <Wrapper variant="standard" class="py-12">
+    <div class="grid gap-8 md:grid-cols-4 items-start">
+      <!-- Brand column -->
+      <div>
+        <Logo class="text-base-900 text-lg" />
+        <p class="mt-4 text-xs text-base-500 leading-relaxed">
+          Offizieller Schüco Partner. Premium-Fenster und Türen für Spanien und Italien.
+        </p>
+      </div>
+
+      <!-- Produkte column -->
+      <nav role="navigation">
+        <h3 class="text-sm font-medium text-base-900">Produkte</h3>
+        <ul class="mt-4 text-xs space-y-3">
+          <li><a class="text-base-500 hover:text-base-900 transition-colors" href="/produkte">Fenster</a></li>
+          <li><a class="text-base-500 hover:text-base-900 transition-colors" href="/produkte">Türen</a></li>
+          <li><a class="text-base-500 hover:text-base-900 transition-colors" href="/produkte">Schiebesysteme</a></li>
+          <li><a class="text-base-500 hover:text-base-900 transition-colors" href="/produkte">Fassaden</a></li>
+          <li><a class="text-base-500 hover:text-base-900 transition-colors" href="/produkte">Smart Home</a></li>
+        </ul>
+      </nav>
+
+      <!-- Unternehmen column -->
+      <nav role="navigation">
+        <h3 class="text-sm font-medium text-base-900">Unternehmen</h3>
+        <ul class="mt-4 text-xs space-y-3">
+          <li><a class="text-base-500 hover:text-base-900 transition-colors" href="/ueber-uns">Über uns</a></li>
+          <li><a class="text-base-500 hover:text-base-900 transition-colors" href="/showrooms">Showrooms</a></li>
+          <li><a class="text-base-500 hover:text-base-900 transition-colors" href="/foerderungen">Förderungen</a></li>
+          <li><a class="text-base-500 hover:text-base-900 transition-colors" href="/referenzen">Referenzen</a></li>
+        </ul>
+      </nav>
+
+      <!-- Kontakt column -->
+      <nav role="navigation">
+        <h3 class="text-sm font-medium text-base-900">Kontakt</h3>
+        <ul class="mt-4 text-xs space-y-3">
+          <li class="text-base-500">Avda. de la Libertad 42</li>
+          <li class="text-base-500">30009 Murcia, Spanien</li>
+          <li><a class="text-base-500 hover:text-base-900 transition-colors" href="mailto:info@fenstervertrieb.com">info@fenstervertrieb.com</a></li>
+          <li><a class="text-base-500 hover:text-base-900 transition-colors" href="tel:+34968000000">+34 968 000 000</a></li>
+        </ul>
+      </nav>
+    </div>
+
+    <!-- Bottom bar -->
+    <div class="mt-12 pt-6 border-t border-base-200 flex flex-col sm:flex-row items-center gap-2 sm:gap-6 text-xs text-base-500">
+      <span>&copy; 2026 Fenstervertrieb GmbH</span>
+      <a href="/impressum" class="hover:text-base-900 transition-colors">Impressum</a>
+      <a href="/agb" class="hover:text-base-900 transition-colors">AGB</a>
+      <a href="/datenschutz" class="hover:text-base-900 transition-colors">Datenschutz</a>
+    </div>
+  </Wrapper>
+</footer>

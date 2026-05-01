@@ -1,0 +1,104 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Wrapper from "@/components/fundations/containers/Wrapper.astro";
+
+const references = [
+  {
+    project: "Residencial Costa Cálida",
+    location: "Murcia, Spanien",
+    type: "Wohnanlage — 48 Wohnungen",
+    system: "AWS 70.HI + ADS 75",
+    description: "Energetische Sanierung einer Wohnanlage am Mittelmeer mit Schüco Aluminium-Fenstern und -Türen.",
+  },
+  {
+    project: "Villa Etna View",
+    location: "Catania, Sizilien",
+    type: "Privatvilla",
+    system: "AWS 90.SI+ + ASS 77 PD.HI",
+    description: "Premium-Villa mit Passivhaus-Fenstern und Panorama-Schiebetüren mit Blick auf den Ätna.",
+  },
+  {
+    project: "Centro Comercial Mediterráneo",
+    location: "Murcia, Spanien",
+    type: "Gewerbekomplex",
+    system: "FWS 50 + FWS 60+",
+    description: "Moderne Fassadenlösung für ein Einkaufszentrum mit integrierten Schüco Fassadensystemen.",
+  },
+  {
+    project: "Palazzo Catania",
+    location: "Catania, Sizilien",
+    type: "Historische Renovierung",
+    system: "LivIng 82 + ADS 90",
+    description: "Sensibler Umbau eines historischen Palazzos mit energieeffizienten Fenstern und Türen.",
+  },
+  {
+    project: "Smart Home Murcia",
+    location: "Murcia, Spanien",
+    type: "Modernes Einfamilienhaus",
+    system: "Schüco TipTronic + AWS 70.HI",
+    description: "Vollautomatisierte Fenstertechnik mit smartem Schüco TipTronic System für maximale Energieeffizienz.",
+  },
+  {
+    project: "Torre del Sol",
+    location: "Alicante, Spanien",
+    type: "Hochhaus — 14 Etagen",
+    system: "FWS 60+ + AWS 90.SI+",
+    description: "Energieeffiziente Fassaden- und Fenstersysteme für ein Hochhaus an der Costa Blanca.",
+  },
+];
+---
+
+<BaseLayout>
+  <section class="bg-[#0a0a0a] text-white">
+    <Wrapper variant="standard" class="py-16 lg:py-24">
+      <h1 class="font-serif italic text-3xl md:text-5xl font-medium tracking-tight">
+        Referenzen
+      </h1>
+      <p class="mt-4 text-gray-400 max-w-xl">
+        Ausgewählte Projekte, die wir mit Schüco Systemen in Spanien und Italien realisiert haben.
+      </p>
+    </Wrapper>
+  </section>
+
+  <section class="bg-white">
+    <Wrapper variant="standard" class="py-12">
+      <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        {references.map((ref) => (
+          <div class="border border-base-200 rounded-lg p-6 hover:border-[#1c69d4] transition-colors">
+            <div class="inline-block bg-[#1c69d4]/10 text-[#1c69d4] text-xs font-medium px-2 py-1 rounded mb-3">
+              {ref.type}
+            </div>
+            <h3 class="font-serif italic text-lg text-base-900 font-medium">
+              {ref.project}
+            </h3>
+            <p class="text-xs text-base-500 mt-1">{ref.location}</p>
+            <p class="text-sm text-base-500 mt-3">{ref.description}</p>
+            <div class="mt-4 pt-4 border-t border-base-100">
+              <span class="text-xs text-base-400">Schüco Systeme:</span>
+              <span class="text-xs text-base-900 ml-1">{ref.system}</span>
+            </div>
+          </div>
+        ))}
+      </div>
+    </Wrapper>
+  </section>
+
+  <section class="bg-[#1c69d4] text-white">
+    <Wrapper variant="standard" class="py-16 text-center">
+      <h2 class="font-serif italic text-2xl md:text-3xl font-medium">
+        Ihr Projekt könnte das Nächste sein
+      </h2>
+      <p class="mt-4 text-blue-100 max-w-xl mx-auto text-sm">
+        Kontaktieren Sie uns und lassen Sie uns gemeinsam Ihr Projekt mit Schüco Premium-Systemen realisieren.
+      </p>
+      <div class="mt-8">
+        <a
+          href="/kontakt"
+          class="inline-block bg-white text-[#1c69d4] px-6 py-3 rounded text-sm font-medium hover:bg-gray-100 transition-colors"
+        >
+          Projekt anfragen
+        </a>
+      </div>
+    </Wrapper>
+  </section>
+</BaseLayout>
