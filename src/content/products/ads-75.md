@@ -9,7 +9,7 @@ highlights:
   - "75 mm Bautiefe"
   - "Hauseingangstür"
   - "Vielseitig einsetzbar"
-image: "https://images.unsplash.com/photo-1555443805-658637492dd3?w=800&q=80"
+image: "/images/tueren-interior.jpg"
 features:
   - "Aluminium-Türensystem mit 75 mm Bautiefe"
   - "Elegante, schmale Profiloptik"

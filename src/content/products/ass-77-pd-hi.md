@@ -9,7 +9,7 @@ highlights:
   - "77 mm Bautiefe"
   - "Parallel-Schiebe-System"
   - "Premium-Architektur"
-image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&q=80"
+image: "/images/interior-office.jpg"
 features:
   - "Parallel-Schiebe-System mit 77 mm Bautiefe"
   - "PD-Technologie für schlanke Profiloptik"

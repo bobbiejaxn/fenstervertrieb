@@ -9,7 +9,7 @@ highlights:
   - "60 mm Bautiefe"
   - "Hebe-Schiebe-System"
   - "Terrassen- und Wintergartentüren"
-image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&q=80"
+image: "/images/interior-office.jpg"
 features:
   - "Hebe-Schiebe-System mit 60 mm Bautiefe"
   - "Leichte Bedienung durch Hebe-Schiebe-Mechanismus"

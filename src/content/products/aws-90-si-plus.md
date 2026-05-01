@@ -9,7 +9,7 @@ highlights:
   - "90 mm Bautiefe"
   - "Passivhausgeeignet"
   - "Maximale Energieeffizienz"
-image: "https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=800&q=80"
+image: "/images/fenster-house.jpg"
 features:
   - "Premium-Aluminium-Profilsystem mit 90 mm Bautiefe"
   - "SI+-Wärmedämmung für Passivhausstandard"

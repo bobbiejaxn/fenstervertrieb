@@ -9,7 +9,7 @@ highlights:
   - "82 mm Bautiefe"
   - "Holzoptik-Innendekor"
   - "PVC-Kunststoff"
-image: "https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=800&q=80"
+image: "/images/fenster-house.jpg"
 features:
   - "PVC-Fenstersystem mit 82 mm Bautiefe"
   - "Ästhetische Holzoptik im Innenbereich"

@@ -9,7 +9,7 @@ highlights:
   - "90 mm Bautiefe"
   - "Hauseingangstür Premium"
   - "Hohe Energieeffizienz"
-image: "https://images.unsplash.com/photo-1555443805-658637492dd3?w=800&q=80"
+image: "/images/tueren-interior.jpg"
 features:
   - "Premium-Aluminium-Türensystem mit 90 mm Bautiefe"
   - "HI-Wärmedämmung"

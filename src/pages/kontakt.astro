@@ -23,7 +23,9 @@ import Wrapper from "@/components/fundations/containers/Wrapper.astro";
           <h2 class="font-serif italic text-2xl text-base-900 font-medium">
             Nachricht senden
           </h2>
-          <form class="mt-6 space-y-4" action="#" method="POST">
+          <!-- TODO: Replace the Formspree endpoint with the real one -->
+          <form class="mt-6 space-y-4" action="https://formspree.io/f/placeholder" method="POST">
+            <input type="hidden" name="_next" value="/kontakt/danke" />
             <div class="grid gap-4 sm:grid-cols-2">
               <div>
                 <label for="firstName" class="block text-sm font-medium text-base-700 mb-1">Vorname</label>
@@ -150,6 +152,18 @@ import Wrapper from "@/components/fundations/containers/Wrapper.astro";
                 <p>Samstag: 10:00 – 14:00</p>
                 <p>Sonntag: Geschlossen</p>
               </div>
+            </div>
+
+            <div class="pt-4 border-t border-base-200">
+              <a
+                href="https://wa.me/34968000000"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-flex items-center gap-2 bg-[#25D366] text-white px-5 py-3 rounded text-sm font-medium hover:bg-[#1eb951] transition-colors"
+              >
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-2.96 2.89-2.96 7.007 0 4.107 2.987 7.697 3.382 8.222.297.397 4.052 6.198 9.318 8.708 1.303.562 2.317.896 3.11 1.149 1.304.415 2.497.354 3.437.214.979-.163 3.005-1.229 3.437-2.414.432-1.186.432-2.208.298-2.414-.134-.199-.397-.297-.694-.497z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.625.846 5.059 2.284 7.034L.789 23.492a.5.5 0 00.611.611l4.458-1.495A11.943 11.943 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-2.376 0-4.585-.796-6.366-2.142l-.444-.332-3.308 1.11 1.11-3.308-.332-.444A9.96 9.96 0 012 12C2 6.486 6.486 2 12 2s10 4.486 10 10-4.486 10-10 10z"/></svg>
+                Nachricht per WhatsApp
+              </a>
             </div>
           </div>
         </div>

@@ -8,7 +8,7 @@ highlights:
   - "App- und Sprachsteuerung"
   - "Sensorsgesteuerte Lüftung"
   - "Intelligente Gebäudetechnik"
-image: "https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=800&q=80"
+image: "/images/fenster-house.jpg"
 features:
   - "Automatische Fensteröffnung und -schließung"
   - "App-Steuerung für iOS und Android"
