@@ -71,6 +71,11 @@ const categoryImages: Record<string, string> = {
                     {product.data.uwert}
                   </span>
                 )}
+                {product.data.price_from && (
+                  <span class="text-xs bg-[#1c69d4] text-white px-2 py-0.5 rounded">
+                    {product.data.price_from}
+                  </span>
+                )}
               </div>
               <p class="text-xs text-base-500 mt-1">{product.data.category}</p>
               <p class="text-sm text-base-500 mt-2 line-clamp-2">{product.data.description}</p>

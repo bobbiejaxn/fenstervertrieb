@@ -3,6 +3,7 @@ title: "ASE 60.HI"
 category: "Schiebesysteme"
 slug: "ase-60-hi"
 uwert: "1,1 W/m²K"
+price_from: "ab 135 €"
 description: "Das Schüco ASE 60.HI ist ein wärmedämmendes Hebe-Schiebe-System mit 60 mm Bautiefe. Elegante Schiebetüren für Terrassen und Wintergärten."
 highlights:
   - "Uw-Wert bis 1,1 W/m²K"

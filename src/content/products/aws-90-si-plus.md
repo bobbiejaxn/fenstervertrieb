@@ -3,6 +3,7 @@ title: "AWS 90.SI+"
 category: "Fenster"
 slug: "aws-90-si-plus"
 uwert: "0,64 W/m²K"
+price_from: "ab 207 €"
 description: "Das Schüco AWS 90.SI+ bietet herausragende Wärmedämmung mit 90 mm Bautiefe. Das Flaggschiff-Fenstersystem für Passivhaus-Standards und anspruchsvolle Architektur."
 highlights:
   - "Uw-Wert bis 0,64 W/m²K"

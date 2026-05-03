@@ -23,9 +23,8 @@ import Wrapper from "@/components/fundations/containers/Wrapper.astro";
           <h2 class="font-serif italic text-2xl text-base-900 font-medium">
             Nachricht senden
           </h2>
-          <!-- TODO: Replace the Formspree endpoint with the real one -->
-          <form class="mt-6 space-y-4" action="https://formspree.io/f/placeholder" method="POST">
-            <input type="hidden" name="_next" value="/kontakt/danke" />
+          <!-- Form submits via mailto: opens user's email client (serverless alternative to Formspree) -->
+          <form class="mt-6 space-y-4" action="mailto:info@fenstervertrieb.com" method="POST" enctype="text/plain">
             <div class="grid gap-4 sm:grid-cols-2">
               <div>
                 <label for="firstName" class="block text-sm font-medium text-base-700 mb-1">Vorname</label>

@@ -12,9 +12,43 @@ export async function getStaticPaths() {
 }
 
 const { product } = Astro.props;
+
+// Parse price_from for JSON-LD (extract numeric value)
+const priceMatch = product.data.price_from?.match(/([\d.,]+)/);
+const priceNumber = priceMatch ? parseFloat(priceMatch[1].replace(/\./g, "").replace(",", ".")) : null;
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Product",
+  name: product.data.title,
+  description: product.data.description,
+  image: product.data.image.startsWith("/")
+    ? `https://fenstervertrieb.debored.ai${product.data.image}`
+    : product.data.image,
+  brand: {
+    "@type": "Brand",
+    name: "Schüco",
+  },
+  manufacturer: {
+    "@type": "Organization",
+    name: "Schüco International KG",
+  },
+  offers: {
+    "@type": "Offer",
+    priceCurrency: "EUR",
+    ...(priceNumber !== null && { price: priceNumber }),
+    availability: "https://schema.org/InStock",
+    seller: {
+      "@type": "Organization",
+      name: "Fenstervertrieb GmbH",
+      url: "https://fenstervertrieb.debored.ai",
+    },
+  },
+};
 ---
 
 <BaseLayout title={`${product.data.title} — Fenstervertrieb`} description={product.data.description?.slice(0, 160) || "Schüco Premium-Systeme"}>
+  <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
   <section class="bg-[#0a0a0a] text-white">
     <Wrapper variant="standard" class="py-16 lg:py-24">
       <a href="/produkte" class="text-sm text-gray-400 hover:text-white transition-colors">
@@ -40,6 +74,11 @@ const { product } = Astro.props;
           {product.data.uwert && (
             <div class="mt-4 inline-block bg-white/10 text-white text-sm px-3 py-1 rounded">
               U-Wert: {product.data.uwert}
+            </div>
+          )}
+          {product.data.price_from && (
+            <div class="mt-4 inline-block bg-[#1c69d4] text-white text-sm px-3 py-1 rounded">
+              {product.data.price_from}
             </div>
           )}
           <p class="mt-6 text-gray-300 leading-relaxed">

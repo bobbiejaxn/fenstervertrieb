@@ -26,6 +26,9 @@
     "image": {
       "type": "string"
     },
+    "price_from": {
+      "type": "string"
+    },
     "features": {
       "type": "array",
       "items": {

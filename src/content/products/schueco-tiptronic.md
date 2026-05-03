@@ -2,6 +2,7 @@
 title: "Schüco TipTronic"
 category: "Smart Home"
 slug: "schueco-tiptronic"
+price_from: "ab 249 € pro Fenster (Aufpreis)"
 description: "Schüco TipTronic — das smarte Fensterautomationssystem. Komfortable Bedienung per App, Sprache oder Sensorik für intelligente Gebäudetechnik."
 highlights:
   - "Smarte Fensterautomation"
