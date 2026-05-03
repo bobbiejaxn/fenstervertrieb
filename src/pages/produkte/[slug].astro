@@ -23,7 +23,7 @@ const jsonLd = {
   name: product.data.title,
   description: product.data.description,
   image: product.data.image.startsWith("/")
-    ? `https://fenstervertrieb.debored.ai${product.data.image}`
+    ? `https://fenstervertrieb.de${product.data.image}`
     : product.data.image,
   brand: {
     "@type": "Brand",
@@ -41,7 +41,7 @@ const jsonLd = {
     seller: {
       "@type": "Organization",
       name: "Fenstervertrieb GmbH",
-      url: "https://fenstervertrieb.debored.ai",
+      url: "https://fenstervertrieb.de"
     },
   },
 };

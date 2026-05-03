@@ -153,9 +153,9 @@ Schüco Aluminium-Fenster sind eine **Investition in Wertbeständigkeit, Energie
 
 Sie möchten **Schüco Fenster kaufen** oder benötigen ein individuelles Angebot für Ihr Bauprojekt? Kontaktieren Sie uns noch heute:
 
-- **Telefon:** [Ihre Telefonnummer einfügen]
-- **E-Mail:** [Ihre E-Mail-Adresse einfügen]
-- **Webseite:** [fenstervertrieb.debored.ai](https://fenstervertrieb.debored.ai)
+- **Telefon:** +49 173 1001726
+- **E-Mail:** info@fenstervertrieb.de
+- **Webseite:** [fenstervertrieb.de](https://fenstervertrieb.de)
 
 Vereinbaren Sie einen unverbindlichen Beratungstermin – online, telefonisch oder vor Ort. Wir freuen uns auf Ihr Projekt!
 
