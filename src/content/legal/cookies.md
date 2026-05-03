@@ -1,11 +1,55 @@
 ---
 page: Cookies
-pubDate: 2024-01-01
+pubDate: 2025-01-01
 ---
-This cookie policy describes how Simplexity (Simplexity) uses “cookies” and other similar technologies, in connection with our Site and Services. For more information on Simplexity privacy practices, please see our Privacy Policy.
-### About cookies
-A cookie is a small piece of information stored on your computer via the web browser you use. Cookies are used to personalize your web experience with a website. They help with things like understanding how you use a website, remembering your login details, and storing site preferences.
-### How Simplexity uses cookies
-Simplexity uses two types of cookies: first and third-party cookies. First party cookies are set and read by us when you use Simplexity. Third party cookies are set by companies other than Simplexity and collect information about you which may be sent to a third party. Simplexity uses third party cookies for site analytics purposes.
-### Opting out
-You can customize your web browser to accept, reject, or delete cookies. All major browsers will give you the option to block some or all cookies and to clear existing cookie data.
+
+## Cookie-Richtlinie — Fenstervertrieb GmbH
+
+**Stand:** Januar 2025
+
+---
+
+### Was sind Cookies?
+
+Cookies sind kleine Textdateien, die von Ihrem Browser beim Besuch einer Website auf Ihrem Endgerät gespeichert werden. Sie helfen uns, die Nutzung unserer Website zu verbessern und Ihnen ein besseres Nutzererlebnis zu bieten.
+
+### Welche Cookies verwenden wir?
+
+#### Notwendige Cookies
+
+Diese Cookies sind für den Betrieb der Website unerlässlich. Ohne sie können wesentliche Funktionen wie die Navigation oder der Zugriff auf geschützte Bereiche nicht bereitgestellt werden.
+
+| Cookie | Zweck | Speicherdauer |
+|--------|-------|--------------|
+| Sitzungscookie | Aufrechterhaltung der Benutzersitzung | Bis zum Schließen des Browsers |
+
+#### Analyse-Cookies
+
+Wir setzen das datenschutzfreundliche Analyse-Tool **Umami** ein. Umami arbeitet anonymisiert und speichert keine personenbezogenen Daten. Es kommt ohne Cookie-Banner aus, da keine identifizierbaren IP-Adressen gespeichert werden.
+
+| Cookie | Zweck | Speicherdauer |
+|--------|-------|--------------|
+| Umami | Anonymisierte Website-Analyse | 1 Jahr |
+
+### Welche Cookies verwenden wir NICHT?
+
+Wir verwenden **keine**:
+
+- Werbe-Cookies (Retargeting, Conversion-Tracking)
+- Social-Media-Cookies (Facebook Pixel, LinkedIn Insight, etc.)
+- Drittanbieter-Tracking-Cookies (Google Analytics, etc.)
+
+### Ihre Rechte
+
+Sie können Cookies in den Einstellungen Ihres Browsers verwalten, aktivieren oder deaktivieren. Die Anleitungen hierzu finden Sie in der Hilfe-Funktion Ihres Browsers.
+
+Bitte beachten Sie: Die Deaktivierung aller Cookies kann die Funktionalität unserer Website einschränken.
+
+### Kontakt
+
+Bei Fragen zum Datenschutz und zur Verwendung von Cookies wenden Sie sich bitte an:
+
+**Fenstervertrieb GmbH**
+Burscheider Str. 157
+51381 Leverkusen
+E-Mail: info@fenstervertrieb.de

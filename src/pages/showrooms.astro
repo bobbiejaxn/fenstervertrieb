@@ -2,44 +2,34 @@
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import Wrapper from "@/components/fundations/containers/Wrapper.astro";
 
+// ⚠️ MOCK DATA — Replace with real showroom locations before going live
+// Remove entries that don't have real addresses yet, or replace with actual data
 const showrooms = [
   {
-    city: "Murcia",
-    country: "Spanien",
-    address: "Avda. de la Libertad 42, 30009 Murcia",
-    phone: "+34 968 000 000",
-    email: "info@fenstervertrieb.com",
+    city: "Leverkusen",
+    country: "Deutschland",
+    address: "Burscheider Str. 157, 51381 Leverkusen",
+    phone: "+49 173 1001726",
+    email: "info@fenstervertrieb.de",
     hours: [
-      "Montag – Freitag: 9:00 – 18:00",
-      "Samstag: 10:00 – 14:00",
+      "Montag – Freitag: 07:00 – 18:00",
+      "Samstag: Nach Vereinbarung",
       "Sonntag: Geschlossen",
     ],
     image: "/images/interior-office.jpg",
-  },
-  {
-    city: "Catania",
-    country: "Sizilien, Italien",
-    address: "Via dei Liotru 12, 95100 Catania",
-    phone: "+39 095 000 000",
-    email: "catania@fenstervertrieb.com",
-    hours: [
-      "Lunedì – Venerdì: 9:00 – 18:00",
-      "Sabato: 10:00 – 14:00",
-      "Domenica: Chiuso",
-    ],
-    image: "/images/interior-office.jpg",
+    mock: true, // ⚠️ MOCK — image is stock photo
   },
 ];
 ---
 
-<BaseLayout title="Showrooms — Fenstervertrieb" description="Erleben Sie Schüco Premium-Systeme live in unseren Ausstellungsräumen in Murcia und Catania.">
+<BaseLayout title="Showrooms — Fenstervertrieb" description="Erleben Sie Schüco Premium-Systeme live in unserem Showroom in Leverkusen.">
   <section class="bg-[#0a0a0a] text-white">
     <Wrapper variant="standard" class="py-16 lg:py-24">
       <h1 class="font-serif italic text-3xl md:text-5xl font-medium tracking-tight">
-        Unsere Showrooms
+        Unser Showroom
       </h1>
       <p class="mt-4 text-gray-400 max-w-xl">
-        Besuchen Sie unsere Showrooms in Murcia und Catania. Erleben Sie unsere Schüco Systeme live und lassen Sie sich von unseren Experten beraten.
+        Besuchen Sie unseren Showroom in Leverkusen. Erleben Sie unsere Schüco Systeme live und lassen Sie sich von unseren Experten beraten.
       </p>
     </Wrapper>
   </section>

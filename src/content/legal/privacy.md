@@ -1,92 +1,80 @@
 ---
-page: Privacy
-pubDate: 2024-01-01
+page: Datenschutz
+pubDate: 2025-01-01
 ---
 
-California Resident Notice at Collection
-========================================
+## Datenschutzerklärung — Fenstervertrieb GmbH
 
-If you are a California resident, the California Consumer Privacy Act, as amended by the California Privacy Rights Act of 2020 (“**CCPA**”), requires us to provide some additional information to California residents. This Section only applies to you if you are a California resident, although please note that this information and the rights afforded herein are the same as offered to our other users in our main Privacy Policy. This Section does not apply to personal information we collect from our employees and job applicants in their capacity as employees and job applicants, as such information practices are described in separate policies.
+**Stand:** Januar 2025
 
-The following chart details these activities:
+---
 
-**Category of personal information**
+### 1. Verantwortlicher
 
-**Purposes of use**
+Fenstervertrieb GmbH
+Burscheider Str. 157
+51381 Leverkusen
+Deutschland
 
-**Categories of Third Parties Information**
+Geschäftsführer: Antonio Maximilian Fernandez Ciszewski
+E-Mail: info@fenstervertrieb.de
+Telefon: +49 173 1001726
 
-**Categories of Third Parties**
+### 2. Erhebung und Speicherung personenbezogener Daten
 
-Contact information (such as your full name, phone number, email address)
+Beim Besuch unserer Website werden automatisch Informationen durch den Browser übermittelt und in Server-Log-Dateien gespeichert. Dies umfasst:
 
-Provide the Services; Communicate with you; Analyze use of and improve the services; With your consent; Comply with law or defend our legal rights; Security/fraud prevention
+- Browsertyp und -version
+- Verwendetes Betriebssystem
+- Referrer-URL (die vorher besuchte Seite)
+- Hostname des zugreifenden Rechners
+- Uhrzeit der Serveranfrage
+- IP-Adresse
 
-Affiliated entities; Service providers; Entities for legal purposes
+Diese Daten sind nicht bestimmten Personen zuordenbar. Eine Zusammenführung mit anderen Datenquellen wird nicht vorgenommen.
 
-We do not share/sell
+### 3. Kontaktformular
 
-Customer service interaction information (including optional surveys and when you ask for help)
+Wenn Sie uns per Kontaktformular Anfragen zukommen lassen, werden Ihre Angaben aus dem Formular (Name, E-Mail-Adresse, Telefonnummer, Nachricht) zwecks Bearbeitung der Anfrage und für Anschlussfragen bei uns gespeichert. Diese Daten geben wir nicht ohne Ihre Einwilligung weiter.
 
-Provide the Services; Communicate with you; Analyze use of and improve the services; With your consent; Comply with law or defend our legal rights; Security/fraud prevention
+Die Verarbeitung erfolgt auf Grundlage von Art. 6 Abs. 1 lit. b DSGVO, soweit die Verarbeitung zur Erfüllung eines Vertrags oder vorvertraglicher Maßnahmen erforderlich ist.
 
-Affiliated entities; Service providers; Entities for legal purposes
+### 4. Cookies
 
-We do not share/sell
+Unsere Website verwendet Cookies. Bei Cookies handelt es sich um kleine Textdateien, die im Browser gespeichert werden und die Erkennung des Browsers ermöglichen. Details siehe separate Cookie-Richtlinie unter [/cookies](/cookies).
 
-Product interaction information
+Sie können Ihren Browser so einstellen, dass Cookies nicht gespeichert werden. Dies kann jedoch die Funktionalität der Website einschränken.
 
-Provide the Services; Communicate with you; Analyze use of and improve the services; With your consent; Comply with law or defend our legal rights; Security/fraud prevention
+### 5. Analyse-Tools
 
-Affiliated entities; Service providers; Entities for legal purposes
+Wir setzen anonymisierte Analysetools (Umami) ein, die keine personenbezogenen Daten speichern und ohne Cookie-Banner auskommen. Es wird keine IP-Adresse gespeichert. Die Verarbeitung erfolgt auf Grundlage von Art. 6 Abs. 1 lit. f DSGVO.
 
-We do not share/sell
+### 6. Ihre Rechte
 
-Internet network and device information (such as mobile device information, IP address, and information about your interaction with the services)
+Sie haben gegenüber uns folgende Rechte hinsichtlich der Sie betreffenden personenbezogenen Daten:
 
-Provide the Services; Analyze use of and improve the services; With your consent; Comply with law or defend our legal rights; Security/fraud prevention
+- **Recht auf Auskunft** (Art. 15 DSGVO)
+- **Recht auf Berichtigung** (Art. 16 DSGVO)
+- **Recht auf Löschung** (Art. 17 DSGVO)
+- **Recht auf Einschränkung der Verarbeitung** (Art. 18 DSGVO)
+- **Recht auf Datenübertragbarkeit** (Art. 20 DSGVO)
+- **Recht auf Widerspruch** gegen die Verarbeitung (Art. 21 DSGVO)
+- **Recht auf Beschwerde** bei einer Datenschutzaufsichtsbehörde (Art. 77 DSGVO)
 
-Affiliated entities; Service providers; Entities for legal purposes;
+### 7. SSL-Verschlüsselung
 
-We do not share/sell
+Diese Seite nutzt aus Sicherheitsgründen eine SSL-Verschlüsselung. Eine verschlüsselte Verbindung erkennen Sie daran, dass die Adresszeile des Browsers von „http://" auf „https://" wechselt.
 
-Login information (such as your username and password)
+### 8. Server-Log-Dateien
 
-Provide the Services; Comply with law or defend our legal rights; Security/fraud prevention; Comply with law or defend our legal rights
+Der Provider der Seiten erhebt und speichert automatisch Informationen in Server-Log-Dateien, die der Browser automatisch übermittelt. Die Speicherung erfolgt aus Sicherheitsgründen und zur Ermittlung von Eingriffen in unsere IT-Systeme.
 
-Affiliated entities; Service providers; Entities for legal purposes
+### 9. Änderungen der Datenschutzerklärung
 
-We do not share/sell
+Wir behalten uns vor, diese Datenschutzerklärung anzupassen, damit sie stets den aktuellen rechtlichen Anforderungen entspricht.
 
-Professional or employment information (such as the name and address of the company you work for and your title)
+---
 
-Provide the Services; Communicate with you; Analyze use of and improve the services; With your consent; Comply with law or defend our legal rights; Security/fraud prevention
-
-Affiliated entities; Service providers; Entities for legal purposes;
-
-We do not share/sell
-
-Other information (any other information you choose to provide directly to us, including optional profile photos)
-
-Provide the Services; Communicate with you; Analyze use of and improve the services; With your consent; Comply with law or defend our legal rights; Security/fraud prevention
-
-Affiliated entities; Service providers; Entities for legal purposes;
-
-We do not sell/share
-
-For more information about each category of personal information, purpose of use, and third parties to which we disclose personal information, please see the "What we collect and why," and "When we access or disclose you information" sections of our Privacy Policy.
-
-**Your Choices Regarding “Sharing” and “Selling”**: You have the right to opt out of our sale/sharing of your personal information for purposes of online analytics and advertising. Currently, we do not sell or share your data as defined by the CCPA and we have not done so over the past 12 months from the effective date of this Privacy Policy.
-
-**Other CCPA Rights.** If we ever offer any financial incentives in exchange for your personal information, we will provide you with appropriate information about such incentives.
-
-The CCPA also allows you to limit the use or disclosure of your “sensitive personal information” (as defined in the CCPA) if your sensitive personal information is used for certain purposes. Please note that we do not use or disclose sensitive personal information other than for business purposes for which you cannot opt out under the CCPA.
-
-Please see the “Your rights with respect to your information” section of our Policy above for information about the additional rights you have with respect to your personal information under California law and how to exercise them.
-
-Retention of Your Personal Information. Please see the “Retention Of Your Information” section belowof our Privacy Policy for more information.
-
-Shine the Light Disclosure
---------------------------
-
-The California "Shine the Light" law gives residents of California the right under certain circumstances to request information from us regarding the manner in which we disclose certain categories of personal information (as defined in the Shine the Light law) with third parties for their direct marketing purposes. We currently do not disclose your personal information to third parties for their own direct marketing purposes.
+**Fenstervertrieb GmbH**
+Burscheider Str. 157 · 51381 Leverkusen
+info@fenstervertrieb.de
