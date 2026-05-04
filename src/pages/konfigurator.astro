@@ -1,0 +1,64 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Wrapper from "@/components/fundations/containers/Wrapper.astro";
+import { getCollection } from "astro:content";
+import ConfiguratorWizard from "@/components/configurator/ConfiguratorWizard.astro";
+
+const allProducts = await getCollection("products");
+const productsData = allProducts.map((p) => ({
+  title: p.data.title,
+  category: p.data.category,
+  slug: p.data.slug,
+  uwert: p.data.uwert || "",
+  description: p.data.description,
+  image: p.data.image,
+  price_from: p.data.price_from || "",
+  highlights: p.data.highlights,
+}));
+
+const categories = ["Fenster", "Türen", "Schiebesysteme", "Fassaden", "Smart Home"];
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  name: "Produktkonfigurator — Fenstervertrieb",
+  description:
+    "Konfigurieren Sie Ihr Schüco Fenstersystem Schritt für Schritt — Kategorie, System, Größe, Farbe und Öffnungsart.",
+  url: "https://fenstervertrieb.de/konfigurator",
+  isPartOf: {
+    "@type": "WebSite",
+    name: "Fenstervertrieb",
+    url: "https://fenstervertrieb.de",
+  },
+};
+---
+
+<BaseLayout
+  title="Produktkonfigurator — Fenstervertrieb"
+  description="Konfigurieren Sie Ihr Schüco Fenstersystem in 4 einfachen Schritten. Individuelle Beratung für Premium-Fenster und Türen in Spanien und Italien."
+>
+  <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+
+  <!-- Hero -->
+  <section class="bg-[#0a0a0a] text-white">
+    <Wrapper variant="standard" class="py-16 lg:py-24">
+      <h1 class="font-serif italic text-3xl md:text-5xl font-medium tracking-tight">
+        Produktkonfigurator
+      </h1>
+      <p class="mt-4 text-gray-400 max-w-xl">
+        Finden Sie das passende Schüco System in wenigen Schritten. Wählen Sie Kategorie, System,
+        Konfiguration und senden Sie Ihre Anfrage.
+      </p>
+    </Wrapper>
+  </section>
+
+  <!-- Wizard -->
+  <section class="bg-white">
+    <Wrapper variant="standard" class="py-12">
+      <ConfiguratorWizard
+        products={productsData}
+        categories={categories}
+      />
+    </Wrapper>
+  </section>
+</BaseLayout>

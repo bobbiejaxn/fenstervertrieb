@@ -6,6 +6,7 @@ import Wrapper from "@/components/fundations/containers/Wrapper.astro";
 
 const navLinks = [
   { text: "Produkte", href: "/produkte" },
+  { text: "Konfigurator", href: "/konfigurator", highlight: true },
   { text: "Blog", href: "/blog" },
   { text: "Showrooms", href: "/showrooms" },
   { text: "Über uns", href: "/ueber-uns" },
@@ -29,7 +30,11 @@ const navLinks = [
             {navLinks.map((link) => (
               <a
                 href={link.href}
-                class="text-xs text-base-500 hover:text-base-900 transition-colors"
+                class={`text-xs transition-colors ${
+                  link.highlight
+                    ? "text-[#1c69d4] font-semibold hover:text-[#1557b0]"
+                    : "text-base-500 hover:text-base-900"
+                }`}
               >
                 {link.text}
               </a>

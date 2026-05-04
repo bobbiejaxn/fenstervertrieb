@@ -1,0 +1,456 @@
+---
+interface Props {
+  products: {
+    title: string;
+    category: string;
+    slug: string;
+    uwert: string;
+    description: string;
+    image: string;
+    price_from: string;
+    highlights: string[];
+  }[];
+  categories: string[];
+}
+
+const { products, categories } = Astro.props;
+---
+
+<div id="configurator" class="max-w-3xl mx-auto">
+  <!-- Step Indicator -->
+  <div class="flex items-center justify-between mb-12">
+    {["Kategorie", "System", "Konfiguration", "Anfrage"].map((label, i) => (
+      <div class="flex items-center flex-1 last:flex-none">
+        <div class="flex flex-col items-center">
+          <div
+            id={`step-circle-${i}`}
+            class={`step-circle w-10 h-10 rounded-full flex items-center justify-center text-sm font-medium border-2 transition-all duration-300 ${
+              i === 0
+                ? "border-[#1c69d4] bg-[#1c69d4] text-white"
+                : "border-gray-300 bg-white text-gray-400"
+            }`}
+          >
+            {i + 1}
+          </div>
+          <span id={`step-label-${i}`} class={`mt-2 text-xs font-medium transition-colors ${i === 0 ? "text-[#1c69d4]" : "text-gray-400"}`}>
+            {label}
+          </span>
+        </div>
+        {i < 3 && (
+          <div class="flex-1 mx-2 mt-[-1.5rem]">
+            <div id={`step-line-${i}`} class="h-0.5 bg-gray-200 transition-all duration-300">
+              <div id={`step-line-fill-${i}`} class="h-full bg-[#1c69d4] w-0 transition-all duration-500"></div>
+            </div>
+          </div>
+        )}
+      </div>
+    ))}
+  </div>
+
+  <!-- Progress Bar -->
+  <div class="mb-8">
+    <div class="h-1 bg-gray-100 rounded-full overflow-hidden">
+      <div id="progress-fill" class="h-full bg-[#1c69d4] transition-all duration-500" style="width: 25%"></div>
+    </div>
+    <p id="progress-text" class="mt-2 text-xs text-base-500 text-right">Schritt 1 von 4</p>
+  </div>
+
+  <!-- Step 1: Category -->
+  <div id="step-0" class="step-panel">
+    <h2 class="font-serif italic text-2xl text-base-900 font-medium mb-2">Produktkategorie wählen</h2>
+    <p class="text-sm text-base-500 mb-8">Wählen Sie die Kategorie für Ihr Projekt.</p>
+    <div class="grid grid-cols-2 sm:grid-cols-3 gap-4" id="category-grid">
+      {categories.map((cat) => (
+        <button
+          data-category={cat}
+          class="category-btn group relative p-6 border-2 border-gray-200 rounded-xl text-center hover:border-[#1c69d4] hover:bg-[#1c69d4]/5 transition-all duration-200"
+        >
+          <div class="text-lg font-medium text-base-900 group-hover:text-[#1c69d4] transition-colors">{cat}</div>
+          <div class="mt-1 text-xs text-base-400">
+            {products.filter((p) => p.category === cat).length} Systeme
+          </div>
+        </button>
+      ))}
+    </div>
+  </div>
+
+  <!-- Step 2: System -->
+  <div id="step-1" class="step-panel hidden">
+    <h2 class="font-serif italic text-2xl text-base-900 font-medium mb-2">System wählen</h2>
+    <p class="text-sm text-base-500 mb-8" id="system-subtitle"></p>
+    <div class="grid gap-4" id="system-grid"></div>
+  </div>
+
+  <!-- Step 3: Configuration -->
+  <div id="step-2" class="step-panel hidden">
+    <h2 class="font-serif italic text-2xl text-base-900 font-medium mb-2">Konfiguration</h2>
+    <p class="text-sm text-base-500 mb-8" id="config-subtitle"></p>
+    
+    <div class="space-y-6">
+      <div>
+        <label class="block text-sm font-medium text-base-900 mb-2">Flügelanzahl</label>
+        <div class="flex flex-wrap gap-2" id="fluegel-btns">
+          {["1-flügelig", "2-flügelig", "3-flügelig", "Sondermaß"].map((opt) => (
+            <button
+              data-fluegel={opt}
+              class="config-btn px-4 py-2 border-2 border-gray-200 rounded-lg text-sm text-base-700 hover:border-[#1c69d4] hover:bg-[#1c69d4]/5 transition-all"
+            >
+              {opt}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium text-base-900 mb-2">Farbe</label>
+        <div class="flex flex-wrap gap-2" id="farbe-btns">
+          {[
+            { name: "Weiß", color: "bg-white border-gray-300" },
+            { name: "Grau", color: "bg-gray-400" },
+            { name: "Anthrazit", color: "bg-gray-700" },
+            { name: "Braun", color: "bg-amber-800" },
+            { name: "Holzoptik", color: "bg-amber-600" },
+          ].map((opt) => (
+            <button
+              data-farbe={opt.name}
+              class="config-btn flex items-center gap-2 px-4 py-2 border-2 border-gray-200 rounded-lg text-sm text-base-700 hover:border-[#1c69d4] transition-all"
+            >
+              <span class={`w-4 h-4 rounded-full ${opt.color}`}></span>
+              {opt.name}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium text-base-900 mb-2">Öffnungsart</label>
+        <div class="flex flex-wrap gap-2" id="oeffnung-btns">
+          {["Drehkipp", "Drehtür", "Schwingflügel", "Hebe-Schiebe", "Festverglasung"].map((opt) => (
+            <button
+              data-oeffnung={opt}
+              class="config-btn px-4 py-2 border-2 border-gray-200 rounded-lg text-sm text-base-700 hover:border-[#1c69d4] hover:bg-[#1c69d4]/5 transition-all"
+            >
+              {opt}
+            </button>
+          ))}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Step 4: Contact -->
+  <div id="step-3" class="step-panel hidden">
+    <h2 class="font-serif italic text-2xl text-base-900 font-medium mb-2">Anfrage senden</h2>
+    <p class="text-sm text-base-500 mb-8">Geben Sie Ihre Kontaktdaten ein. Wir melden uns innerhalb von 24 Stunden.</p>
+
+    <div id="config-summary" class="mb-8 p-4 bg-gray-50 rounded-xl border border-gray-200">
+      <h3 class="text-sm font-medium text-base-900 mb-3">Ihre Konfiguration</h3>
+      <div id="summary-content" class="text-sm text-base-600 space-y-1"></div>
+    </div>
+
+    <form id="contact-form" class="space-y-4">
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div>
+          <label for="name" class="block text-sm font-medium text-base-900 mb-1">Name *</label>
+          <input type="text" id="name" name="name" required
+            class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:border-[#1c69d4] focus:ring-1 focus:ring-[#1c69d4] outline-none transition-colors" />
+        </div>
+        <div>
+          <label for="email" class="block text-sm font-medium text-base-900 mb-1">E-Mail *</label>
+          <input type="email" id="email" name="email" required
+            class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:border-[#1c69d4] focus:ring-1 focus:ring-[#1c69d4] outline-none transition-colors" />
+        </div>
+      </div>
+      <div>
+        <label for="telefon" class="block text-sm font-medium text-base-900 mb-1">Telefon</label>
+        <input type="tel" id="telefon" name="telefon"
+          class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:border-[#1c69d4] focus:ring-1 focus:ring-[#1c69d4] outline-none transition-colors" />
+      </div>
+      <div>
+        <label for="preisvorstellung" class="block text-sm font-medium text-base-900 mb-1">Preisvorstellung</label>
+        <select id="preisvorstellung" name="preisvorstellung"
+          class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:border-[#1c69d4] focus:ring-1 focus:ring-[#1c69d4] outline-none transition-colors bg-white">
+          <option value="">Keine Angabe</option>
+          <option value="bis-3000">Bis 3.000 €</option>
+          <option value="3000-6000">3.000 – 6.000 €</option>
+          <option value="6000-10000">6.000 – 10.000 €</option>
+          <option value="ab-10000">Ab 10.000 €</option>
+        </select>
+      </div>
+      <div>
+        <label for="nachricht" class="block text-sm font-medium text-base-900 mb-1">Nachricht</label>
+        <textarea id="nachricht" name="nachricht" rows="3"
+          class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:border-[#1c69d4] focus:ring-1 focus:ring-[#1c69d4] outline-none transition-colors resize-y"
+          placeholder="Besondere Wünsche, Standort des Objekts, etc."></textarea>
+      </div>
+    </form>
+  </div>
+
+  <!-- Navigation Buttons -->
+  <div class="mt-8 flex justify-between items-center">
+    <button
+      id="btn-back"
+      class="hidden px-6 py-3 border-2 border-gray-300 rounded-lg text-sm font-medium text-base-700 hover:border-base-900 hover:text-base-900 transition-colors"
+    >
+      ← Zurück
+    </button>
+    <div class="flex-1"></div>
+    <button
+      id="btn-next"
+      class="px-6 py-3 bg-[#1c69d4] text-white rounded-lg text-sm font-medium hover:bg-[#1557b0] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+      disabled
+    >
+      Weiter →
+    </button>
+    <button
+      id="btn-submit"
+      class="hidden px-6 py-3 bg-[#1c69d4] text-white rounded-lg text-sm font-medium hover:bg-[#1557b0] transition-colors"
+    >
+      Anfrage absenden →
+    </button>
+  </div>
+</div>
+
+<script define:vars={{ products, categories }}>
+  const state = {
+    step: 0,
+    category: null,
+    system: null,
+    fluegel: null,
+    farbe: null,
+    oeffnung: null,
+  };
+
+  const productsList = products;
+  const totalSteps = 4;
+
+  // Elements
+  const btnBack = document.getElementById('btn-back');
+  const btnNext = document.getElementById('btn-next');
+  const btnSubmit = document.getElementById('btn-submit');
+  const progressFill = document.getElementById('progress-fill');
+  const progressText = document.getElementById('progress-text');
+
+  function updateUI() {
+    // Step panels
+    for (let i = 0; i < totalSteps; i++) {
+      const panel = document.getElementById(`step-${i}`);
+      if (i === state.step) {
+        panel.classList.remove('hidden');
+      } else {
+        panel.classList.add('hidden');
+      }
+    }
+
+    // Step circles
+    for (let i = 0; i < totalSteps; i++) {
+      const circle = document.getElementById(`step-circle-${i}`);
+      const label = document.getElementById(`step-label-${i}`);
+      const lineFill = document.getElementById(`step-line-fill-${i}`);
+      if (i < state.step) {
+        circle.className = 'step-circle w-10 h-10 rounded-full flex items-center justify-center text-sm font-medium border-2 transition-all duration-300 border-[#1c69d4] bg-[#1c69d4] text-white';
+        label.className = 'mt-2 text-xs font-medium transition-colors text-[#1c69d4]';
+        if (lineFill) lineFill.style.width = '100%';
+      } else if (i === state.step) {
+        circle.className = 'step-circle w-10 h-10 rounded-full flex items-center justify-center text-sm font-medium border-2 transition-all duration-300 border-[#1c69d4] bg-[#1c69d4] text-white';
+        label.className = 'mt-2 text-xs font-medium transition-colors text-[#1c69d4]';
+      } else {
+        circle.className = 'step-circle w-10 h-10 rounded-full flex items-center justify-center text-sm font-medium border-2 transition-all duration-300 border-gray-300 bg-white text-gray-400';
+        label.className = 'mt-2 text-xs font-medium transition-colors text-gray-400';
+        if (lineFill) lineFill.style.width = '0%';
+      }
+    }
+
+    // Progress
+    const pct = ((state.step + 1) / totalSteps) * 100;
+    progressFill.style.width = pct + '%';
+    progressText.textContent = `Schritt ${state.step + 1} von ${totalSteps}`;
+
+    // Buttons
+    btnBack.classList.toggle('hidden', state.step === 0);
+    if (state.step === totalSteps - 1) {
+      btnNext.classList.add('hidden');
+      btnSubmit.classList.remove('hidden');
+    } else {
+      btnNext.classList.remove('hidden');
+      btnSubmit.classList.add('hidden');
+    }
+  }
+
+  function canProceed() {
+    switch (state.step) {
+      case 0: return !!state.category;
+      case 1: return !!state.system;
+      case 2: return !!state.fluegel && !!state.farbe && !!state.oeffnung;
+      case 3: return true;
+      default: return false;
+    }
+  }
+
+  function updateNextButton() {
+    btnNext.disabled = !canProceed();
+  }
+
+  // --- Step 1: Categories ---
+  document.querySelectorAll('.category-btn').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      state.category = btn.dataset.category;
+      document.querySelectorAll('.category-btn').forEach((b) => {
+        b.classList.remove('border-[#1c69d4]', 'bg-[#1c69d4]/5');
+        b.classList.add('border-gray-200');
+      });
+      btn.classList.remove('border-gray-200');
+      btn.classList.add('border-[#1c69d4]', 'bg-[#1c69d4]/5');
+      renderSystems();
+      updateNextButton();
+    });
+  });
+
+  // --- Step 2: Systems ---
+  function renderSystems() {
+    const grid = document.getElementById('system-grid');
+    const subtitle = document.getElementById('system-subtitle');
+    const filtered = productsList.filter((p) => p.category === state.category);
+    subtitle.textContent = `${filtered.length} ${state.category}-Systeme verfügbar`;
+
+    grid.innerHTML = filtered
+      .map(
+        (p) => `
+      <button data-slug="${p.slug}" data-title="${p.title}" data-uwert="${p.uwert}" data-price="${p.price_from}" data-desc="${p.description.replace(/"/g, '&quot;')}"
+        class="system-btn group p-4 border-2 border-gray-200 rounded-xl hover:border-[#1c69d4] hover:bg-[#1c69d4]/5 transition-all text-left">
+        <div class="flex justify-between items-start">
+          <div>
+            <div class="font-medium text-base-900 group-hover:text-[#1c69d4] transition-colors">${p.title}</div>
+            <div class="text-xs text-base-500 mt-1 line-clamp-2">${p.description}</div>
+          </div>
+          <div class="text-right shrink-0 ml-4">
+            ${p.uwert ? `<div class="text-xs bg-[#1c69d4]/10 text-[#1c69d4] px-2 py-0.5 rounded inline-block mb-1">${p.uwert}</div>` : ''}
+            ${p.price_from ? `<div class="text-xs bg-[#1c69d4] text-white px-2 py-0.5 rounded inline-block">${p.price_from}</div>` : ''}
+          </div>
+        </div>
+      </button>
+    `
+      )
+      .join('');
+
+    grid.querySelectorAll('.system-btn').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        state.system = { slug: btn.dataset.slug, title: btn.dataset.title, uwert: btn.dataset.uwert, price: btn.dataset.price, desc: btn.dataset.desc };
+        grid.querySelectorAll('.system-btn').forEach((b) => {
+          b.classList.remove('border-[#1c69d4]', 'bg-[#1c69d4]/5');
+          b.classList.add('border-gray-200');
+        });
+        btn.classList.remove('border-gray-200');
+        btn.classList.add('border-[#1c69d4]', 'bg-[#1c69d4]/5');
+        document.getElementById('config-subtitle').textContent = `Konfigurieren Sie Ihr ${state.system.title}`;
+        updateNextButton();
+      });
+    });
+  }
+
+  // --- Step 3: Config buttons ---
+  document.querySelectorAll('.config-btn').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const fluegel = btn.dataset.fluegel;
+      const farbe = btn.dataset.farbe;
+      const oeffnung = btn.dataset.oeffnung;
+
+      if (fluegel) {
+        state.fluegel = fluegel;
+        document.querySelectorAll('#fluegel-btns .config-btn').forEach((b) => {
+          b.classList.remove('border-[#1c69d4]', 'bg-[#1c69d4]/5', 'text-[#1c69d4]');
+          b.classList.add('border-gray-200', 'text-base-700');
+        });
+      }
+      if (farbe) {
+        state.farbe = farbe;
+        document.querySelectorAll('#farbe-btns .config-btn').forEach((b) => {
+          b.classList.remove('border-[#1c69d4]', 'bg-[#1c69d4]/5', 'text-[#1c69d4]');
+          b.classList.add('border-gray-200', 'text-base-700');
+        });
+      }
+      if (oeffnung) {
+        state.oeffnung = oeffnung;
+        document.querySelectorAll('#oeffnung-btns .config-btn').forEach((b) => {
+          b.classList.remove('border-[#1c69d4]', 'bg-[#1c69d4]/5', 'text-[#1c69d4]');
+          b.classList.add('border-gray-200', 'text-base-700');
+        });
+      }
+
+      btn.classList.remove('border-gray-200', 'text-base-700');
+      btn.classList.add('border-[#1c69d4]', 'bg-[#1c69d4]/5', 'text-[#1c69d4]');
+      updateNextButton();
+    });
+  });
+
+  // --- Step 4: Summary ---
+  function renderSummary() {
+    const content = document.getElementById('summary-content');
+    content.innerHTML = `
+      <div><strong>Kategorie:</strong> ${state.category}</div>
+      <div><strong>System:</strong> ${state.system?.title || ''} ${state.system?.uwert ? `(${state.system.uwert})` : ''}</div>
+      <div><strong>Flügelanzahl:</strong> ${state.fluegel}</div>
+      <div><strong>Farbe:</strong> ${state.farbe}</div>
+      <div><strong>Öffnungsart:</strong> ${state.oeffnung}</div>
+      ${state.system?.price ? `<div><strong>Startpreis:</strong> ${state.system.price}</div>` : ''}
+    `;
+  }
+
+  // --- Navigation ---
+  btnNext.addEventListener('click', () => {
+    if (state.step < totalSteps - 1 && canProceed()) {
+      state.step++;
+      if (state.step === 3) renderSummary();
+      updateUI();
+      updateNextButton();
+    }
+  });
+
+  btnBack.addEventListener('click', () => {
+    if (state.step > 0) {
+      state.step--;
+      updateUI();
+      updateNextButton();
+    }
+  });
+
+  btnSubmit.addEventListener('click', () => {
+    const name = document.getElementById('name').value;
+    const email = document.getElementById('email').value;
+    const telefon = document.getElementById('telefon').value;
+    const preis = document.getElementById('preisvorstellung').value;
+    const nachricht = document.getElementById('nachricht').value;
+
+    if (!name || !email) {
+      alert('Bitte füllen Sie Name und E-Mail aus.');
+      return;
+    }
+
+    const body = [
+      `Neue Konfigurator-Anfrage`,
+      ``,
+      `Kategorie: ${state.category}`,
+      `System: ${state.system?.title}`,
+      `Flügel: ${state.fluegel}`,
+      `Farbe: ${state.farbe}`,
+      `Öffnungsart: ${state.oeffnung}`,
+      preis ? `Preisvorstellung: ${preis}` : '',
+      ``,
+      `Kontaktdaten:`,
+      `Name: ${name}`,
+      `E-Mail: ${email}`,
+      telefon ? `Telefon: ${telefon}` : '',
+      nachricht ? `Nachricht: ${nachricht}` : '',
+    ]
+      .filter(Boolean)
+      .join('\n');
+
+    const subject = encodeURIComponent(`Konfigurator-Anfrage: ${state.system?.title}`);
+    const mailBody = encodeURIComponent(body);
+    window.location.href = `mailto:info@fenstervertrieb.com?subject=${subject}&body=${mailBody}`;
+  });
+
+  // Init
+  updateUI();
+  updateNextButton();
+</script>
