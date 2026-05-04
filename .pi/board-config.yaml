@@ -1,0 +1,63 @@
+---
+# Board Deliberation Configuration
+# Used by /deliberate command, /ship Phase 0.5, and the board TUI extension
+
+meeting:
+  constraints:
+    min_time_minutes: 2
+    max_time_minutes: 5
+    min_budget: $1
+    max_budget: $5
+    max_rounds: 4          # debate rounds before forcing final statements
+  editor: 'code'           # opens memo after meeting (code, cursor, vi)
+
+# Required sections in a brief — meeting won't start without these
+brief_sections:
+  - section: "## Situation"
+    description: "What is happening right now? State the technical or product facts. No opinion."
+  - section: "## Stakes"
+    description: "What's at risk? What breaks if we get this wrong? What do we gain if we get it right?"
+  - section: "## Constraints"
+    description: "Timeline, team size, existing tech stack, budget, backwards compatibility requirements."
+  - section: "## Key Question"
+    description: "The single most important question you want the board to answer. Be specific."
+
+# Where things live
+paths:
+  briefs: specs/briefs/
+  deliberations: specs/deliberations/
+  agents: .pi/agents/board/
+  expertise: .pi/board-expertise/
+
+# Board roster — order matters (Contrarian always speaks last)
+board:
+  - name: Ship Fast
+    agent: ship-fast
+    color: "#ff7edb"
+  - name: Architect
+    agent: board-architect
+    color: "#fede5d"
+  - name: Security Advisor
+    agent: security-advisor
+    color: "#ff6e96"
+  - name: DX Advocate
+    agent: dx-advocate
+    color: "#36f9f6"
+  - name: Moonshot
+    agent: board-moonshot
+    color: "#7dcfff"
+  - name: Tech Debt Auditor
+    agent: tech-debt-auditor
+    color: "#72f1b8"
+  - name: Contrarian
+    agent: board-contrarian
+    color: "#ff9e64"
+
+# Complexity triggers for auto-deliberation in /ship Phase 0.5
+auto_deliberate:
+  enabled: false            # set to true to auto-trigger during /ship
+  triggers:
+    - domains_touched: 3    # feature touches >= N domains (auth, payments, UI, API, etc.)
+    - new_dependency: true   # introduces a new external dependency
+    - architecture_change: true  # changes data model, API contracts, or system boundaries
+    - estimated_days: 5      # estimated implementation >= N days

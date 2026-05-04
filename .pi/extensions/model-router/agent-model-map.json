@@ -1,0 +1,398 @@
+{
+  "ceo": {
+    "modelKey": "deepseek-v4-flash",
+    "ollamaId": "deepseek-v4-flash",
+    "score": 81,
+    "capabilities": {
+      "coding": 78,
+      "reasoning": 82,
+      "structured": 75,
+      "speed": 88,
+      "agentic": 80
+    }
+  },
+  "architect": {
+    "modelKey": "deepseek-v4-flash",
+    "ollamaId": "deepseek-v4-flash",
+    "score": 80,
+    "capabilities": {
+      "coding": 78,
+      "reasoning": 82,
+      "structured": 75,
+      "speed": 88,
+      "agentic": 80
+    }
+  },
+  "software-architect": {
+    "modelKey": "deepseek-v4-flash",
+    "ollamaId": "deepseek-v4-flash",
+    "score": 80,
+    "capabilities": {
+      "coding": 78,
+      "reasoning": 82,
+      "structured": 75,
+      "speed": 88,
+      "agentic": 80
+    }
+  },
+  "implementer": {
+    "modelKey": "deepseek-v4-flash",
+    "ollamaId": "deepseek-v4-flash",
+    "score": 80,
+    "capabilities": {
+      "coding": 78,
+      "reasoning": 82,
+      "structured": 75,
+      "speed": 88,
+      "agentic": 80
+    }
+  },
+  "backend-lead": {
+    "modelKey": "deepseek-v4-flash",
+    "ollamaId": "deepseek-v4-flash",
+    "score": 79,
+    "capabilities": {
+      "coding": 78,
+      "reasoning": 82,
+      "structured": 75,
+      "speed": 88,
+      "agentic": 80
+    }
+  },
+  "frontend-lead": {
+    "modelKey": "deepseek-v4-flash",
+    "ollamaId": "deepseek-v4-flash",
+    "score": 81,
+    "capabilities": {
+      "coding": 78,
+      "reasoning": 82,
+      "structured": 75,
+      "speed": 88,
+      "agentic": 80
+    }
+  },
+  "test-writer": {
+    "modelKey": "deepseek-v4-flash",
+    "ollamaId": "deepseek-v4-flash",
+    "score": 78,
+    "capabilities": {
+      "coding": 78,
+      "reasoning": 82,
+      "structured": 75,
+      "speed": 88,
+      "agentic": 80
+    }
+  },
+  "unit-test-writer": {
+    "modelKey": "deepseek-v4-flash",
+    "ollamaId": "deepseek-v4-flash",
+    "score": 81,
+    "capabilities": {
+      "coding": 78,
+      "reasoning": 82,
+      "structured": 75,
+      "speed": 88,
+      "agentic": 80
+    }
+  },
+  "reviewer": {
+    "modelKey": "deepseek-v4-flash",
+    "ollamaId": "deepseek-v4-flash",
+    "score": 82,
+    "capabilities": {
+      "coding": 78,
+      "reasoning": 82,
+      "structured": 75,
+      "speed": 88,
+      "agentic": 80
+    }
+  },
+  "security-reviewer": {
+    "modelKey": "deepseek-v4-flash",
+    "ollamaId": "deepseek-v4-flash",
+    "score": 80,
+    "capabilities": {
+      "coding": 78,
+      "reasoning": 82,
+      "structured": 75,
+      "speed": 88,
+      "agentic": 80
+    }
+  },
+  "gate-skeptic": {
+    "modelKey": "deepseek-v4-flash",
+    "ollamaId": "deepseek-v4-flash",
+    "score": 82,
+    "capabilities": {
+      "coding": 78,
+      "reasoning": 82,
+      "structured": 75,
+      "speed": 88,
+      "agentic": 80
+    }
+  },
+  "ui-reviewer": {
+    "modelKey": "deepseek-v4-flash",
+    "ollamaId": "deepseek-v4-flash",
+    "score": 81,
+    "capabilities": {
+      "coding": 78,
+      "reasoning": 82,
+      "structured": 75,
+      "speed": 88,
+      "agentic": 80
+    }
+  },
+  "debug-agent": {
+    "modelKey": "deepseek-v4-flash",
+    "ollamaId": "deepseek-v4-flash",
+    "score": 82,
+    "capabilities": {
+      "coding": 78,
+      "reasoning": 82,
+      "structured": 75,
+      "speed": 88,
+      "agentic": 80
+    }
+  },
+  "fixer": {
+    "modelKey": "deepseek-v4-flash",
+    "ollamaId": "deepseek-v4-flash",
+    "score": 82,
+    "capabilities": {
+      "coding": 78,
+      "reasoning": 82,
+      "structured": 75,
+      "speed": 88,
+      "agentic": 80
+    }
+  },
+  "adversarial-tester": {
+    "modelKey": "deepseek-v4-flash",
+    "ollamaId": "deepseek-v4-flash",
+    "score": 82,
+    "capabilities": {
+      "coding": 78,
+      "reasoning": 82,
+      "structured": 75,
+      "speed": 88,
+      "agentic": 80
+    }
+  },
+  "validation-lead": {
+    "modelKey": "deepseek-v4-flash",
+    "ollamaId": "deepseek-v4-flash",
+    "score": 81,
+    "capabilities": {
+      "coding": 78,
+      "reasoning": 82,
+      "structured": 75,
+      "speed": 88,
+      "agentic": 80
+    }
+  },
+  "product-manager": {
+    "modelKey": "deepseek-v4-flash",
+    "ollamaId": "deepseek-v4-flash",
+    "score": 80,
+    "capabilities": {
+      "coding": 78,
+      "reasoning": 82,
+      "structured": 75,
+      "speed": 88,
+      "agentic": 80
+    }
+  },
+  "idea-capture": {
+    "modelKey": "deepseek-v4-flash",
+    "ollamaId": "deepseek-v4-flash",
+    "score": 81,
+    "capabilities": {
+      "coding": 78,
+      "reasoning": 82,
+      "structured": 75,
+      "speed": 88,
+      "agentic": 80
+    }
+  },
+  "issue-creator": {
+    "modelKey": "deepseek-v4-flash",
+    "ollamaId": "deepseek-v4-flash",
+    "score": 81,
+    "capabilities": {
+      "coding": 78,
+      "reasoning": 82,
+      "structured": 75,
+      "speed": 88,
+      "agentic": 80
+    }
+  },
+  "learning-agent": {
+    "modelKey": "deepseek-v4-flash",
+    "ollamaId": "deepseek-v4-flash",
+    "score": 81,
+    "capabilities": {
+      "coding": 78,
+      "reasoning": 82,
+      "structured": 75,
+      "speed": 88,
+      "agentic": 80
+    }
+  },
+  "knowledge-organizer": {
+    "modelKey": "deepseek-v4-flash",
+    "ollamaId": "deepseek-v4-flash",
+    "score": 81,
+    "capabilities": {
+      "coding": 78,
+      "reasoning": 82,
+      "structured": 75,
+      "speed": 88,
+      "agentic": 80
+    }
+  },
+  "sre": {
+    "modelKey": "deepseek-v4-flash",
+    "ollamaId": "deepseek-v4-flash",
+    "score": 81,
+    "capabilities": {
+      "coding": 78,
+      "reasoning": 82,
+      "structured": 75,
+      "speed": 88,
+      "agentic": 80
+    }
+  },
+  "harness-evolver": {
+    "modelKey": "deepseek-v4-flash",
+    "ollamaId": "deepseek-v4-flash",
+    "score": 79,
+    "capabilities": {
+      "coding": 78,
+      "reasoning": 82,
+      "structured": 75,
+      "speed": 88,
+      "agentic": 80
+    }
+  },
+  "reasoning-researcher": {
+    "modelKey": "deepseek-v4-flash",
+    "ollamaId": "deepseek-v4-flash",
+    "score": 82,
+    "capabilities": {
+      "coding": 78,
+      "reasoning": 82,
+      "structured": 75,
+      "speed": 88,
+      "agentic": 80
+    }
+  },
+  "web-researcher": {
+    "modelKey": "deepseek-v4-flash",
+    "ollamaId": "deepseek-v4-flash",
+    "score": 83,
+    "capabilities": {
+      "coding": 78,
+      "reasoning": 82,
+      "structured": 75,
+      "speed": 88,
+      "agentic": 80
+    }
+  },
+  "board-ceo": {
+    "modelKey": "deepseek-v4-flash",
+    "ollamaId": "deepseek-v4-flash",
+    "score": 81,
+    "capabilities": {
+      "coding": 78,
+      "reasoning": 82,
+      "structured": 75,
+      "speed": 88,
+      "agentic": 80
+    }
+  },
+  "board-architect": {
+    "modelKey": "deepseek-v4-flash",
+    "ollamaId": "deepseek-v4-flash",
+    "score": 80,
+    "capabilities": {
+      "coding": 78,
+      "reasoning": 82,
+      "structured": 75,
+      "speed": 88,
+      "agentic": 80
+    }
+  },
+  "board-contrarian": {
+    "modelKey": "deepseek-v4-flash",
+    "ollamaId": "deepseek-v4-flash",
+    "score": 82,
+    "capabilities": {
+      "coding": 78,
+      "reasoning": 82,
+      "structured": 75,
+      "speed": 88,
+      "agentic": 80
+    }
+  },
+  "board-moonshot": {
+    "modelKey": "deepseek-v4-flash",
+    "ollamaId": "deepseek-v4-flash",
+    "score": 81,
+    "capabilities": {
+      "coding": 78,
+      "reasoning": 82,
+      "structured": 75,
+      "speed": 88,
+      "agentic": 80
+    }
+  },
+  "dx-advocate": {
+    "modelKey": "deepseek-v4-flash",
+    "ollamaId": "deepseek-v4-flash",
+    "score": 81,
+    "capabilities": {
+      "coding": 78,
+      "reasoning": 82,
+      "structured": 75,
+      "speed": 88,
+      "agentic": 80
+    }
+  },
+  "security-advisor": {
+    "modelKey": "deepseek-v4-flash",
+    "ollamaId": "deepseek-v4-flash",
+    "score": 79,
+    "capabilities": {
+      "coding": 78,
+      "reasoning": 82,
+      "structured": 75,
+      "speed": 88,
+      "agentic": 80
+    }
+  },
+  "ship-fast": {
+    "modelKey": "deepseek-v4-flash",
+    "ollamaId": "deepseek-v4-flash",
+    "score": 81,
+    "capabilities": {
+      "coding": 78,
+      "reasoning": 82,
+      "structured": 75,
+      "speed": 88,
+      "agentic": 80
+    }
+  },
+  "tech-debt-auditor": {
+    "modelKey": "deepseek-v4-flash",
+    "ollamaId": "deepseek-v4-flash",
+    "score": 81,
+    "capabilities": {
+      "coding": 78,
+      "reasoning": 82,
+      "structured": 75,
+      "speed": 88,
+      "agentic": 80
+    }
+  }
+}

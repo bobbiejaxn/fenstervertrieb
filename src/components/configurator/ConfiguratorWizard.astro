@@ -14,32 +14,54 @@ interface Props {
 }
 
 const { products, categories } = Astro.props;
+
+const categoryMeta: Record<string, { icon: string; desc: string }> = {
+  Fenster: { icon: "🏠", desc: "Drehkipp, Festverglasung" },
+  Türen: { icon: "🚪", desc: "Hauseingang, Innentüren" },
+  Schiebesysteme: { icon: "↔️", desc: "Hebe-Schiebe, Parallel-Schiebe" },
+  Fassaden: { icon: "🏢", desc: "Pfosten-Riegel, VSF" },
+  "Smart Home": { icon: "📱", desc: "TipTronic, Automatisierung" },
+};
 ---
 
-<div id="configurator" class="max-w-3xl mx-auto">
-  <!-- Step Indicator -->
-  <div class="flex items-center justify-between mb-12">
-    {["Kategorie", "System", "Konfiguration", "Anfrage"].map((label, i) => (
+<div id="configurator" class="max-w-4xl mx-auto">
+  <!-- Step Indicator — clean, minimal -->
+  <div class="flex items-center mb-10" id="step-indicator">
+    {["Kategorie", "System", "Details", "Anfrage"].map((label, i) => (
       <div class="flex items-center flex-1 last:flex-none">
-        <div class="flex flex-col items-center">
+        <button
+          id={`step-tab-${i}`}
+          class="step-tab flex items-center gap-2 group"
+          data-step={i}
+        >
           <div
             id={`step-circle-${i}`}
-            class={`step-circle w-10 h-10 rounded-full flex items-center justify-center text-sm font-medium border-2 transition-all duration-300 ${
+            class={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold border-2 shrink-0 transition-all duration-300 ${
               i === 0
-                ? "border-[#1c69d4] bg-[#1c69d4] text-white"
-                : "border-gray-300 bg-white text-gray-400"
+                ? "border-[#1c69d4] bg-[#1c69d4] text-white shadow-[0_0_0_4px_rgba(28,105,212,0.15)]"
+                : "border-gray-200 bg-white text-gray-300"
             }`}
           >
             {i + 1}
           </div>
-          <span id={`step-label-${i}`} class={`mt-2 text-xs font-medium transition-colors ${i === 0 ? "text-[#1c69d4]" : "text-gray-400"}`}>
+          <span
+            id={`step-label-${i}`}
+            class={`text-sm font-medium transition-colors hidden sm:inline ${
+              i === 0 ? "text-[#1c69d4]" : "text-gray-300"
+            }`}
+          >
             {label}
           </span>
-        </div>
+        </button>
         {i < 3 && (
-          <div class="flex-1 mx-2 mt-[-1.5rem]">
-            <div id={`step-line-${i}`} class="h-0.5 bg-gray-200 transition-all duration-300">
-              <div id={`step-line-fill-${i}`} class="h-full bg-[#1c69d4] w-0 transition-all duration-500"></div>
+          <div class="flex-1 mx-3">
+            <div class="h-px bg-gray-200">
+              <div
+                id={`step-line-fill-${i}`}
+                class="h-full bg-[#1c69d4] transition-all duration-500"
+                style={`width: ${i === 0 ? "0%" : "0%"}`
+              }
+              ></div>
             </div>
           </div>
         )}
@@ -47,164 +69,229 @@ const { products, categories } = Astro.props;
     ))}
   </div>
 
-  <!-- Progress Bar -->
-  <div class="mb-8">
-    <div class="h-1 bg-gray-100 rounded-full overflow-hidden">
-      <div id="progress-fill" class="h-full bg-[#1c69d4] transition-all duration-500" style="width: 25%"></div>
-    </div>
-    <p id="progress-text" class="mt-2 text-xs text-base-500 text-right">Schritt 1 von 4</p>
-  </div>
+  <!-- Step content wrapper with fade animation -->
+  <div id="step-content" class="relative min-h-[420px]">
 
-  <!-- Step 1: Category -->
-  <div id="step-0" class="step-panel">
-    <h2 class="font-serif italic text-2xl text-base-900 font-medium mb-2">Produktkategorie wählen</h2>
-    <p class="text-sm text-base-500 mb-8">Wählen Sie die Kategorie für Ihr Projekt.</p>
-    <div class="grid grid-cols-2 sm:grid-cols-3 gap-4" id="category-grid">
-      {categories.map((cat) => (
-        <button
-          data-category={cat}
-          class="category-btn group relative p-6 border-2 border-gray-200 rounded-xl text-center hover:border-[#1c69d4] hover:bg-[#1c69d4]/5 transition-all duration-200"
-        >
-          <div class="text-lg font-medium text-base-900 group-hover:text-[#1c69d4] transition-colors">{cat}</div>
-          <div class="mt-1 text-xs text-base-400">
-            {products.filter((p) => p.category === cat).length} Systeme
-          </div>
+    <!-- Step 1: Category -->
+    <div id="step-0" class="step-panel opacity-100 transition-opacity duration-300">
+      <h2 class="font-serif italic text-2xl md:text-3xl text-base-900 font-medium mb-1">
+        Was suchen Sie?
+      </h2>
+      <p class="text-sm text-base-400 mb-8">Wählen Sie die Produktkategorie für Ihr Projekt.</p>
+      <div class="grid grid-cols-2 sm:grid-cols-3 gap-4" id="category-grid">
+        {categories.map((cat) => {
+          const meta = categoryMeta[cat] || { icon: "🔹", desc: "" };
+          const count = products.filter((p) => p.category === cat).length;
+          return (
+            <button
+              data-category={cat}
+              class="category-btn group relative p-6 border-2 border-gray-200 rounded-2xl text-center hover:border-[#1c69d4] hover:bg-[#1c69d4]/5 transition-all duration-200 cursor-pointer"
+            >
+              <div class="text-3xl mb-3">{meta.icon}</div>
+              <div class="text-base font-semibold text-base-900 group-hover:text-[#1c69d4] transition-colors">
+                {cat}
+              </div>
+              <div class="mt-1 text-xs text-base-400">{meta.desc}</div>
+              <div class="mt-2 text-xs text-[#1c69d4] font-medium opacity-0 group-hover:opacity-100 transition-opacity">
+                {count} Systeme ⟶
+              </div>
+            </button>
+          );
+        })}
+      </div>
+    </div>
+
+    <!-- Step 2: System -->
+    <div id="step-1" class="step-panel hidden opacity-0 transition-opacity duration-300">
+      <div class="flex items-center gap-3 mb-1">
+        <button id="back-to-cat" class="text-sm text-base-400 hover:text-[#1c69d4] transition-colors">
+          ← Kategorie ändern
         </button>
-      ))}
+      </div>
+      <h2 class="font-serif italic text-2xl md:text-3xl text-base-900 font-medium mb-1">
+        System wählen
+      </h2>
+      <p class="text-sm text-base-400 mb-8" id="system-subtitle"></p>
+      <div class="grid gap-4" id="system-grid"></div>
     </div>
-  </div>
 
-  <!-- Step 2: System -->
-  <div id="step-1" class="step-panel hidden">
-    <h2 class="font-serif italic text-2xl text-base-900 font-medium mb-2">System wählen</h2>
-    <p class="text-sm text-base-500 mb-8" id="system-subtitle"></p>
-    <div class="grid gap-4" id="system-grid"></div>
-  </div>
+    <!-- Step 3: Configuration -->
+    <div id="step-2" class="step-panel hidden opacity-0 transition-opacity duration-300">
+      <h2 class="font-serif italic text-2xl md:text-3xl text-base-900 font-medium mb-1">
+        Details konfigurieren
+      </h2>
+      <p class="text-sm text-base-400 mb-8" id="config-subtitle"></p>
 
-  <!-- Step 3: Configuration -->
-  <div id="step-2" class="step-panel hidden">
-    <h2 class="font-serif italic text-2xl text-base-900 font-medium mb-2">Konfiguration</h2>
-    <p class="text-sm text-base-500 mb-8" id="config-subtitle"></p>
-    
-    <div class="space-y-6">
-      <div>
-        <label class="block text-sm font-medium text-base-900 mb-2">Flügelanzahl</label>
-        <div class="flex flex-wrap gap-2" id="fluegel-btns">
-          {["1-flügelig", "2-flügelig", "3-flügelig", "Sondermaß"].map((opt) => (
-            <button
-              data-fluegel={opt}
-              class="config-btn px-4 py-2 border-2 border-gray-200 rounded-lg text-sm text-base-700 hover:border-[#1c69d4] hover:bg-[#1c69d4]/5 transition-all"
-            >
-              {opt}
-            </button>
-          ))}
+      <!-- Live selection summary -->
+      <div id="live-summary" class="mb-6 px-4 py-3 bg-[#1c69d4]/5 rounded-xl border border-[#1c69d4]/20 hidden">
+        <div class="flex items-center gap-2 text-xs text-[#1c69d4] font-medium">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+          </svg>
+          <span id="live-summary-text">Ihre Auswahl wird hier angezeigt</span>
         </div>
       </div>
 
-      <div>
-        <label class="block text-sm font-medium text-base-900 mb-2">Farbe</label>
-        <div class="flex flex-wrap gap-2" id="farbe-btns">
-          {[
-            { name: "Weiß", color: "bg-white border-gray-300" },
-            { name: "Grau", color: "bg-gray-400" },
-            { name: "Anthrazit", color: "bg-gray-700" },
-            { name: "Braun", color: "bg-amber-800" },
-            { name: "Holzoptik", color: "bg-amber-600" },
-          ].map((opt) => (
-            <button
-              data-farbe={opt.name}
-              class="config-btn flex items-center gap-2 px-4 py-2 border-2 border-gray-200 rounded-lg text-sm text-base-700 hover:border-[#1c69d4] transition-all"
-            >
-              <span class={`w-4 h-4 rounded-full ${opt.color}`}></span>
-              {opt.name}
-            </button>
-          ))}
-        </div>
-      </div>
-
-      <div>
-        <label class="block text-sm font-medium text-base-900 mb-2">Öffnungsart</label>
-        <div class="flex flex-wrap gap-2" id="oeffnung-btns">
-          {["Drehkipp", "Drehtür", "Schwingflügel", "Hebe-Schiebe", "Festverglasung"].map((opt) => (
-            <button
-              data-oeffnung={opt}
-              class="config-btn px-4 py-2 border-2 border-gray-200 rounded-lg text-sm text-base-700 hover:border-[#1c69d4] hover:bg-[#1c69d4]/5 transition-all"
-            >
-              {opt}
-            </button>
-          ))}
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Step 4: Contact -->
-  <div id="step-3" class="step-panel hidden">
-    <h2 class="font-serif italic text-2xl text-base-900 font-medium mb-2">Anfrage senden</h2>
-    <p class="text-sm text-base-500 mb-8">Geben Sie Ihre Kontaktdaten ein. Wir melden uns innerhalb von 24 Stunden.</p>
-
-    <div id="config-summary" class="mb-8 p-4 bg-gray-50 rounded-xl border border-gray-200">
-      <h3 class="text-sm font-medium text-base-900 mb-3">Ihre Konfiguration</h3>
-      <div id="summary-content" class="text-sm text-base-600 space-y-1"></div>
-    </div>
-
-    <form id="contact-form" class="space-y-4">
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <div class="space-y-8">
         <div>
-          <label for="name" class="block text-sm font-medium text-base-900 mb-1">Name *</label>
-          <input type="text" id="name" name="name" required
-            class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:border-[#1c69d4] focus:ring-1 focus:ring-[#1c69d4] outline-none transition-colors" />
+          <label class="block text-sm font-semibold text-base-900 mb-3">Flügelanzahl</label>
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-3" id="fluegel-btns">
+            {[
+              { val: "1-flügelig", label: "1-flügelig", icon: "▯" },
+              { val: "2-flügelig", label: "2-flügelig", icon: "▯▯" },
+              { val: "3-flügelig", label: "3-flügelig", icon: "▯▯▯" },
+              { val: "Sondermaß", label: "Sondermaß", icon: "✎" },
+            ].map((opt) => (
+              <button
+                data-fluegel={opt.val}
+                class="config-btn px-4 py-4 border-2 border-gray-200 rounded-xl text-center hover:border-[#1c69d4] hover:bg-[#1c69d4]/5 transition-all cursor-pointer"
+              >
+                <div class="text-lg mb-1 text-base-400">{opt.icon}</div>
+                <div class="text-sm font-medium text-base-700">{opt.label}</div>
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-sm font-semibold text-base-900 mb-3">Farbe</label>
+          <div class="flex flex-wrap gap-3" id="farbe-btns">
+            {[
+              { name: "Weiß", color: "bg-white border-2 border-gray-200" },
+              { name: "Grau", color: "bg-gray-400" },
+              { name: "Anthrazit", color: "bg-gray-700" },
+              { name: "Braun", color: "bg-amber-800" },
+              { name: "Holzoptik Eiche", color: "bg-gradient-to-br from-amber-600 to-amber-900" },
+              { name: "Holzoptik Nuss", color: "bg-gradient-to-br from-amber-800 to-amber-950" },
+            ].map((opt) => (
+              <button
+                data-farbe={opt.name}
+                class="config-btn flex items-center gap-2.5 px-5 py-3 border-2 border-gray-200 rounded-xl text-sm font-medium text-base-700 hover:border-[#1c69d4] transition-all cursor-pointer"
+              >
+                <span class={`w-6 h-6 rounded-full shrink-0 ${opt.color}`}></span>
+                {opt.name}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-sm font-semibold text-base-900 mb-3">Öffnungsart</label>
+          <div class="grid grid-cols-2 sm:grid-cols-3 gap-3" id="oeffnung-btns">
+            {[
+              { val: "Drehkipp", desc: "Standard mit Kippfunktion" },
+              { val: "Drehtür", desc: "Klassische Türöffnung" },
+              { val: "Schwingflügel", desc: "Pendeltür, beide Richtungen" },
+              { val: "Hebe-Schiebe", desc: "Große Öffnungsweite" },
+              { val: "Festverglasung", desc: "Nur Licht, keine Öffnung" },
+            ].map((opt) => (
+              <button
+                data-oeffnung={opt.val}
+                class="config-btn px-4 py-4 border-2 border-gray-200 rounded-xl text-left hover:border-[#1c69d4] hover:bg-[#1c69d4]/5 transition-all cursor-pointer"
+              >
+                <div class="text-sm font-medium text-base-700">{opt.val}</div>
+                <div class="text-xs text-base-400 mt-0.5">{opt.desc}</div>
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 4: Contact -->
+    <div id="step-3" class="step-panel hidden opacity-0 transition-opacity duration-300">
+      <h2 class="font-serif italic text-2xl md:text-3xl text-base-900 font-medium mb-1">
+        Anfrage absenden
+      </h2>
+      <p class="text-sm text-base-400 mb-8">Prüfen Sie Ihre Konfiguration und senden Sie die Anfrage.</p>
+
+      <!-- Config summary card -->
+      <div id="config-summary" class="mb-8 p-5 bg-gray-50 rounded-2xl border border-gray-200">
+        <div class="flex items-center justify-between mb-4">
+          <h3 class="text-sm font-semibold text-base-900">Ihre Konfiguration</h3>
+          <button id="edit-config" class="text-xs text-[#1c69d4] hover:underline cursor-pointer">Bearbeiten</button>
+        </div>
+        <div id="summary-content" class="grid grid-cols-2 sm:grid-cols-3 gap-4 text-sm"></div>
+      </div>
+
+      <form id="contact-form" class="space-y-4">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label for="name" class="block text-sm font-medium text-base-900 mb-1.5">Name *</label>
+            <input type="text" id="name" name="name" required placeholder="Max Mustermann"
+              class="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:border-[#1c69d4] focus:ring-2 focus:ring-[#1c69d4]/20 outline-none transition-all bg-white" />
+          </div>
+          <div>
+            <label for="email" class="block text-sm font-medium text-base-900 mb-1.5">E-Mail *</label>
+            <input type="email" id="email" name="email" required placeholder="max@beispiel.de"
+              class="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:border-[#1c69d4] focus:ring-2 focus:ring-[#1c69d4]/20 outline-none transition-all bg-white" />
+          </div>
         </div>
         <div>
-          <label for="email" class="block text-sm font-medium text-base-900 mb-1">E-Mail *</label>
-          <input type="email" id="email" name="email" required
-            class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:border-[#1c69d4] focus:ring-1 focus:ring-[#1c69d4] outline-none transition-colors" />
+          <label for="telefon" class="block text-sm font-medium text-base-900 mb-1.5">Telefon (optional)</label>
+          <input type="tel" id="telefon" name="telefon" placeholder="+34 600 000 000"
+            class="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:border-[#1c69d4] focus:ring-2 focus:ring-[#1c69d4]/20 outline-none transition-all bg-white" />
         </div>
+        <div>
+          <label for="preisvorstellung" class="block text-sm font-medium text-base-900 mb-1.5">Preisvorstellung</label>
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-2" id="preis-btns">
+            {["Bis 3.000€", "3.000–6.000€", "6.000–10.000€", "10.000€+"].map((opt) => (
+              <button
+                type="button"
+                data-preis={opt}
+                class="preis-btn px-3 py-3 border-2 border-gray-200 rounded-xl text-xs font-medium text-base-700 hover:border-[#1c69d4] hover:bg-[#1c69d4]/5 transition-all cursor-pointer text-center"
+              >
+                {opt}
+              </button>
+            ))}
+          </div>
+        </div>
+        <div>
+          <label for="nachricht" class="block text-sm font-medium text-base-900 mb-1.5">Nachricht (optional)</label>
+          <textarea id="nachricht" name="nachricht" rows="3"
+            class="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:border-[#1c69d4] focus:ring-2 focus:ring-[#1c69d4]/20 outline-none transition-all resize-y bg-white"
+            placeholder="Standort des Objekts, Besonderes, Zeitrahmen..."></textarea>
+        </div>
+      </form>
+    </div>
+
+    <!-- Success screen (hidden) -->
+    <div id="success-screen" class="step-panel hidden opacity-0 transition-opacity duration-300 text-center py-16">
+      <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
+        <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+        </svg>
       </div>
-      <div>
-        <label for="telefon" class="block text-sm font-medium text-base-900 mb-1">Telefon</label>
-        <input type="tel" id="telefon" name="telefon"
-          class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:border-[#1c69d4] focus:ring-1 focus:ring-[#1c69d4] outline-none transition-colors" />
-      </div>
-      <div>
-        <label for="preisvorstellung" class="block text-sm font-medium text-base-900 mb-1">Preisvorstellung</label>
-        <select id="preisvorstellung" name="preisvorstellung"
-          class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:border-[#1c69d4] focus:ring-1 focus:ring-[#1c69d4] outline-none transition-colors bg-white">
-          <option value="">Keine Angabe</option>
-          <option value="bis-3000">Bis 3.000 €</option>
-          <option value="3000-6000">3.000 – 6.000 €</option>
-          <option value="6000-10000">6.000 – 10.000 €</option>
-          <option value="ab-10000">Ab 10.000 €</option>
-        </select>
-      </div>
-      <div>
-        <label for="nachricht" class="block text-sm font-medium text-base-900 mb-1">Nachricht</label>
-        <textarea id="nachricht" name="nachricht" rows="3"
-          class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:border-[#1c69d4] focus:ring-1 focus:ring-[#1c69d4] outline-none transition-colors resize-y"
-          placeholder="Besondere Wünsche, Standort des Objekts, etc."></textarea>
-      </div>
-    </form>
+      <h2 class="font-serif italic text-2xl text-base-900 font-medium mb-2">Anfrage gesendet!</h2>
+      <p class="text-sm text-base-500 max-w-md mx-auto">
+        Vielen Dank! Sie erhalten innerhalb von 24 Stunden eine persönliche Beratung. Wir melden uns per E-Mail bei Ihnen.
+      </p>
+      <a href="/" class="mt-6 inline-block text-sm text-[#1c69d4] hover:underline">← Zurück zur Startseite</a>
+    </div>
   </div>
 
   <!-- Navigation Buttons -->
-  <div class="mt-8 flex justify-between items-center">
+  <div class="mt-10 flex items-center justify-between pt-6 border-t border-gray-100">
     <button
       id="btn-back"
-      class="hidden px-6 py-3 border-2 border-gray-300 rounded-lg text-sm font-medium text-base-700 hover:border-base-900 hover:text-base-900 transition-colors"
+      class="hidden px-5 py-3 text-sm font-medium text-base-500 hover:text-base-900 transition-colors cursor-pointer"
     >
       ← Zurück
     </button>
     <div class="flex-1"></div>
+    <div id="next-hint" class="text-xs text-base-400 mr-4 hidden">
+      Treffen Sie eine Auswahl um fortzufahren
+    </div>
     <button
       id="btn-next"
-      class="px-6 py-3 bg-[#1c69d4] text-white rounded-lg text-sm font-medium hover:bg-[#1557b0] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+      class="px-8 py-3.5 bg-[#1c69d4] text-white rounded-xl text-sm font-semibold hover:bg-[#1557b0] hover:shadow-lg hover:shadow-[#1c69d4]/25 transition-all disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:shadow-none cursor-pointer"
       disabled
     >
       Weiter →
     </button>
     <button
       id="btn-submit"
-      class="hidden px-6 py-3 bg-[#1c69d4] text-white rounded-lg text-sm font-medium hover:bg-[#1557b0] transition-colors"
+      class="hidden px-8 py-3.5 bg-[#1c69d4] text-white rounded-xl text-sm font-semibold hover:bg-[#1557b0] hover:shadow-lg hover:shadow-[#1c69d4]/25 transition-all cursor-pointer"
     >
       Anfrage absenden →
     </button>
@@ -219,56 +306,77 @@ const { products, categories } = Astro.props;
     fluegel: null,
     farbe: null,
     oeffnung: null,
+    preis: null,
   };
 
   const productsList = products;
   const totalSteps = 4;
 
-  // Elements
   const btnBack = document.getElementById('btn-back');
   const btnNext = document.getElementById('btn-next');
   const btnSubmit = document.getElementById('btn-submit');
-  const progressFill = document.getElementById('progress-fill');
-  const progressText = document.getElementById('progress-text');
+  const nextHint = document.getElementById('next-hint');
+  const successScreen = document.getElementById('success-screen');
 
-  function updateUI() {
-    // Step panels
-    for (let i = 0; i < totalSteps; i++) {
-      const panel = document.getElementById(`step-${i}`);
-      if (i === state.step) {
-        panel.classList.remove('hidden');
-      } else {
-        panel.classList.add('hidden');
-      }
+  function animateTransition(fromStep, toStep) {
+    const fromPanel = document.getElementById(`step-${fromStep}`);
+    const toPanel = document.getElementById(`step-${toStep}`);
+    if (fromPanel) {
+      fromPanel.style.opacity = '0';
+      setTimeout(() => {
+        fromPanel.classList.add('hidden');
+        if (toPanel) {
+          toPanel.classList.remove('hidden');
+          requestAnimationFrame(() => {
+            toPanel.style.opacity = '1';
+          });
+        }
+      }, 200);
     }
+  }
+
+  function updateUI(skipAnimation = false) {
+    const currentStep = state.step;
 
     // Step circles
     for (let i = 0; i < totalSteps; i++) {
       const circle = document.getElementById(`step-circle-${i}`);
       const label = document.getElementById(`step-label-${i}`);
       const lineFill = document.getElementById(`step-line-fill-${i}`);
-      if (i < state.step) {
-        circle.className = 'step-circle w-10 h-10 rounded-full flex items-center justify-center text-sm font-medium border-2 transition-all duration-300 border-[#1c69d4] bg-[#1c69d4] text-white';
-        label.className = 'mt-2 text-xs font-medium transition-colors text-[#1c69d4]';
+
+      if (i < currentStep) {
+        circle.className = 'w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold border-2 shrink-0 transition-all duration-300 border-[#1c69d4] bg-[#1c69d4] text-white';
+        label.className = 'text-sm font-medium transition-colors hidden sm:inline text-[#1c69d4]';
         if (lineFill) lineFill.style.width = '100%';
-      } else if (i === state.step) {
-        circle.className = 'step-circle w-10 h-10 rounded-full flex items-center justify-center text-sm font-medium border-2 transition-all duration-300 border-[#1c69d4] bg-[#1c69d4] text-white';
-        label.className = 'mt-2 text-xs font-medium transition-colors text-[#1c69d4]';
+      } else if (i === currentStep) {
+        circle.className = 'w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold border-2 shrink-0 transition-all duration-300 border-[#1c69d4] bg-[#1c69d4] text-white shadow-[0_0_0_4px_rgba(28,105,212,0.15)]';
+        label.className = 'text-sm font-medium transition-colors hidden sm:inline text-[#1c69d4]';
+        if (lineFill) lineFill.style.width = '0%';
       } else {
-        circle.className = 'step-circle w-10 h-10 rounded-full flex items-center justify-center text-sm font-medium border-2 transition-all duration-300 border-gray-300 bg-white text-gray-400';
-        label.className = 'mt-2 text-xs font-medium transition-colors text-gray-400';
+        circle.className = 'w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold border-2 shrink-0 transition-all duration-300 border-gray-200 bg-white text-gray-300';
+        label.className = 'text-sm font-medium transition-colors hidden sm:inline text-gray-300';
         if (lineFill) lineFill.style.width = '0%';
       }
     }
 
-    // Progress
-    const pct = ((state.step + 1) / totalSteps) * 100;
-    progressFill.style.width = pct + '%';
-    progressText.textContent = `Schritt ${state.step + 1} von ${totalSteps}`;
+    // Panels
+    for (let i = 0; i < totalSteps; i++) {
+      const panel = document.getElementById(`step-${i}`);
+      if (i === currentStep && !skipAnimation) {
+        panel.classList.remove('hidden');
+        requestAnimationFrame(() => { panel.style.opacity = '1'; });
+      } else if (i === currentStep && skipAnimation) {
+        panel.classList.remove('hidden');
+        panel.style.opacity = '1';
+      } else {
+        panel.classList.add('hidden');
+        panel.style.opacity = '0';
+      }
+    }
 
     // Buttons
-    btnBack.classList.toggle('hidden', state.step === 0);
-    if (state.step === totalSteps - 1) {
+    btnBack.classList.toggle('hidden', currentStep === 0);
+    if (currentStep === totalSteps - 1) {
       btnNext.classList.add('hidden');
       btnSubmit.classList.remove('hidden');
     } else {
@@ -288,13 +396,40 @@ const { products, categories } = Astro.props;
   }
 
   function updateNextButton() {
-    btnNext.disabled = !canProceed();
+    const ok = canProceed();
+    btnNext.disabled = !ok;
+    nextHint.classList.toggle('hidden', ok);
+  }
+
+  function updateLiveSummary() {
+    const el = document.getElementById('live-summary');
+    const text = document.getElementById('live-summary-text');
+    const parts = [];
+    if (state.category) parts.push(state.category);
+    if (state.system) parts.push(state.system.title);
+    if (state.fluegel) parts.push(state.fluegel);
+    if (state.farbe) parts.push(state.farbe);
+    if (state.oeffnung) parts.push(state.oeffnung);
+
+    if (parts.length > 0) {
+      el.classList.remove('hidden');
+      const priceNote = state.system?.price ? ` · ${state.system.price}` : '';
+      text.textContent = parts.join(' → ') + priceNote;
+    } else {
+      el.classList.add('hidden');
+    }
   }
 
   // --- Step 1: Categories ---
   document.querySelectorAll('.category-btn').forEach((btn) => {
     btn.addEventListener('click', () => {
       state.category = btn.dataset.category;
+      // Reset downstream
+      state.system = null;
+      state.fluegel = null;
+      state.farbe = null;
+      state.oeffnung = null;
+
       document.querySelectorAll('.category-btn').forEach((b) => {
         b.classList.remove('border-[#1c69d4]', 'bg-[#1c69d4]/5');
         b.classList.add('border-gray-200');
@@ -303,6 +438,7 @@ const { products, categories } = Astro.props;
       btn.classList.add('border-[#1c69d4]', 'bg-[#1c69d4]/5');
       renderSystems();
       updateNextButton();
+      updateLiveSummary();
     });
   });
 
@@ -314,23 +450,25 @@ const { products, categories } = Astro.props;
     subtitle.textContent = `${filtered.length} ${state.category}-Systeme verfügbar`;
 
     grid.innerHTML = filtered
-      .map(
-        (p) => `
-      <button data-slug="${p.slug}" data-title="${p.title}" data-uwert="${p.uwert}" data-price="${p.price_from}" data-desc="${p.description.replace(/"/g, '&quot;')}"
-        class="system-btn group p-4 border-2 border-gray-200 rounded-xl hover:border-[#1c69d4] hover:bg-[#1c69d4]/5 transition-all text-left">
-        <div class="flex justify-between items-start">
-          <div>
-            <div class="font-medium text-base-900 group-hover:text-[#1c69d4] transition-colors">${p.title}</div>
-            <div class="text-xs text-base-500 mt-1 line-clamp-2">${p.description}</div>
+      .map((p) => `
+        <button data-slug="${p.slug}" data-title="${p.title}" data-uwert="${p.uwert}" data-price="${p.price_from}" data-image="${p.image}" data-desc="${p.description.replace(/"/g, '&quot;')}"
+          class="system-btn group flex gap-4 p-5 border-2 border-gray-200 rounded-2xl hover:border-[#1c69d4] hover:bg-[#1c69d4]/5 transition-all text-left cursor-pointer">
+          <div class="w-20 h-20 rounded-xl overflow-hidden shrink-0 bg-gray-100">
+            <img src="${p.image}" alt="${p.title}" class="w-full h-full object-cover" loading="lazy" />
           </div>
-          <div class="text-right shrink-0 ml-4">
-            ${p.uwert ? `<div class="text-xs bg-[#1c69d4]/10 text-[#1c69d4] px-2 py-0.5 rounded inline-block mb-1">${p.uwert}</div>` : ''}
-            ${p.price_from ? `<div class="text-xs bg-[#1c69d4] text-white px-2 py-0.5 rounded inline-block">${p.price_from}</div>` : ''}
+          <div class="flex-1 min-w-0">
+            <div class="font-semibold text-base-900 group-hover:text-[#1c69d4] transition-colors">${p.title}</div>
+            <div class="text-xs text-base-400 mt-1 line-clamp-2">${p.description}</div>
+            <div class="flex flex-wrap gap-2 mt-2">
+              ${p.uwert ? `<span class="text-xs bg-[#1c69d4]/10 text-[#1c69d4] px-2 py-0.5 rounded-md font-medium">${p.uwert}</span>` : ''}
+              ${p.price_from ? `<span class="text-xs bg-[#1c69d4] text-white px-2 py-0.5 rounded-md font-medium">${p.price_from}</span>` : ''}
+            </div>
           </div>
-        </div>
-      </button>
-    `
-      )
+          <div class="flex items-center text-gray-300 group-hover:text-[#1c69d4] transition-colors">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+          </div>
+        </button>
+      `)
       .join('');
 
     grid.querySelectorAll('.system-btn').forEach((btn) => {
@@ -344,9 +482,20 @@ const { products, categories } = Astro.props;
         btn.classList.add('border-[#1c69d4]', 'bg-[#1c69d4]/5');
         document.getElementById('config-subtitle').textContent = `Konfigurieren Sie Ihr ${state.system.title}`;
         updateNextButton();
+        updateLiveSummary();
       });
     });
   }
+
+  // "Kategorie ändern" link in step 2
+  document.getElementById('back-to-cat')?.addEventListener('click', () => {
+    if (state.step === 1) {
+      animateTransition(1, 0);
+      state.step = 0;
+      setTimeout(() => updateUI(true), 210);
+      updateNextButton();
+    }
+  });
 
   // --- Step 3: Config buttons ---
   document.querySelectorAll('.config-btn').forEach((btn) => {
@@ -380,63 +529,110 @@ const { products, categories } = Astro.props;
       btn.classList.remove('border-gray-200', 'text-base-700');
       btn.classList.add('border-[#1c69d4]', 'bg-[#1c69d4]/5', 'text-[#1c69d4]');
       updateNextButton();
+      updateLiveSummary();
+    });
+  });
+
+  // --- Preis buttons (step 4) ---
+  document.querySelectorAll('.preis-btn').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      state.preis = btn.dataset.preis;
+      document.querySelectorAll('.preis-btn').forEach((b) => {
+        b.classList.remove('border-[#1c69d4]', 'bg-[#1c69d4]/5', 'text-[#1c69d4]');
+        b.classList.add('border-gray-200', 'text-base-700');
+      });
+      btn.classList.remove('border-gray-200', 'text-base-700');
+      btn.classList.add('border-[#1c69d4]', 'bg-[#1c69d4]/5', 'text-[#1c69d4]');
     });
   });
 
   // --- Step 4: Summary ---
   function renderSummary() {
     const content = document.getElementById('summary-content');
-    content.innerHTML = `
-      <div><strong>Kategorie:</strong> ${state.category}</div>
-      <div><strong>System:</strong> ${state.system?.title || ''} ${state.system?.uwert ? `(${state.system.uwert})` : ''}</div>
-      <div><strong>Flügelanzahl:</strong> ${state.fluegel}</div>
-      <div><strong>Farbe:</strong> ${state.farbe}</div>
-      <div><strong>Öffnungsart:</strong> ${state.oeffnung}</div>
-      ${state.system?.price ? `<div><strong>Startpreis:</strong> ${state.system.price}</div>` : ''}
-    `;
+    const items = [
+      { label: 'Kategorie', value: state.category, icon: categoryMeta?.[state.category]?.icon || '🔹' },
+      { label: 'System', value: state.system?.title || '', icon: '⚙️' },
+      { label: 'Flügel', value: state.fluegel || '', icon: '📐' },
+      { label: 'Farbe', value: state.farbe || '', icon: '🎨' },
+      { label: 'Öffnung', value: state.oeffnung || '', icon: '↗️' },
+    ];
+    if (state.system?.price) {
+      items.push({ label: 'Startpreis', value: state.system.price, icon: '€' });
+    }
+
+    content.innerHTML = items
+      .filter((i) => i.value)
+      .map(
+        (i) => `
+        <div class="bg-white p-3 rounded-xl border border-gray-100">
+          <div class="text-xs text-base-400 mb-1">${i.icon} ${i.label}</div>
+          <div class="text-sm font-medium text-base-900">${i.value}</div>
+        </div>
+      `
+      )
+      .join('');
   }
+
+  // Edit config in step 4
+  document.getElementById('edit-config')?.addEventListener('click', () => {
+    if (state.step === 3) {
+      animateTransition(3, 2);
+      state.step = 2;
+      setTimeout(() => updateUI(true), 210);
+      updateNextButton();
+    }
+  });
 
   // --- Navigation ---
   btnNext.addEventListener('click', () => {
     if (state.step < totalSteps - 1 && canProceed()) {
+      const from = state.step;
       state.step++;
+      animateTransition(from, state.step);
+      setTimeout(() => updateUI(true), 210);
       if (state.step === 3) renderSummary();
-      updateUI();
       updateNextButton();
+      // Scroll to top of configurator
+      document.getElementById('configurator').scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
   });
 
   btnBack.addEventListener('click', () => {
     if (state.step > 0) {
+      const from = state.step;
       state.step--;
-      updateUI();
+      animateTransition(from, state.step);
+      setTimeout(() => updateUI(true), 210);
       updateNextButton();
+      document.getElementById('configurator').scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
   });
 
   btnSubmit.addEventListener('click', () => {
-    const name = document.getElementById('name').value;
-    const email = document.getElementById('email').value;
-    const telefon = document.getElementById('telefon').value;
-    const preis = document.getElementById('preisvorstellung').value;
-    const nachricht = document.getElementById('nachricht').value;
+    const name = document.getElementById('name').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const telefon = document.getElementById('telefon').value.trim();
+    const nachricht = document.getElementById('nachricht').value.trim();
 
     if (!name || !email) {
-      alert('Bitte füllen Sie Name und E-Mail aus.');
+      // Highlight empty required fields
+      if (!name) document.getElementById('name').classList.add('border-red-400', 'bg-red-50');
+      if (!email) document.getElementById('email').classList.add('border-red-400', 'bg-red-50');
       return;
     }
 
+    // Build mailto
     const body = [
-      `Neue Konfigurator-Anfrage`,
-      ``,
+      'Neue Konfigurator-Anfrage',
+      '',
       `Kategorie: ${state.category}`,
       `System: ${state.system?.title}`,
       `Flügel: ${state.fluegel}`,
       `Farbe: ${state.farbe}`,
       `Öffnungsart: ${state.oeffnung}`,
-      preis ? `Preisvorstellung: ${preis}` : '',
-      ``,
-      `Kontaktdaten:`,
+      state.preis ? `Preisvorstellung: ${state.preis}` : '',
+      '',
+      'Kontaktdaten:',
       `Name: ${name}`,
       `E-Mail: ${email}`,
       telefon ? `Telefon: ${telefon}` : '',
@@ -448,9 +644,40 @@ const { products, categories } = Astro.props;
     const subject = encodeURIComponent(`Konfigurator-Anfrage: ${state.system?.title}`);
     const mailBody = encodeURIComponent(body);
     window.location.href = `mailto:info@fenstervertrieb.com?subject=${subject}&body=${mailBody}`;
+
+    // Show success screen
+    setTimeout(() => {
+      for (let i = 0; i < totalSteps; i++) {
+        document.getElementById(`step-${i}`).classList.add('hidden');
+      }
+      btnNext.classList.add('hidden');
+      btnSubmit.classList.add('hidden');
+      btnBack.classList.add('hidden');
+      document.getElementById('step-indicator').classList.add('hidden');
+
+      successScreen.classList.remove('hidden');
+      requestAnimationFrame(() => { successScreen.style.opacity = '1'; });
+    }, 500);
   });
 
+  // Remove red highlight on input
+  document.getElementById('name')?.addEventListener('input', function () {
+    this.classList.remove('border-red-400', 'bg-red-50');
+  });
+  document.getElementById('email')?.addEventListener('input', function () {
+    this.classList.remove('border-red-400', 'bg-red-50');
+  });
+
+  // Category meta for summary icons
+  const categoryMeta = {
+    Fenster: { icon: '🏠' },
+    Türen: { icon: '🚪' },
+    Schiebesysteme: { icon: '↔️' },
+    Fassaden: { icon: '🏢' },
+    'Smart Home': { icon: '📱' },
+  };
+
   // Init
-  updateUI();
+  updateUI(true);
   updateNextButton();
 </script>

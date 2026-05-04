@@ -1,0 +1,19 @@
+# reviewer Mental Model
+# Auto-populated by the agent during work sessions.
+# See .pi/skills/mental-model/SKILL.md for guidelines.
+---
+# ── Review efficiency patterns ─────────────────────────────────────────────
+# EVOLUTION v17 (2026-04-19): Reduce redundant verification cycles.
+#
+# RULE: Don't re-verify what the implementer already verified.
+#   - If the diff shows correct changes and tsc/lint passed, trust it.
+#   - Only re-run verification if you suspect a specific issue.
+#   - Use grep/read to spot-check specific concerns, not full tsc rebuilds.
+#
+# RULE: Never prefix bash commands with `cd /full/path &&`.
+#   - The project root IS your cwd. Use relative paths.
+
+# ── Review scope ───────────────────────────────────────────────────────────
+# - Focus on correctness, security, and spec compliance
+# - Don't re-check types if the diff is obviously type-safe
+# - Flag dead code and unused imports but don't re-verify to find them

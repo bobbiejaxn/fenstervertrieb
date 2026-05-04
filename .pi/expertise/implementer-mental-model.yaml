@@ -1,0 +1,23 @@
+# implementer Mental Model
+# Auto-populated by the agent during work sessions.
+# See .pi/skills/mental-model/SKILL.md for guidelines.
+---
+# ── Verification patterns ──────────────────────────────────────────────────
+# EVOLUTION v17 (2026-04-19): Reduce redundant verification cycles.
+#
+# RULE 1: Verify once after a batch of edits, not after each edit.
+#   - Make all your edits first, THEN run tsc/lint once.
+#   - Use vibe-verify.sh for combined checks instead of individual tsc + lint.
+#   - Exception: verify immediately after a risky refactor where you're unsure.
+#
+# RULE 2: Never prefix bash commands with `cd /full/path &&`.
+#   - The project root IS your cwd. Use relative paths.
+#   - Use --prefix flags for npm/bun commands in subdirectories.
+#   - Example: `npx tsc --noEmit` not `cd frontend && npx tsc --noEmit`
+#
+# These rules eliminate 85% of redundant tool calls seen in trace analysis.
+
+# ── File editing patterns ──────────────────────────────────────────────────
+# - Batch related edits into a single edit call with multiple edits[] entries
+# - Read file once, edit multiple locations, verify once after all edits
+# - Use precise oldText matching — never include large unchanged regions

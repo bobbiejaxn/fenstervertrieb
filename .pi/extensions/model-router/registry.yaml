@@ -1,0 +1,421 @@
+# ─── Ollama Cloud Model Registry ──────────────────────────────────────────────
+# Manually curated capability scores for models available on Ollama Cloud.
+# Scores are 0-100 based on verified benchmarks + real-world agentic coding tests.
+# Updated: 2026-04-24
+#
+# Sources:
+#   - LMSYS Chatbot Arena (arena.ai) — human preference ELO
+#   - AkitaOnRails LLM Coding Benchmark — practical project delivery
+#   - SWE-bench Verified — real GitHub issue resolution
+#   - LiveCodeBench — code generation
+#
+# Capability dimensions:
+#   coding       — code generation, editing, debugging, multi-file
+#   reasoning    — analysis, architecture, planning, trade-offs
+#   structured   — structured output, JSON, YAML, specs, templates
+#   speed        — TTFT + tokens/sec (higher = faster)
+#   agentic      — tool use, multi-step workflows, following complex instructions
+#
+# role_fit: which agent roles this model excels at (for matching)
+# tags: freeform labels for filtering
+
+models:
+  # ─── DeepSeek V4 (released Apr 24, 2026) ─────────────────────────────────
+  deepseek-v4-flash:
+    ollama_id: "deepseek-v4-flash:cloud"
+    provider: deepseek
+    params: "284B/13B active MoE"
+    context: 1000000
+    capabilities:
+      coding: 78
+      reasoning: 82
+      structured: 75
+      speed: 88
+      agentic: 80
+    role_fit: [reviewer, gate-skeptic, debug-agent, fixer, validation-lead, ui-reviewer, reasoning-researcher, web-researcher]
+    tags: [reasoning, fast, new]
+    notes: "Just released. 284B MoE with 13B active. Fast + strong reasoning. Successor to V3.2."
+
+  deepseek-v4-pro:
+    ollama_id: "deepseek-v4-pro:cloud"
+    provider: deepseek
+    params: "1.6T/49B active MoE"
+    context: 1000000
+    capabilities:
+      coding: 88
+      reasoning: 92
+      structured: 80
+      speed: 55
+      agentic: 90
+    role_fit: [architect, software-architect, security-reviewer, harness-evolver, gate-skeptic, board-architect, board-contrarian, security-advisor]
+    tags: [deep-reasoning, slow, premium]
+    notes: "1.6T MoE flagship. Deepest reasoning. Slower but thorough."
+
+  # ─── DeepSeek V3.2 (stable) ──────────────────────────────────────────────
+  deepseek-v3.2:
+    ollama_id: "deepseek-v3.2:cloud"
+    provider: deepseek
+    params: "685B MoE"
+    context: 131072
+    capabilities:
+      coding: 72
+      reasoning: 85
+      structured: 72
+      speed: 65
+      agentic: 78
+    role_fit: [architect, security-reviewer, harness-evolver]
+    tags: [deep-reasoning, stable]
+    notes: "Scored 40 on AkitaOnRails benchmark. Solid reasoner but V4-Pro is better now."
+
+  # ─── GLM-5.1 (Zhipu/ZAI) ────────────────────────────────────────────────
+  glm-5.1:
+    ollama_id: "glm-5.1:cloud"
+    provider: zai
+    params: "355B"
+    context: 131072
+    capabilities:
+      coding: 82
+      reasoning: 78
+      structured: 70
+      speed: 72
+      agentic: 80
+    role_fit: [implementer, backend-lead, test-writer, debug-agent]
+    tags: [coding, proven, free-on-zai]
+    notes: "#3 Code Arena (1530 ELO). 94.6% of Opus 4.6 coding. Free via ZAI direct API. Scored 43 on AkitaOnRails — arena and practical scores diverge."
+
+  glm-5:
+    ollama_id: "glm-5:cloud"
+    provider: zai
+    params: "large"
+    context: 131072
+    capabilities:
+      coding: 80
+      reasoning: 76
+      structured: 68
+      speed: 70
+      agentic: 78
+    role_fit: [implementer, test-writer, fixer]
+    tags: [coding, free-on-zai]
+    notes: "Previous gen. Still solid for implementation. Free on ZAI direct."
+
+  # ─── Qwen3-Coder ─────────────────────────────────────────────────────────
+  qwen3-coder-480b:
+    ollama_id: "qwen3-coder:480b-cloud"
+    provider: alibaba
+    params: "480B/35B active MoE"
+    context: 256000
+    capabilities:
+      coding: 80
+      reasoning: 68
+      structured: 72
+      speed: 85
+      agentic: 75
+    role_fit: [frontend-lead, unit-test-writer]
+    tags: [coding, fast, code-gen]
+    notes: "480B MoE, 35B active. Hybrid thinking mode (not purely non-thinking). Fast code gen. Has Qwen Code CLI."
+
+  # ─── MiniMax M2.7 ────────────────────────────────────────────────────────
+  minimax-m2.7:
+    ollama_id: "minimax-m2.7:cloud"
+    provider: minimax
+    params: "large MoE"
+    context: 1048576
+    capabilities:
+      coding: 74
+      reasoning: 70
+      structured: 82
+      speed: 75
+      agentic: 76
+    role_fit: [product-manager, idea-capture, issue-creator, learning-agent, knowledge-organizer, sre, board-ceo, ship-fast]
+    tags: [structured, agentic, cheap]
+    notes: "56.22% SWE-Pro. Strong structured output + agentic tool use. 1495 ELO on GDPval-AA. Underutilized if only used for structured tasks."
+
+  # ─── Kimi K2.5/K2.6 ─────────────────────────────────────────────────────
+  kimi-k2.5:
+    ollama_id: "kimi-k2.5:cloud"
+    provider: moonshot
+    params: "MoE"
+    context: 131072
+    capabilities:
+      coding: 76
+      reasoning: 78
+      structured: 72
+      speed: 70
+      agentic: 82
+    role_fit: [implementer, debug-agent]
+    tags: [coding, agentic]
+    notes: "Strong agentic capabilities. Good at tool use and multi-step tasks."
+
+  # ─── Fallbacks / Budget ──────────────────────────────────────────────────
+  gemma4-27b:
+    ollama_id: "gemma4:27b-cloud"
+    provider: google
+    params: "27B"
+    context: 131072
+    capabilities:
+      coding: 55
+      reasoning: 60
+      structured: 65
+      speed: 92
+      agentic: 55
+    role_fit: [idea-capture, issue-creator]
+    tags: [fast, budget, small]
+    notes: "Good for trivial routing tasks. Very fast."
+
+# ─── Agent Role Definitions ──────────────────────────────────────────────────
+# Maps each agent to its capability requirements (weighted).
+# The router scores models against these requirements to find the best match.
+
+agent_roles:
+  # Orchestration
+  ceo:
+    requires:
+      structured: 0.35
+      reasoning: 0.30
+      speed: 0.25
+      agentic: 0.10
+    description: "Fast routing, structured synthesis"
+
+  # Architecture
+  architect:
+    requires:
+      reasoning: 0.45
+      coding: 0.25
+      agentic: 0.20
+      structured: 0.10
+    description: "Deepest system design reasoning"
+  software-architect:
+    requires:
+      reasoning: 0.40
+      coding: 0.30
+      agentic: 0.20
+      structured: 0.10
+    description: "Domain modeling needs depth"
+
+  # Implementation
+  implementer:
+    requires:
+      coding: 0.50
+      agentic: 0.25
+      speed: 0.15
+      reasoning: 0.10
+    description: "Execute plans, write code"
+  backend-lead:
+    requires:
+      coding: 0.45
+      reasoning: 0.25
+      agentic: 0.20
+      structured: 0.10
+    description: "API patterns, backend code"
+  frontend-lead:
+    requires:
+      coding: 0.50
+      speed: 0.25
+      agentic: 0.15
+      structured: 0.10
+    description: "React/Next.js, fast code gen"
+
+  # Testing
+  test-writer:
+    requires:
+      coding: 0.45
+      structured: 0.25
+      agentic: 0.20
+      reasoning: 0.10
+    description: "Gherkin→code, precise generation"
+  unit-test-writer:
+    requires:
+      coding: 0.40
+      speed: 0.30
+      structured: 0.20
+      agentic: 0.10
+    description: "Fast boilerplate tests"
+
+  # Review
+  reviewer:
+    requires:
+      reasoning: 0.35
+      coding: 0.30
+      speed: 0.25
+      structured: 0.10
+    description: "Fast quality review"
+  security-reviewer:
+    requires:
+      reasoning: 0.45
+      coding: 0.25
+      agentic: 0.20
+      structured: 0.10
+    description: "Threat modeling needs depth"
+  gate-skeptic:
+    requires:
+      reasoning: 0.40
+      speed: 0.30
+      structured: 0.20
+      agentic: 0.10
+    description: "Fast yes/no decisions"
+  ui-reviewer:
+    requires:
+      reasoning: 0.30
+      speed: 0.30
+      structured: 0.25
+      coding: 0.15
+    description: "Design compliance"
+
+  # Debug
+  debug-agent:
+    requires:
+      reasoning: 0.35
+      coding: 0.35
+      speed: 0.20
+      agentic: 0.10
+    description: "Root cause + fix, fast"
+  fixer:
+    requires:
+      reasoning: 0.30
+      coding: 0.35
+      speed: 0.25
+      agentic: 0.10
+    description: "Triage + code fix"
+
+  # Adversarial
+  adversarial-tester:
+    requires:
+      reasoning: 0.40
+      coding: 0.25
+      speed: 0.20
+      agentic: 0.15
+    description: "Active red-team — edge cases, boundary attacks, RBAC probing"
+  validation-lead:
+    requires:
+      reasoning: 0.35
+      structured: 0.30
+      speed: 0.25
+      agentic: 0.10
+    description: "Structured validation"
+
+  # PM / Structured
+  product-manager:
+    requires:
+      structured: 0.40
+      reasoning: 0.30
+      speed: 0.20
+      agentic: 0.10
+    description: "Structured USVA specs"
+  idea-capture:
+    requires:
+      structured: 0.40
+      speed: 0.35
+      reasoning: 0.15
+      agentic: 0.10
+    description: "Structured output"
+  issue-creator:
+    requires:
+      structured: 0.40
+      speed: 0.35
+      reasoning: 0.15
+      agentic: 0.10
+    description: "Structured GitHub issues"
+  learning-agent:
+    requires:
+      structured: 0.35
+      reasoning: 0.30
+      speed: 0.25
+      agentic: 0.10
+    description: "Pattern logging"
+  knowledge-organizer:
+    requires:
+      structured: 0.40
+      reasoning: 0.25
+      speed: 0.25
+      agentic: 0.10
+    description: "Structured data"
+  sre:
+    requires:
+      structured: 0.35
+      reasoning: 0.25
+      speed: 0.25
+      agentic: 0.15
+    description: "Status checks, runbooks"
+
+  # Meta
+  harness-evolver:
+    requires:
+      reasoning: 0.45
+      structured: 0.25
+      coding: 0.20
+      agentic: 0.10
+    description: "Meta-optimization"
+
+  # Research
+  reasoning-researcher:
+    requires:
+      reasoning: 0.45
+      speed: 0.25
+      agentic: 0.20
+      structured: 0.10
+    description: "Fast deep analysis"
+  web-researcher:
+    requires:
+      reasoning: 0.35
+      speed: 0.30
+      agentic: 0.25
+      structured: 0.10
+    description: "Fast reasoning"
+
+  # Board members
+  board-ceo:
+    requires:
+      structured: 0.35
+      speed: 0.30
+      reasoning: 0.25
+      agentic: 0.10
+    description: "Fast synthesis of 8 opinions"
+  board-architect:
+    requires:
+      reasoning: 0.45
+      coding: 0.20
+      structured: 0.20
+      agentic: 0.15
+    description: "Architecture depth"
+  board-contrarian:
+    requires:
+      reasoning: 0.35
+      speed: 0.30
+      structured: 0.20
+      agentic: 0.15
+    description: "Fast devil's advocate"
+  board-moonshot:
+    requires:
+      reasoning: 0.30
+      speed: 0.25
+      structured: 0.25
+      coding: 0.20
+    description: "Creative tech ideas"
+  dx-advocate:
+    requires:
+      reasoning: 0.35
+      speed: 0.25
+      structured: 0.25
+      agentic: 0.15
+    description: "Developer experience"
+  security-advisor:
+    requires:
+      reasoning: 0.45
+      coding: 0.25
+      structured: 0.20
+      agentic: 0.10
+    description: "Threat analysis"
+  ship-fast:
+    requires:
+      structured: 0.35
+      speed: 0.30
+      reasoning: 0.25
+      agentic: 0.10
+    description: "Speed-first philosophy"
+  tech-debt-auditor:
+    requires:
+      reasoning: 0.35
+      structured: 0.30
+      speed: 0.25
+      coding: 0.10
+    description: "Methodical review"
