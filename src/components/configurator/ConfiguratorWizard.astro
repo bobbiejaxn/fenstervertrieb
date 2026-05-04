@@ -26,7 +26,7 @@ const categoryMeta: Record<string, { icon: string; desc: string }> = {
 
 <div id="configurator" class="max-w-4xl mx-auto">
   <!-- Step Indicator — clean, minimal -->
-  <div class="flex items-center mb-10" id="step-indicator">
+  <div class="flex items-center mb-3" id="step-indicator">
     {["Kategorie", "System", "Details", "Anfrage"].map((label, i) => (
       <div class="flex items-center flex-1 last:flex-none">
         <button
@@ -68,6 +68,8 @@ const categoryMeta: Record<string, { icon: string; desc: string }> = {
       </div>
     ))}
   </div>
+  <!-- Progress label -->
+  <div id="progress-label" class="text-xs text-base-400 mb-6">Schritt 1 von 4</div>
 
   <!-- Step content wrapper with fade animation -->
   <div id="step-content" class="relative min-h-[420px]">
@@ -151,6 +153,23 @@ const categoryMeta: Record<string, { icon: string; desc: string }> = {
               </button>
             ))}
           </div>
+        </div>
+
+        <div>
+          <label class="block text-sm font-semibold text-base-900 mb-3">Dimensionen (mm)</label>
+          <div class="grid grid-cols-2 gap-4">
+            <div>
+              <label for="breite" class="block text-xs text-base-500 mb-1.5">Breite</label>
+              <input type="number" id="breite" name="breite" min="300" max="6000" step="10" placeholder="z.B. 1200"
+                class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl text-sm focus:border-[#1c69d4] focus:ring-2 focus:ring-[#1c69d4]/20 outline-none transition-all bg-white" />
+            </div>
+            <div>
+              <label for="hoehe" class="block text-xs text-base-500 mb-1.5">Höhe</label>
+              <input type="number" id="hoehe" name="hoehe" min="300" max="4000" step="10" placeholder="z.B. 1500"
+                class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl text-sm focus:border-[#1c69d4] focus:ring-2 focus:ring-[#1c69d4]/20 outline-none transition-all bg-white" />
+            </div>
+          </div>
+          <p class="mt-1.5 text-xs text-base-400">Min. 300 mm — max. 6000 × 4000 mm</p>
         </div>
 
         <div>
@@ -307,6 +326,8 @@ const categoryMeta: Record<string, { icon: string; desc: string }> = {
     farbe: null,
     oeffnung: null,
     preis: null,
+    breite: null,
+    hoehe: null,
   };
 
   const productsList = products;
@@ -357,6 +378,12 @@ const categoryMeta: Record<string, { icon: string; desc: string }> = {
         label.className = 'text-sm font-medium transition-colors hidden sm:inline text-gray-300';
         if (lineFill) lineFill.style.width = '0%';
       }
+    }
+
+    // Progress label
+    const progressLabel = document.getElementById('progress-label');
+    if (progressLabel) {
+      progressLabel.textContent = `Schritt ${currentStep + 1} von ${totalSteps}`;
     }
 
     // Panels
@@ -410,6 +437,7 @@ const categoryMeta: Record<string, { icon: string; desc: string }> = {
     if (state.fluegel) parts.push(state.fluegel);
     if (state.farbe) parts.push(state.farbe);
     if (state.oeffnung) parts.push(state.oeffnung);
+    if (state.breite && state.hoehe) parts.push(`${state.breite}×${state.hoehe} mm`);
 
     if (parts.length > 0) {
       el.classList.remove('hidden');
@@ -533,6 +561,22 @@ const categoryMeta: Record<string, { icon: string; desc: string }> = {
     });
   });
 
+  // --- Dimensionen inputs ---
+  const breiteInput = document.getElementById('breite');
+  const hoeheInput = document.getElementById('hoehe');
+  if (breiteInput) {
+    breiteInput.addEventListener('input', () => {
+      state.breite = breiteInput.value || null;
+      updateLiveSummary();
+    });
+  }
+  if (hoeheInput) {
+    hoeheInput.addEventListener('input', () => {
+      state.hoehe = hoeheInput.value || null;
+      updateLiveSummary();
+    });
+  }
+
   // --- Preis buttons (step 4) ---
   document.querySelectorAll('.preis-btn').forEach((btn) => {
     btn.addEventListener('click', () => {
@@ -555,6 +599,8 @@ const categoryMeta: Record<string, { icon: string; desc: string }> = {
       { label: 'Flügel', value: state.fluegel || '', icon: '📐' },
       { label: 'Farbe', value: state.farbe || '', icon: '🎨' },
       { label: 'Öffnung', value: state.oeffnung || '', icon: '↗️' },
+      { label: 'Breite', value: state.breite ? `${state.breite} mm` : '', icon: '↔️' },
+      { label: 'Höhe', value: state.hoehe ? `${state.hoehe} mm` : '', icon: '↕️' },
     ];
     if (state.system?.price) {
       items.push({ label: 'Startpreis', value: state.system.price, icon: '€' });
@@ -608,42 +654,65 @@ const categoryMeta: Record<string, { icon: string; desc: string }> = {
     }
   });
 
-  btnSubmit.addEventListener('click', () => {
+  btnSubmit.addEventListener('click', async () => {
     const name = document.getElementById('name').value.trim();
     const email = document.getElementById('email').value.trim();
     const telefon = document.getElementById('telefon').value.trim();
     const nachricht = document.getElementById('nachricht').value.trim();
 
     if (!name || !email) {
-      // Highlight empty required fields
       if (!name) document.getElementById('name').classList.add('border-red-400', 'bg-red-50');
       if (!email) document.getElementById('email').classList.add('border-red-400', 'bg-red-50');
       return;
     }
 
-    // Build mailto
-    const body = [
-      'Neue Konfigurator-Anfrage',
-      '',
-      `Kategorie: ${state.category}`,
-      `System: ${state.system?.title}`,
-      `Flügel: ${state.fluegel}`,
-      `Farbe: ${state.farbe}`,
-      `Öffnungsart: ${state.oeffnung}`,
-      state.preis ? `Preisvorstellung: ${state.preis}` : '',
-      '',
-      'Kontaktdaten:',
-      `Name: ${name}`,
-      `E-Mail: ${email}`,
-      telefon ? `Telefon: ${telefon}` : '',
-      nachricht ? `Nachricht: ${nachricht}` : '',
-    ]
-      .filter(Boolean)
-      .join('\n');
+    btnSubmit.disabled = true;
+    btnSubmit.textContent = 'Wird gesendet...';
 
-    const subject = encodeURIComponent(`Konfigurator-Anfrage: ${state.system?.title}`);
-    const mailBody = encodeURIComponent(body);
-    window.location.href = `mailto:info@fenstervertrieb.com?subject=${subject}&body=${mailBody}`;
+    try {
+      const res = await fetch('/api/quote-request', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name, email, telefon, nachricht,
+          category: state.category,
+          system: state.system?.title,
+          slug: state.system?.slug,
+          fluegel: state.fluegel,
+          farbe: state.farbe,
+          oeffnung: state.oeffnung,
+          breite: state.breite,
+          hoehe: state.hoehe,
+          preis: state.preis,
+        }),
+      });
+
+      const data = await res.json();
+
+      // If backend returns a mailto link, open it as fallback
+      if (data.mailto) {
+        window.location.href = data.mailto;
+      }
+    } catch (err) {
+      // Fallback to mailto
+      const body = [
+        'Neue Konfigurator-Anfrage', '',
+        `Kategorie: ${state.category}`,
+        `System: ${state.system?.title}`,
+        `Flügel: ${state.fluegel}`,
+        `Farbe: ${state.farbe}`,
+        `Öffnungsart: ${state.oeffnung}`,
+        state.breite ? `Breite: ${state.breite} mm` : '',
+        state.hoehe ? `Höhe: ${state.hoehe} mm` : '',
+        state.preis ? `Preisvorstellung: ${state.preis}` : '',
+        '', 'Kontaktdaten:',
+        `Name: ${name}`, `E-Mail: ${email}`,
+        telefon ? `Telefon: ${telefon}` : '',
+        nachricht ? `Nachricht: ${nachricht}` : '',
+      ].filter(Boolean).join('\n');
+      const subject = encodeURIComponent(`Konfigurator-Anfrage: ${state.system?.title}`);
+      window.location.href = `mailto:info@fenstervertrieb.com?subject=${subject}&body=${encodeURIComponent(body)}`;
+    }
 
     // Show success screen
     setTimeout(() => {
@@ -654,6 +723,7 @@ const categoryMeta: Record<string, { icon: string; desc: string }> = {
       btnSubmit.classList.add('hidden');
       btnBack.classList.add('hidden');
       document.getElementById('step-indicator').classList.add('hidden');
+      document.getElementById('progress-label').classList.add('hidden');
 
       successScreen.classList.remove('hidden');
       requestAnimationFrame(() => { successScreen.style.opacity = '1'; });
@@ -676,6 +746,39 @@ const categoryMeta: Record<string, { icon: string; desc: string }> = {
     Fassaden: { icon: '🏢' },
     'Smart Home': { icon: '📱' },
   };
+
+  // --- Micro-animation on selection ---
+  function pulseElement(el) {
+    el.style.transform = 'scale(1.05)';
+    setTimeout(() => { el.style.transform = ''; }, 150);
+  }
+
+  // Enhance all category/system/config/preis buttons with pulse
+  const originalCategoryClick = true; // just observe existing
+  document.querySelectorAll('.category-btn, .system-btn, .config-btn, .preis-btn').forEach((btn) => {
+    btn.addEventListener('click', () => pulseElement(btn));
+  });
+
+  // --- Keyboard navigation ---
+  document.addEventListener('keydown', (e) => {
+    const currentStep = state.step;
+    if (e.key === 'Enter' && canProceed() && currentStep < totalSteps - 1) {
+      e.preventDefault();
+      btnNext.click();
+    }
+    if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
+      const activePanel = document.getElementById(`step-${currentStep}`);
+      if (!activePanel) return;
+      const focusableBtns = Array.from(activePanel.querySelectorAll('button:not([disabled])'));
+      const currentIdx = focusableBtns.indexOf(document.activeElement);
+      if (currentIdx === -1) return;
+      e.preventDefault();
+      const nextIdx = e.key === 'ArrowRight'
+        ? (currentIdx + 1) % focusableBtns.length
+        : (currentIdx - 1 + focusableBtns.length) % focusableBtns.length;
+      focusableBtns[nextIdx]?.focus();
+    }
+  });
 
   // Init
   updateUI(true);
