@@ -18,12 +18,10 @@
 
 set -euo pipefail
 
-# Resolve REPO_ROOT: use git root (works from subdirs), fallback to script location
-_git_root="$(git rev-parse --show-toplevel 2>/dev/null | tr -d '\n' | head -1)"
-REPO_ROOT="${_git_root:-$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)}"
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
 
-# Load project config (must be after REPO_ROOT is set)
+# Load config
 source "$REPO_ROOT/.pi/config.sh"
 
 RED='\033[0;31m'

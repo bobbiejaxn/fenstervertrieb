@@ -4,7 +4,7 @@ description: >
   Creative quality specialist. Audits ad creative across LinkedIn, TikTok,
   and Microsoft for format diversity, fatigue signals, platform-native
   content, and spec compliance.
-model: sonnet
+model: deepseek-v4-flash:cloud
 maxTurns: 20
 tools: Read, Bash, Write, Glob, Grep
 ---

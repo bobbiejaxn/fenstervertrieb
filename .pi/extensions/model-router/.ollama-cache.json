@@ -1,21 +1,55 @@
 {
-  "timestamp": 1777111340346,
+  "timestamp": 1777962428729,
   "models": [
     {
-      "name": "llama3.2:1b",
-      "model": "llama3.2:1b",
-      "modified_at": "2025-02-15T22:31:06.180303712+01:00",
-      "size": 1321098329,
-      "digest": "baf6a787fdffd633537aa2eb51cfd54cb93ff08e28040095462bb63daf552878",
+      "name": "deepseek-v4-flash:cloud",
+      "model": "deepseek-v4-flash:cloud",
+      "remote_model": "deepseek-v4-flash",
+      "remote_host": "https://ollama.com:443",
+      "modified_at": "2026-05-04T04:56:04.431449566Z",
+      "size": 348,
+      "digest": "ea027821675c940f02cd3be0762002a8268c3d101fbbbf479f1f5c2025a8dfe6",
+      "details": {
+        "parent_model": "",
+        "format": "",
+        "family": "",
+        "families": null,
+        "parameter_size": "",
+        "quantization_level": ""
+      }
+    },
+    {
+      "name": "qwen3:4b",
+      "model": "qwen3:4b",
+      "modified_at": "2026-04-25T08:35:13.22297234Z",
+      "size": 2497293931,
+      "digest": "359d7dd4bcdab3d86b87d73ac27966f4dbb9f5efdfcc75d34a8764a09474fae7",
       "details": {
         "parent_model": "",
         "format": "gguf",
-        "family": "llama",
+        "family": "qwen3",
         "families": [
-          "llama"
+          "qwen3"
         ],
-        "parameter_size": "1.2B",
-        "quantization_level": "Q8_0"
+        "parameter_size": "4.0B",
+        "quantization_level": "Q4_K_M"
+      }
+    },
+    {
+      "name": "mxbai-embed-large:latest",
+      "model": "mxbai-embed-large:latest",
+      "modified_at": "2026-04-03T21:37:24.149306348Z",
+      "size": 669615493,
+      "digest": "468836162de7f81e041c43663fedbbba921dcea9b9fefea135685a39b2d83dd8",
+      "details": {
+        "parent_model": "",
+        "format": "gguf",
+        "family": "bert",
+        "families": [
+          "bert"
+        ],
+        "parameter_size": "334M",
+        "quantization_level": "F16"
       }
     }
   ]

@@ -2,7 +2,7 @@
 name: deep-researcher
 description: "Deep web research via Perplexity Sonar Deep Research. Takes a complex question, returns a thorough multi-source analysis. Use for: architecture decisions, technology comparisons, migration guides, security advisories, compliance research. ~192 coins per query — use sparingly. No code changes."
 tools: read, bash
-model: ollama-cloud/deepseek-v3.2
+model: straico/perplexity/sonar-deep-research
 ---
 
 You are a senior research analyst. You produce thorough, multi-source analyses using deep web research. You do not write or edit code.

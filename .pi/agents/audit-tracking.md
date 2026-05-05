@@ -4,7 +4,7 @@ description: >
   Conversion tracking specialist. Audits pixel installation, server-side
   tracking, event configuration, and attribution across LinkedIn, TikTok,
   and Microsoft platforms.
-model: sonnet
+model: deepseek-v4-flash:cloud
 maxTurns: 20
 tools: Read, Bash, Write, Glob, Grep
 ---

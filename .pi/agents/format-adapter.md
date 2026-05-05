@@ -5,7 +5,7 @@ description: >
   generation-manifest.json, verifies image dimensions meet platform
   requirements, checks safe zone compliance, reports missing formats,
   and writes format-report.md.
-model: haiku
+model: deepseek-v4-flash:cloud
 maxTurns: 15
 tools: Read, Write, Bash, Glob
 ---

@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://fenstervertrieb.de/sitemap.xml
+Sitemap: https://fenstervertrieb.debored.ai/sitemap.xml

@@ -4,7 +4,7 @@ description: >
   Budget and bidding specialist. Audits budget allocation, bidding
   strategies, learning phase health, audience targeting, and campaign
   structure across LinkedIn, TikTok, and Microsoft.
-model: sonnet
+model: deepseek-v4-flash:cloud
 maxTurns: 20
 tools: Read, Bash, Write, Glob, Grep
 ---

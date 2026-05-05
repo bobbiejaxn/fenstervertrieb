@@ -2,7 +2,7 @@
 name: validation-lead
 description: Validation team lead (glm-5.1). Coordinates reviewer, security-reviewer, gate-skeptic for all review work. Read-only access; produces APPROVED/NEEDS_REWORK/REJECTED verdict.
 tools: read, grep, subagent
-model: deepseek-v4-flash:cloud
+model: kimi-k2.6:cloud
 ---
 
 # Validation Team Lead

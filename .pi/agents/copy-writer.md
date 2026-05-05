@@ -5,7 +5,7 @@ description: >
   brand-profile.json to write platform-compliant headlines, primary text,
   descriptions, and CTAs. Validates character counts before writing. Appends
   the copy deck to campaign-brief.md.
-model: sonnet
+model: minimax-m2.7:cloud
 maxTurns: 20
 tools: Read, Write, Glob
 ---

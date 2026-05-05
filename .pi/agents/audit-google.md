@@ -4,7 +4,7 @@ description: >
   Google Ads audit specialist. Analyzes conversion tracking, wasted spend,
   account structure, keywords, Quality Score, ad assets, PMax, bidding,
   and settings.
-model: sonnet
+model: deepseek-v4-flash:cloud
 maxTurns: 20
 tools: Read, Bash, Write, Glob, Grep
 ---

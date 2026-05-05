@@ -4,7 +4,7 @@ description: >
   Meta Ads audit specialist. Analyzes Pixel/CAPI health, EMQ scores,
   creative diversity and fatigue, account structure, learning phase,
   audience targeting, and Advantage+ campaigns.
-model: sonnet
+model: deepseek-v4-flash:cloud
 maxTurns: 20
 tools: Read, Bash, Write, Glob, Grep
 ---

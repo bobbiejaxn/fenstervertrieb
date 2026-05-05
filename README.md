@@ -1,6 +1,6 @@
 # Pi Launchpad
 
-Autonomous agent orchestration layer for any software project. Drop it into your repo and get a team of 36 specialist AI agents that plan, build, review, and ship verified features end-to-end — including a CEO agent that can autonomously pursue high-level goals, a board of 8 advisors that debate strategic decisions, an **adversarial red-team agent** that actively tries to break implementations, a **dynamic model router** that selects the best Ollama Cloud model per agent role, and a **self-optimizing harness** that gets better every session.
+Autonomous agent orchestration layer for any software project. Drop it into your repo and get a team of **46 specialist AI agents** that plan, build, review, and ship verified features end-to-end — including a CEO agent that can autonomously pursue high-level goals, a board of 8 advisors that debate strategic decisions, an **adversarial red-team agent** that actively tries to break implementations (with live HTTP fuzzing, mutation testing, and dependency auditing), a **live verifier agent** that watches the builder in real-time and auto-corrects mistakes, a **dynamic model router** that selects the best Ollama Cloud model per agent role, and a **self-optimizing harness** that gets better every session.
 
 ## What Makes This Different
 
@@ -44,16 +44,16 @@ Most agentic setups give you a single agent with tools. Pi Launchpad gives you *
 
 ```
 .pi/
-├── agents/          28 core agents + 8 board advisors (.md definitions)
+├── agents/          38 core agents + 8 board advisors (.md definitions)
 ├── prompts/         22 orchestration workflows (/ship, /fix, /ceo, /deliberate, etc.)
-├── extensions/      11 TypeScript extensions (subagent, CEO, model-router, search, GitHub, etc.)
-├── skills/          32 reusable patterns and domain expertise
+├── extensions/      12 TypeScript extensions (subagent, CEO, model-router, verifier, search, GitHub, etc.)
+├── skills/          177 reusable patterns, domain expertise, and Google Workspace skills
 ├── board-config.yaml Board deliberation settings and auto-trigger rules
 ├── board-expertise/  Advisor scratch pads (persistent across sessions)
 ├── config.sh        Single source of truth for project settings
 └── learnings/       Self-learning loop (act -> learn -> reuse -> auto-promote)
 
-scripts/             30 hard-enforcement and automation scripts
+scripts/             31 hard-enforcement and automation scripts
 docs/                Specs, plans, references, workflow guides
 specs/               Deliberation briefs and outputs
 ```
@@ -157,9 +157,9 @@ No Anthropic OAuth dependency. Models accessed via API keys and Ollama Cloud:
 
 | Provider | Models | Cost | Used by |
 |----------|--------|------|--------|
-| **Ollama Cloud** | DeepSeek V4 Pro (deep reasoning), V4 Flash (fast reasoning), Qwen3-Coder, MiniMax, Kimi, and 30+ more | $20-100/mo plans | model-router selects dynamically |
-| **ZAI API** | GLM-5.1 (coding), GLM-5 (fast) | ~$1.00 / ~$0.20 per 1M tokens | 4 coding agents |
-| **MiniMax API** | M2.7 (structured output) | ~$0.30 per 1M tokens | 8 agents |
+| **Ollama Cloud** | DeepSeek V4 Pro (9), V4 Flash (16), Kimi K2.6 (6), Qwen3-Coder, Kimi K2.5 | $20-100/mo plans | 31 agents |
+| **ZAI API** | GLM-5.1 (coding) | ~$1.00 per 1M tokens | 4 coding agents |
+| **MiniMax API** | M2.7 (structured output) | ~$0.30 per 1M tokens | 9 agents |
 | **Straico** | Perplexity Sonar, Sonar Deep Research | gateway pricing | 2 research agents |
 
 ### Dynamic Model Router
@@ -167,17 +167,17 @@ No Anthropic OAuth dependency. Models accessed via API keys and Ollama Cloud:
 The `model-router` extension maintains a capability registry (coding, reasoning, structured output, speed, agentic) for every model on Ollama Cloud. Each agent role defines weighted requirements. The router scores all models and picks the best fit — no hardcoded assignments.
 
 - **On `pi` launch**: queries Ollama for new models, alerts you with a 🆕 banner
-- **Registry**: `.pi/extensions/model-router/registry.yaml` — 9 models, 23 roles
+- **Registry**: `.pi/extensions/model-router/registry.yaml` — 10 models, 23 roles
 - **Tool actions**: `best-for-role`, `list-models`, `list-roles`, `scan-new`, `refresh`, `update-agents`
 - Models update automatically as new ones appear on Ollama Cloud
 
-## Agents (36 = 28 core + 8 board)
+## Agents (46 = 38 core + 8 board)
 
 | Agent | Model | Role |
 |-------|-------|------|
 | **ceo** | MiniMax-M2.7 | Autonomous goal orchestration — plans, delegates, reviews, iterates |
 | product-manager | MiniMax-M2.7 | PM interview, USVA spec writing |
-| **architect** | DeepSeek V4 Flash | Implementation plans from specs |
+| **architect** | Kimi K2.6 | Implementation plans from specs |
 | **software-architect** | DeepSeek V4 Pro | System design, DDD, architectural patterns, ADRs |
 | **security-reviewer** | DeepSeek V4 Pro | STRIDE threat model, RBAC gaps, data leakage |
 | learning-agent | DeepSeek V4 Flash | Log session outcomes, retrieve learnings, auto-promote patterns |
@@ -188,7 +188,7 @@ The `model-router` extension maintains a capability registry (coding, reasoning,
 | database-optimizer | GLM-5.1 | Schema design, query optimization, indexing, migrations |
 | sre | MiniMax-M2.7 | SLOs, error budgets, observability, toil automation |
 | knowledge-organizer | MiniMax-M2.7 | Obsidian vault organization, properties, wikilinks |
-| **validation-lead** | DeepSeek V4 Flash | Coordinates reviewer + security-reviewer + adversarial-tester + gate-skeptic |
+| **validation-lead** | Kimi K2.6 | Coordinates reviewer + security-reviewer + adversarial-tester + gate-skeptic |
 | **frontend-lead** | DeepSeek V4 Flash | Frontend team coordinator — delegates to implementer, ui-reviewer, test-writers |
 | **backend-lead** | GLM-5.1 | Backend team coordinator — delegates to implementer, database-optimizer, sre |
 | **implementer** | GLM-5.1 | Execute implementation plans |
@@ -196,10 +196,20 @@ The `model-router` extension maintains a capability registry (coding, reasoning,
 | debug-agent | DeepSeek V4 Flash | Fix exact gate failures (Iron Law: no fix without root cause) |
 | test-writer | GLM-5.1 | Gherkin specs, E2E tests |
 | unit-test-writer | DeepSeek V4 Flash | Typed unit/integration tests (zero `any`) |
-| **adversarial-tester** | DeepSeek V4 Flash | Active red-team — edge cases, boundary attacks, RBAC probing |
+| **adversarial-tester** | DeepSeek V4 Pro | Active red-team — live HTTP fuzzing, mutation testing, RBAC probing, dependency audit |
+| creative-strategist | DeepSeek V4 Pro | Creative direction and brand strategy |
+| copy-writer | MiniMax-M2.7 | Content writing, messaging, and copy |
+| visual-designer | DeepSeek V4 Flash | Visual design, UI mockups, brand assets |
+| format-adapter | DeepSeek V4 Flash | Adapt content across formats and channels |
+| audit-google | DeepSeek V4 Flash | Google Ads audit and optimization |
+| audit-meta | DeepSeek V4 Flash | Meta/Facebook ads audit and optimization |
+| audit-creative | DeepSeek V4 Flash | Creative/ad copy audit and scoring |
+| audit-budget | DeepSeek V4 Flash | Budget allocation audit and optimization |
+| audit-compliance | DeepSeek V4 Flash | Ad compliance and policy review |
+| audit-tracking | DeepSeek V4 Flash | Tracking/analytics audit and verification |
 | researcher | Straico/Sonar | Quick web research |
 | deep-researcher | Straico/Sonar DR | Deep multi-source analysis |
-| reasoning-researcher | DeepSeek V4 Flash | Complex reasoning over multiple sources |
+| reasoning-researcher | Kimi K2.6 | Complex reasoning over multiple sources |
 | web-researcher | DeepSeek V4 Flash | Web search for current information |
 | idea-capture | MiniMax-M2.7 | Capture raw ideas as GitHub issues |
 | issue-creator | MiniMax-M2.7 | GitHub issues for out-of-scope work |
@@ -207,18 +217,19 @@ The `model-router` extension maintains a capability registry (coding, reasoning,
 | board/ship-fast | MiniMax-M2.7 | Speed & delivery bias |
 | **board/board-architect** | DeepSeek V4 Pro | Long-term design bias |
 | **board/security-advisor** | DeepSeek V4 Pro | Attack surface bias |
-| board/dx-advocate | DeepSeek V4 Flash | Developer experience bias |
-| board/board-moonshot | DeepSeek V4 Flash | 10x simplification bias |
-| board/tech-debt-auditor | DeepSeek V4 Flash | Sustainability bias |
+| board/dx-advocate | Kimi K2.6 | Developer experience bias |
+| board/board-moonshot | Kimi K2.6 | 10x simplification bias |
+| board/tech-debt-auditor | Kimi K2.6 | Sustainability bias |
 | **board/board-contrarian** | DeepSeek V4 Pro | Challenge assumptions — default skeptic |
 
-## Extensions (11)
+## Extensions (12)
 
 | Extension | What it does |
 |-----------|-------------|
 | **ceo** | Autonomous CEO orchestration loop with parallel worker delegation, state management, and memory |
 | **subagent** | Core tool — spawns isolated agent processes (single, parallel up to 8, chain modes) |
 | **model-router** | Dynamic Ollama Cloud model selection — capability scoring, role matching, new model alerts |
+| **verifier** | Two-agent observer system — verifier watches builder in real-time, sends corrective feedback (4 domain personas) |
 | **trace-recorder** | Captures every tool call, result, and message as structured JSONL — powers the harness evolver |
 | **domain-enforcer** | Enforces file-level read/write/delete permissions per agent via `tool_call` hooks |
 | brave-search | Web search integration via Brave Search API |
@@ -386,6 +397,28 @@ The agents handle what scripts can't:
 
 Mechanical checks run first (fast, deterministic). LLM reviewers run second (thorough, contextual). Neither can be bypassed.
 
+## Live Verifier Agent
+
+A real-time two-agent observer system. While the builder writes code, a separate verifier agent watches every turn, decomposes claims into atomic checks, and sends corrective feedback automatically. Up to 3 auto-correction loops, then human escalation.
+
+```bash
+./scripts/launch-verifier.sh                  # Generic verifier
+./scripts/launch-verifier.sh --agent sqlite   # SQLite domain
+./scripts/launch-verifier.sh --agent python   # Python domain
+./scripts/launch-verifier.sh --agent image    # Image vision verifier
+```
+
+| Domain | What it verifies | Security |
+|--------|-----------------|----------|
+| **SQLite** | Schemas, FKs, indexes, integrity, migrations | Script-only bash + `mode=ro` SQLite |
+| **Python** | Type-check (`uvx ty`), lint (`ruff`), format, `pytest` | Script-only bash + check-only flags |
+| **Image** | Generated images match user prompt | Vision-only (no bash policy) |
+| **Generic** | Claim decomposition, general verification | Default bash (prompt-enforced read-only) |
+
+3-layer read-only security: persona tools list (no write/edit) → bash policy override (script-only) → script itself (read-only DB connections, check-only tooling).
+
+Integrates with `/ship` Phase 5.5.5 — optional for critical features. Does not block the pipeline.
+
 ## Self-Learning Loop
 
 The learning system evolves from session outcomes:
@@ -476,7 +509,7 @@ risks:
 
 Agents read their mental model at task start and update it after completing work. You don't touch these files — the agents maintain them automatically.
 
-## Agent Skills (32)
+## Agent Skills (177)
 
 Composable behavioral rules loaded by agents:
 
@@ -506,6 +539,7 @@ Composable behavioral rules loaded by agents:
 | drive | Terminal automation | tmux session control, screenshots, parallel execution |
 | + 8 OpenSpec | Change management | propose, explore, apply, archive — structured change workflows |
 | **sync-docs** | Maintenance | Scan actual state → update README, AGENTS.md, registry, target projects — run after any change |
+| **frontier-sweep** | Model updates | Scrape ollama.com/library → evaluate new models → score against roles → assign with balance constraints → commit with evidence |
 
 ## Setup
 
@@ -575,12 +609,14 @@ your-project/
 |   +-- traces/                <- execution trace filesystem
 |   +-- harness-versions/      <- harness version snapshots
 |   +-- sessions/              <- shared conversation logs
-|   +-- skills/                <- 27 composable behavior skills
-|   +-- lib/                   <- shared utilities
+|   +-- skills/                <- composable behavior skills
+|   +-- verifier/              <- live verifier personas, scripts, prompts
 |   +-- tools/                 <- shell-based MCP wrappers
 +-- .learnings/
 |   +-- LEARNINGS.md           <- knowledge base (grows over time)
 |   +-- ERRORS.md              <- error log
++-- apps/
+|   +-- verifier/              <- verifier Pi extension (TypeScript)
 +-- scripts/                   <- hard-enforcement, automation, harness evolution
 +-- specs/usva/                <- feature specs
 +-- AGENTS.md                  <- project rules (source of truth)
@@ -656,15 +692,18 @@ Route agents to different providers based on their role:
 
 | Role | Model | Provider |
 |------|-------|----------|
-| Deep reasoning (security, architect, gate-skeptic, evolver) | DeepSeek V4 Pro | Ollama Cloud |
-| Fast reasoning (review, debug, adversarial, leads) | DeepSeek V4 Flash | Ollama Cloud |
-| Coding execution (implementer, test-writer, backend) | GLM-5.1 | ZAI API |
-| Structured output (PM, CEO, ideas, issues, SRE) | MiniMax-M2.7 | MiniMax API |
+| Deep reasoning (9 agents) | DeepSeek V4 Pro | Ollama Cloud |
+| Frontier reasoning (6 agents) | Kimi K2.6 | Ollama Cloud |
+| Fast reasoning (16 agents) | DeepSeek V4 Flash | Ollama Cloud |
+| Coding execution (4 agents) | GLM-5.1 | ZAI API |
+| Structured output (9 agents) | MiniMax-M2.7 | MiniMax API |
 | Research (sonar, deep-research) | Perplexity Sonar / Sonar DR | Straico |
 
 Supported providers: Z.ai (`ZAI_API_KEY`), MiniMax (`MINIMAX_API_KEY`), Straico (`STRAICO_API_KEY`), DeepSeek (`DEEPSEEK_API_KEY`), Ollama Cloud (subscription).
 
 The **model-router** extension can dynamically reassign models based on Ollama Cloud availability and capability scores. Run `model-router update-agents` to push optimized assignments.
+
+The **frontier-sweep** skill automates the full cycle: scrapes `ollama.com/library` (229+ models, not just locally pulled), evaluates new models against benchmarks, scores all models against all agent roles, applies balance constraints (max 12/model, 3+ providers, 5% stability threshold), updates agent frontmatter, and commits with score evidence. Run weekly or when you hear about new model releases.
 
 ## Architecture Decisions
 
@@ -676,8 +715,9 @@ The **model-router** extension can dynamically reassign models based on Ollama C
 - **Mechanical > LLM enforcement** — `vibe-verify.sh` catches `any` types, unsafe patterns, and hardcoded secrets deterministically; agents handle the nuanced stuff
 - **GLM-5.1 for judgment** — PM, architect, security-reviewer, learning, CEO reasoning, board-ceo, harness-evolver
 - **GLM-5 for execution** — Implement, review, debug, test-write
-- **DeepSeek V4 Pro for deep reasoning** — Security, architecture, gate-skeptic, harness-evolver, board (architect, contrarian, security)
-- **DeepSeek V4 Flash for fast reasoning** — Review, debug, adversarial, leads, board (moonshot, DX, tech-debt)
+- **DeepSeek V4 Pro for deep reasoning** — Security-reviewer, software-architect, gate-skeptic, harness-evolver, adversarial-tester, creative-strategist, board (architect, contrarian, security) (9 agents)
+- **Kimi K2.6 for frontier reasoning** — Architect, validation-lead, reasoning-researcher, board (moonshot, DX, tech-debt) (6 agents). #1 open weights Intelligence Index (54).
+- **DeepSeek V4 Flash for fast execution** — Reviewer, debug-agent, fixer, frontend-lead, unit-test-writer, audit agents (6), visual-designer, format-adapter, ui-reviewer, web-researcher, learning-agent (16 agents)
 - **MiniMax-M2.7 for translation** — Mechanical tasks (issues, ideas)
 - **Dynamic model routing** — model-router selects best Ollama Cloud model per role
 - **Builder ethos** — Boil the Lake, Search Before Building, User Sovereignty — injected into all agents

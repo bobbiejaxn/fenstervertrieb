@@ -19,6 +19,6 @@ export default defineConfig({
     skipInline: false,
     drafts: true
   },
-  site: 'https://fenstervertrieb.de',
+  site: 'https://fenstervertrieb.debored.ai',
   integrations: [ sitemap(), mdx()]
 });

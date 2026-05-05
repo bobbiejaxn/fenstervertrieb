@@ -5,7 +5,7 @@ description: >
   to construct 5-component image generation prompts via banana MCP, organizes
   outputs into ad-assets/ directories, and writes generation-manifest.json
   for the format-adapter agent.
-model: sonnet
+model: deepseek-v4-flash:cloud
 maxTurns: 30
 tools: Read, Write, Bash, Glob
 ---

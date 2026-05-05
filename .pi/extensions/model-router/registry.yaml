@@ -134,7 +134,7 @@ models:
   kimi-k2.5:
     ollama_id: "kimi-k2.5:cloud"
     provider: moonshot
-    params: "MoE"
+    params: "1T/32B active MoE"
     context: 131072
     capabilities:
       coding: 76
@@ -145,6 +145,27 @@ models:
     role_fit: [implementer, debug-agent]
     tags: [coding, agentic]
     notes: "Strong agentic capabilities. Good at tool use and multi-step tasks."
+
+  kimi-k2.6:
+    ollama_id: "kimi-k2.6:cloud"
+    provider: moonshot
+    params: "1T/32B active MoE"
+    context: 131072
+    capabilities:
+      coding: 88
+      reasoning: 92
+      structured: 80
+      speed: 65
+      agentic: 94
+    role_fit: [architect, software-architect, security-reviewer, gate-skeptic, harness-evolver, ceo, debug-agent, implementer, adversarial-tester, board-architect, board-contrarian, security-advisor]
+    tags: [frontier, coding, reasoning, agentic, #1-open-weights]
+    notes: |
+      #1 open weights model (Artificial Analysis Intelligence Index: 54).
+      SWE-bench Verified: 80.2%, SWE-bench Pro: 58.6 (beats GPT-5.4's 57.7).
+      LiveCodeBench v6: 89.6%, Terminal-Bench 2.0: 66.7%.
+      Agentic: supports agent swarms up to 300 sub-agents, 4000 coordinated steps.
+      1T MoE with 32B active. Slower than V4 Flash but deeper reasoning.
+      Available on Ollama Cloud: ollama pull kimi-k2.6:cloud
 
   # ─── Fallbacks / Budget ──────────────────────────────────────────────────
   gemma4-27b:

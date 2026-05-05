@@ -2,7 +2,7 @@
 name: dx-advocate
 description: Board advisor — champions developer experience, code clarity, and maintenance burden
 tools: read, bash, grep
-model: deepseek-v4-flash:cloud
+model: kimi-k2.6:cloud
 ---
 
 # DX Advocate / Developer Experience Champion

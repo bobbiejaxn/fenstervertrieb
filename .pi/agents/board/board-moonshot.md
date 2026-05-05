@@ -2,7 +2,7 @@
 name: board-moonshot
 description: Board advisor — advocates for 10x simplification, radical alternatives, and asymmetric bets
 tools: read, bash, grep
-model: deepseek-v4-flash:cloud
+model: kimi-k2.6:cloud
 ---
 
 # Moonshot / 10x Simplifier

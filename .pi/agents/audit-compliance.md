@@ -4,7 +4,7 @@ description: >
   Compliance and performance specialist. Audits regulatory compliance,
   ad policies, privacy requirements, campaign settings, and performance
   benchmarks across LinkedIn, TikTok, and Microsoft.
-model: sonnet
+model: deepseek-v4-flash:cloud
 maxTurns: 20
 tools: Read, Bash, Write, Glob, Grep
 ---

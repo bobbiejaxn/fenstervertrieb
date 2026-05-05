@@ -613,6 +613,74 @@ See `docs/meta-harness-implementation.md` for the full architectural plan.
 
 ---
 
+## Live Verifier Agent System
+
+A two-agent observer system that runs alongside the builder in real-time. The verifier watches the builder's session transcript via a unix domain socket, independently re-checks every claim using deterministic read-only tools, and sends corrective feedback back to the builder automatically.
+
+### Architecture
+
+```
+Builder (your terminal)          Verifier (separate window)
+  ┌─────────────────┐              ┌─────────────────┐
+  │ pi (writes code) │◄──unix──────►│ pi (reads only)  │
+  │ socket server    │   socket     │ bash=script-only │
+  │ lifecycle ticks  │              │ verifier_prompt  │
+  └────────┬─────────┘              └──────────────────┘
+           │ writes session.jsonl    reads ──────────────┘
+           ▼
+   ~/.pi/agent/sessions/<sid>.jsonl
+```
+
+### Security — 3-layer read-only enforcement
+
+1. **Persona tools list** — no `write`, no `edit` in the verifier's tool allowlist
+2. **Bash policy override** — `mode: script-only`, only the domain verification script can run
+3. **Script itself** — SQLite opened `mode=ro&immutable=1`, Python runs `ruff --check` not `ruff`
+
+### Launch commands
+
+```bash
+./scripts/launch-verifier.sh                  # Generic verifier
+./scripts/launch-verifier.sh --agent sqlite   # SQLite domain
+./scripts/launch-verifier.sh --agent python   # Python domain
+./scripts/launch-verifier.sh --agent image    # Image vision verifier
+./scripts/launch-verifier.sh --clean          # Kill stale processes
+```
+
+### Domain verifiers
+
+| Persona | Bash policy | What it verifies |
+|---------|-------------|-----------------|
+| `verify_sqlite` | `script-only` → `verify_sqlite.py` | Schemas, FKs, indexes, integrity, migrations |
+| `verify_python` | `script-only` → `verify_python.py` | Type-check (`uvx ty`), lint (`ruff`), format, `pytest` |
+| `verify_image` | None (vision-only) | Generated images match user's prompt |
+| `verifier` (generic) | Default bash | Claim decomposition, general verification |
+
+### Integration with /ship
+
+- **Phase 5.5.5** — Optional live verifier for critical features
+- Does not block the pipeline — runs alongside, supplements adversarial-tester
+- Findings auto-correct up to 3 loops, then escalate to human
+
+### File locations
+
+```
+apps/verifier/               Pi extension (verifiable.ts, verifier.ts, cross-agent.ts)
+  _shared/                  IPC, launcher, socket-path, frontmatter, env
+.pi/verifier/
+  agents/                   4 domain persona .md files
+  scripts/                  verify_sqlite.py, verify_python.py
+  prompts/                  verify_on_stop.md, builder_error.md
+scripts/launch-verifier.sh   Boot script
+```
+
+### Authoring new domain verifiers
+
+1. Clone `.pi/verifier/scripts/verify_sqlite.py` → `verify_<domain>.py`
+2. Clone `.pi/verifier/agents/verify_sqlite.md` → `verify_<domain>.md`
+3. Update frontmatter: `bash_policy`, `verification_focus`, `domain`
+4. Wire into `launch-verifier.sh --agent <domain>`
+
 ## Agentic Horizon — Multi-Team System
 
 pi_launchpad integrates the [Agentic Horizon](https://agenticengineer.com/tactical-agentic-coding) trilogy for multi-team agent orchestration and infinite UI generation.

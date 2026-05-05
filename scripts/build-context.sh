@@ -15,10 +15,8 @@ AGENT="${1:-}"
 FEATURE_SLUG="${2:-}"
 USVA_PATH="${3:-}"
 
-# Resolve REPO_ROOT: use git root (works from subdirs), fallback to script location
-_git_root="$(git rev-parse --show-toplevel 2>/dev/null | tr -d '\n' | head -1)"
-REPO_ROOT="${_git_root:-$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)}"
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
 
 # Load project config
 source "$REPO_ROOT/.pi/config.sh"

@@ -222,6 +222,32 @@ After reviewer passes, run the adversarial-tester to actively break the implemen
 If BROKEN with CRITICAL/HIGH findings: send findings to implementer to fix, then re-run adversarial-tester. Max 2 rounds.
 If SURVIVED: proceed to gate-skeptic.
 
+#### Phase 5.5.5 — Live Verifier (optional, for critical features)
+
+For critical features, launch the two-agent verifier system alongside the implementer:
+
+```bash
+./scripts/launch-verifier.sh --agent sqlite  # or python, image, verifier (generic)
+```
+
+The verifier watches the builder's session JSONL and sends corrective feedback in real-time.
+This is a separate Pi process running in its own terminal — not a subagent.
+
+To use programmatically in /ship:
+```bash
+# Start builder with verifier attached
+pi -e apps/verifier/verifiable.ts -e apps/verifier/cross-agent.ts --verifiable --verifier-agent verify_sqlite
+```
+
+Available domain verifiers:
+- `verify_sqlite` — schemas, FKs, indexes, integrity (script: verify_sqlite.py)
+- `verify_python` — type-check, lint, format, tests (script: verify_python.py)
+- `verify_image` — vision-based image verification
+- `verifier` — generic claim decomposition (no script)
+
+This phase is manual/opt-in. It does not block the /ship pipeline.
+If run, its findings supplement adversarial-tester output.
+
 #### Phase 5.6 — Adversarial Readiness Check
 
 After adversarial testing passes, run the gate-skeptic for an adversarial pre-gate check:

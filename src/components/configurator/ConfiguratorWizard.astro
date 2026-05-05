@@ -711,7 +711,7 @@ const categoryMeta: Record<string, { icon: string; desc: string }> = {
         nachricht ? `Nachricht: ${nachricht}` : '',
       ].filter(Boolean).join('\n');
       const subject = encodeURIComponent(`Konfigurator-Anfrage: ${state.system?.title}`);
-      window.location.href = `mailto:info@fenstervertrieb.com?subject=${subject}&body=${encodeURIComponent(body)}`;
+      window.location.href = `mailto:info@fenstervertrieb.de?subject=${subject}&body=${encodeURIComponent(body)}`;
     }
 
     // Show success screen

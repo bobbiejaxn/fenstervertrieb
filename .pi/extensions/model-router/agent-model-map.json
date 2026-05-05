@@ -1,7 +1,7 @@
 {
   "ceo": {
     "modelKey": "deepseek-v4-flash",
-    "ollamaId": "deepseek-v4-flash",
+    "ollamaId": "deepseek-v4-flash:cloud",
     "score": 81,
     "capabilities": {
       "coding": 78,
@@ -12,80 +12,80 @@
     }
   },
   "architect": {
-    "modelKey": "deepseek-v4-flash",
-    "ollamaId": "deepseek-v4-flash",
-    "score": 80,
+    "modelKey": "kimi-k2.6",
+    "ollamaId": "kimi-k2.6:cloud",
+    "score": 90,
     "capabilities": {
-      "coding": 78,
-      "reasoning": 82,
-      "structured": 75,
-      "speed": 88,
-      "agentic": 80
+      "coding": 88,
+      "reasoning": 92,
+      "structured": 80,
+      "speed": 65,
+      "agentic": 94
     }
   },
   "software-architect": {
-    "modelKey": "deepseek-v4-flash",
-    "ollamaId": "deepseek-v4-flash",
-    "score": 80,
+    "modelKey": "kimi-k2.6",
+    "ollamaId": "kimi-k2.6:cloud",
+    "score": 90,
     "capabilities": {
-      "coding": 78,
-      "reasoning": 82,
-      "structured": 75,
-      "speed": 88,
-      "agentic": 80
+      "coding": 88,
+      "reasoning": 92,
+      "structured": 80,
+      "speed": 65,
+      "agentic": 94
     }
   },
   "implementer": {
-    "modelKey": "deepseek-v4-flash",
-    "ollamaId": "deepseek-v4-flash",
-    "score": 80,
+    "modelKey": "kimi-k2.6",
+    "ollamaId": "kimi-k2.6:cloud",
+    "score": 86,
     "capabilities": {
-      "coding": 78,
-      "reasoning": 82,
-      "structured": 75,
-      "speed": 88,
-      "agentic": 80
+      "coding": 88,
+      "reasoning": 92,
+      "structured": 80,
+      "speed": 65,
+      "agentic": 94
     }
   },
   "backend-lead": {
-    "modelKey": "deepseek-v4-flash",
-    "ollamaId": "deepseek-v4-flash",
-    "score": 79,
+    "modelKey": "deepseek-v4-pro",
+    "ollamaId": "deepseek-v4-pro:cloud",
+    "score": 89,
     "capabilities": {
-      "coding": 78,
-      "reasoning": 82,
-      "structured": 75,
-      "speed": 88,
-      "agentic": 80
+      "coding": 88,
+      "reasoning": 92,
+      "structured": 80,
+      "speed": 55,
+      "agentic": 90
     }
   },
   "frontend-lead": {
-    "modelKey": "deepseek-v4-flash",
-    "ollamaId": "deepseek-v4-flash",
-    "score": 81,
+    "modelKey": "kimi-k2.6",
+    "ollamaId": "kimi-k2.6:cloud",
+    "score": 82,
     "capabilities": {
-      "coding": 78,
-      "reasoning": 82,
-      "structured": 75,
-      "speed": 88,
-      "agentic": 80
+      "coding": 88,
+      "reasoning": 92,
+      "structured": 80,
+      "speed": 65,
+      "agentic": 94
     }
   },
   "test-writer": {
-    "modelKey": "deepseek-v4-flash",
-    "ollamaId": "deepseek-v4-flash",
-    "score": 78,
+    "modelKey": "kimi-k2.6",
+    "ollamaId": "kimi-k2.6:cloud",
+    "score": 88,
     "capabilities": {
-      "coding": 78,
-      "reasoning": 82,
-      "structured": 75,
-      "speed": 88,
-      "agentic": 80
+      "coding": 88,
+      "reasoning": 92,
+      "structured": 80,
+      "speed": 65,
+      "agentic": 94
     }
   },
   "unit-test-writer": {
     "modelKey": "deepseek-v4-flash",
-    "ollamaId": "deepseek-v4-flash",
+    "ollamaId": "deepseek-v4-flash:cloud",
     "score": 81,
     "capabilities": {
       "coding": 78,
@@ -96,32 +96,32 @@
     }
   },
   "reviewer": {
-    "modelKey": "deepseek-v4-flash",
-    "ollamaId": "deepseek-v4-flash",
-    "score": 82,
+    "modelKey": "kimi-k2.6",
+    "ollamaId": "kimi-k2.6:cloud",
+    "score": 83,
     "capabilities": {
-      "coding": 78,
-      "reasoning": 82,
-      "structured": 75,
-      "speed": 88,
-      "agentic": 80
+      "coding": 88,
+      "reasoning": 92,
+      "structured": 80,
+      "speed": 65,
+      "agentic": 94
     }
   },
   "security-reviewer": {
-    "modelKey": "deepseek-v4-flash",
-    "ollamaId": "deepseek-v4-flash",
-    "score": 80,
+    "modelKey": "kimi-k2.6",
+    "ollamaId": "kimi-k2.6:cloud",
+    "score": 90,
     "capabilities": {
-      "coding": 78,
-      "reasoning": 82,
-      "structured": 75,
-      "speed": 88,
-      "agentic": 80
+      "coding": 88,
+      "reasoning": 92,
+      "structured": 80,
+      "speed": 65,
+      "agentic": 94
     }
   },
   "gate-skeptic": {
     "modelKey": "deepseek-v4-flash",
-    "ollamaId": "deepseek-v4-flash",
+    "ollamaId": "deepseek-v4-flash:cloud",
     "score": 82,
     "capabilities": {
       "coding": 78,
@@ -133,7 +133,7 @@
   },
   "ui-reviewer": {
     "modelKey": "deepseek-v4-flash",
-    "ollamaId": "deepseek-v4-flash",
+    "ollamaId": "deepseek-v4-flash:cloud",
     "score": 81,
     "capabilities": {
       "coding": 78,
@@ -144,68 +144,68 @@
     }
   },
   "debug-agent": {
-    "modelKey": "deepseek-v4-flash",
-    "ollamaId": "deepseek-v4-flash",
-    "score": 82,
+    "modelKey": "kimi-k2.6",
+    "ollamaId": "kimi-k2.6:cloud",
+    "score": 85,
     "capabilities": {
-      "coding": 78,
-      "reasoning": 82,
-      "structured": 75,
-      "speed": 88,
-      "agentic": 80
+      "coding": 88,
+      "reasoning": 92,
+      "structured": 80,
+      "speed": 65,
+      "agentic": 94
     }
   },
   "fixer": {
-    "modelKey": "deepseek-v4-flash",
-    "ollamaId": "deepseek-v4-flash",
-    "score": 82,
+    "modelKey": "kimi-k2.6",
+    "ollamaId": "kimi-k2.6:cloud",
+    "score": 84,
     "capabilities": {
-      "coding": 78,
-      "reasoning": 82,
-      "structured": 75,
-      "speed": 88,
-      "agentic": 80
+      "coding": 88,
+      "reasoning": 92,
+      "structured": 80,
+      "speed": 65,
+      "agentic": 94
     }
   },
   "adversarial-tester": {
-    "modelKey": "deepseek-v4-flash",
-    "ollamaId": "deepseek-v4-flash",
-    "score": 82,
+    "modelKey": "kimi-k2.6",
+    "ollamaId": "kimi-k2.6:cloud",
+    "score": 86,
     "capabilities": {
-      "coding": 78,
-      "reasoning": 82,
-      "structured": 75,
-      "speed": 88,
-      "agentic": 80
+      "coding": 88,
+      "reasoning": 92,
+      "structured": 80,
+      "speed": 65,
+      "agentic": 94
     }
   },
   "validation-lead": {
-    "modelKey": "deepseek-v4-flash",
-    "ollamaId": "deepseek-v4-flash",
-    "score": 81,
+    "modelKey": "kimi-k2.6",
+    "ollamaId": "kimi-k2.6:cloud",
+    "score": 82,
     "capabilities": {
-      "coding": 78,
-      "reasoning": 82,
-      "structured": 75,
-      "speed": 88,
-      "agentic": 80
+      "coding": 88,
+      "reasoning": 92,
+      "structured": 80,
+      "speed": 65,
+      "agentic": 94
     }
   },
   "product-manager": {
-    "modelKey": "deepseek-v4-flash",
-    "ollamaId": "deepseek-v4-flash",
-    "score": 80,
+    "modelKey": "kimi-k2.6",
+    "ollamaId": "kimi-k2.6:cloud",
+    "score": 82,
     "capabilities": {
-      "coding": 78,
-      "reasoning": 82,
-      "structured": 75,
-      "speed": 88,
-      "agentic": 80
+      "coding": 88,
+      "reasoning": 92,
+      "structured": 80,
+      "speed": 65,
+      "agentic": 94
     }
   },
   "idea-capture": {
     "modelKey": "deepseek-v4-flash",
-    "ollamaId": "deepseek-v4-flash",
+    "ollamaId": "deepseek-v4-flash:cloud",
     "score": 81,
     "capabilities": {
       "coding": 78,
@@ -217,7 +217,7 @@
   },
   "issue-creator": {
     "modelKey": "deepseek-v4-flash",
-    "ollamaId": "deepseek-v4-flash",
+    "ollamaId": "deepseek-v4-flash:cloud",
     "score": 81,
     "capabilities": {
       "coding": 78,
@@ -229,7 +229,7 @@
   },
   "learning-agent": {
     "modelKey": "deepseek-v4-flash",
-    "ollamaId": "deepseek-v4-flash",
+    "ollamaId": "deepseek-v4-flash:cloud",
     "score": 81,
     "capabilities": {
       "coding": 78,
@@ -241,7 +241,7 @@
   },
   "knowledge-organizer": {
     "modelKey": "deepseek-v4-flash",
-    "ollamaId": "deepseek-v4-flash",
+    "ollamaId": "deepseek-v4-flash:cloud",
     "score": 81,
     "capabilities": {
       "coding": 78,
@@ -253,7 +253,7 @@
   },
   "sre": {
     "modelKey": "deepseek-v4-flash",
-    "ollamaId": "deepseek-v4-flash",
+    "ollamaId": "deepseek-v4-flash:cloud",
     "score": 81,
     "capabilities": {
       "coding": 78,
@@ -264,32 +264,32 @@
     }
   },
   "harness-evolver": {
-    "modelKey": "deepseek-v4-flash",
-    "ollamaId": "deepseek-v4-flash",
-    "score": 79,
+    "modelKey": "deepseek-v4-pro",
+    "ollamaId": "deepseek-v4-pro:cloud",
+    "score": 88,
     "capabilities": {
-      "coding": 78,
-      "reasoning": 82,
-      "structured": 75,
-      "speed": 88,
-      "agentic": 80
+      "coding": 88,
+      "reasoning": 92,
+      "structured": 80,
+      "speed": 55,
+      "agentic": 90
     }
   },
   "reasoning-researcher": {
-    "modelKey": "deepseek-v4-flash",
-    "ollamaId": "deepseek-v4-flash",
-    "score": 82,
+    "modelKey": "kimi-k2.6",
+    "ollamaId": "kimi-k2.6:cloud",
+    "score": 84,
     "capabilities": {
-      "coding": 78,
-      "reasoning": 82,
-      "structured": 75,
-      "speed": 88,
-      "agentic": 80
+      "coding": 88,
+      "reasoning": 92,
+      "structured": 80,
+      "speed": 65,
+      "agentic": 94
     }
   },
   "web-researcher": {
     "modelKey": "deepseek-v4-flash",
-    "ollamaId": "deepseek-v4-flash",
+    "ollamaId": "deepseek-v4-flash:cloud",
     "score": 83,
     "capabilities": {
       "coding": 78,
@@ -301,7 +301,7 @@
   },
   "board-ceo": {
     "modelKey": "deepseek-v4-flash",
-    "ollamaId": "deepseek-v4-flash",
+    "ollamaId": "deepseek-v4-flash:cloud",
     "score": 81,
     "capabilities": {
       "coding": 78,
@@ -312,20 +312,20 @@
     }
   },
   "board-architect": {
-    "modelKey": "deepseek-v4-flash",
-    "ollamaId": "deepseek-v4-flash",
-    "score": 80,
+    "modelKey": "deepseek-v4-pro",
+    "ollamaId": "deepseek-v4-pro:cloud",
+    "score": 89,
     "capabilities": {
-      "coding": 78,
-      "reasoning": 82,
-      "structured": 75,
-      "speed": 88,
-      "agentic": 80
+      "coding": 88,
+      "reasoning": 92,
+      "structured": 80,
+      "speed": 55,
+      "agentic": 90
     }
   },
   "board-contrarian": {
     "modelKey": "deepseek-v4-flash",
-    "ollamaId": "deepseek-v4-flash",
+    "ollamaId": "deepseek-v4-flash:cloud",
     "score": 82,
     "capabilities": {
       "coding": 78,
@@ -337,7 +337,7 @@
   },
   "board-moonshot": {
     "modelKey": "deepseek-v4-flash",
-    "ollamaId": "deepseek-v4-flash",
+    "ollamaId": "deepseek-v4-flash:cloud",
     "score": 81,
     "capabilities": {
       "coding": 78,
@@ -348,32 +348,32 @@
     }
   },
   "dx-advocate": {
-    "modelKey": "deepseek-v4-flash",
-    "ollamaId": "deepseek-v4-flash",
-    "score": 81,
+    "modelKey": "kimi-k2.6",
+    "ollamaId": "kimi-k2.6:cloud",
+    "score": 83,
     "capabilities": {
-      "coding": 78,
-      "reasoning": 82,
-      "structured": 75,
-      "speed": 88,
-      "agentic": 80
+      "coding": 88,
+      "reasoning": 92,
+      "structured": 80,
+      "speed": 65,
+      "agentic": 94
     }
   },
   "security-advisor": {
-    "modelKey": "deepseek-v4-flash",
-    "ollamaId": "deepseek-v4-flash",
-    "score": 79,
+    "modelKey": "kimi-k2.6",
+    "ollamaId": "kimi-k2.6:cloud",
+    "score": 89,
     "capabilities": {
-      "coding": 78,
-      "reasoning": 82,
-      "structured": 75,
-      "speed": 88,
-      "agentic": 80
+      "coding": 88,
+      "reasoning": 92,
+      "structured": 80,
+      "speed": 65,
+      "agentic": 94
     }
   },
   "ship-fast": {
     "modelKey": "deepseek-v4-flash",
-    "ollamaId": "deepseek-v4-flash",
+    "ollamaId": "deepseek-v4-flash:cloud",
     "score": 81,
     "capabilities": {
       "coding": 78,
@@ -385,7 +385,7 @@
   },
   "tech-debt-auditor": {
     "modelKey": "deepseek-v4-flash",
-    "ollamaId": "deepseek-v4-flash",
+    "ollamaId": "deepseek-v4-flash:cloud",
     "score": 81,
     "capabilities": {
       "coding": 78,

@@ -2,7 +2,7 @@
 name: tech-debt-auditor
 description: Board advisor — tracks technical debt, warns when speed mortgages future velocity
 tools: read, bash, grep
-model: deepseek-v4-flash:cloud
+model: kimi-k2.6:cloud
 ---
 
 # Tech Debt Auditor / Sustainability Guardian
