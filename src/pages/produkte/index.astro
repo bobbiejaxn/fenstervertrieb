@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import Wrapper from "@/components/fundations/containers/Wrapper.astro";
+import BreadcrumbJsonLd from "@/components/fundations/head/BreadcrumbJsonLd.astro";
 import { getCollection } from "astro:content";
 
 const allProducts = await getCollection("products");
@@ -24,6 +25,7 @@ const categoryImages: Record<string, string> = {
 ---
 
 <BaseLayout title="Produkte — Fenstervertrieb" description="Premium-Aluminium- und PVC-Systeme von Schüco: Fenster, Türen, Schiebesysteme, Fassaden und Smart Home.">
+  <BreadcrumbJsonLd items={[{ name: "Produkte" }]} />
   <section class="bg-[#0a0a0a] text-white">
     <Wrapper variant="standard" class="py-16 lg:py-24">
       <h1 class="font-serif italic text-3xl md:text-5xl font-medium tracking-tight">

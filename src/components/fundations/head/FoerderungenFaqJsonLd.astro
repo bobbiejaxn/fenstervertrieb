@@ -1,0 +1,52 @@
+---
+// FAQPage structured data for Förderungen
+const ORIGIN = "https://fenstervertrieb.debored.ai";
+
+const faqs = [
+  {
+    question: "Welche Förderungen gibt es für neue Fenster in Deutschland?",
+    answer:
+      "In Deutschland werden energieeffiziente Fenster über die KfW (Kreditanstalt für Wiederaufbau), BAFA (Bundesamt für Wirtschaft und Ausfuhrkontrolle) und landesspezifische Programme gefördert. Die KfW bietet zinsgünstige Kredite und Tilgungszuschüsse, BAFA Direktzuschüsse für den Austausch einzelner Fenster. Viele Bundesländer haben zusätzlich eigene Förderprogramme.",
+  },
+  {
+    question: "Wie viel Förderung bekomme ich für den Fensterkauf?",
+    answer:
+      "Die Förderung hängt vom erzielten U-Wert ab. Bei Einzelaustausch über BAFA erhalten Sie bis zu 20% der förderfähigen Kosten als Direktzuschuss. Über die KfW können Sie bei Sanierung zum Effizienzhaus bis zu 35% Tilgungszuschuss erhalten. Bei einer Standard-Sanierung mit 10 Fenstern können das mehrere Tausend Euro sein.",
+  },
+  {
+    question: "Welchen U-Wert müssen Fenster für die Förderung haben?",
+    answer:
+      "Für BAFA-Förderung müssen die neuen Fenster einen U-Wert von maximal 1,1 W/m²K aufweisen (Fenster ohne Lüftungseinrichtung). Für die KfW-Förderung zum Effizienzhaus hängt der erforderliche U-Wert von der gewählten Effizienzhaus-Stufe ab — Effizienzhaus 40 erfordert deutlich bessere Werte als Effizienzhaus 70. Schüco Aluminium-Fenster erreichen U-Werte bis 0,64 W/m²K und erfüllen alle Förderbedingungen.",
+  },
+  {
+    question: "Kann ich KfW- und BAFA-Förderung gleichzeitig beantragen?",
+    answer:
+      "Nein, eine Doppelförderung ist ausgeschlossen. Sie müssen sich bei der Antragstellung für entweder KfW oder BAFA entscheiden. Die KfW-Förderung lohnt sich besser bei umfassenden Sanierungen (mehrere Maßnahmen), während BAFA sich für den reinen Fensteraustausch eignet.",
+  },
+  {
+    question: "Wann muss ich die Förderung beantragen?",
+    answer:
+      "Wichtig: Die Förderung muss VOR Beginn der Maßnahmen beantragt werden! Bei BAFA reicht ein Online-Antrag vor Auftragsvergabe. Bei der KfW muss der Antrag vor Abschluss des Darlehensvertrags gestellt werden. Nachträgliche Anträge werden grundsätzlich abgelehnt.",
+  },
+  {
+    question: "Welche Schüco Fenstersysteme sind förderfähig?",
+    answer:
+      "Alle Schüco Aluminium-Fenstersysteme unseres Sortiments sind förderfähig, da sie die U-Wert-Anforderungen deutlich unterschreiten. Besonders empfehlenswert: AWS 90.SI+ (Uw 0,64 W/m²K) für höchste Förderstufen und AWS 70.HI (Uw 0,80 W/m²K) als Preis-Leistungs-Sieger. Auch Schüco Türen (ADS-Serie) und Schiebesysteme (ASS-Serie) sind förderfähig.",
+  },
+];
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faqs.map((faq) => ({
+    "@type": "Question",
+    name: faq.question,
+    acceptedAnswer: {
+      "@type": "Answer",
+      text: faq.answer,
+    },
+  })),
+};
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />

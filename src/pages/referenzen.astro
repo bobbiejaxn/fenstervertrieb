@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import Wrapper from "@/components/fundations/containers/Wrapper.astro";
+import BreadcrumbJsonLd from "@/components/fundations/head/BreadcrumbJsonLd.astro";
 
 // ⚠️ MOCK DATA — These are example projects, not real references.
 // Replace with actual project references before going live with real customer names.
@@ -51,6 +52,7 @@ const references = [
 ---
 
 <BaseLayout title="Referenzen — Fenstervertrieb" description="Beispielprojekte mit Schüco Premium-Systemen — veranschaulichen unsere Leistungsbereite.">
+  <BreadcrumbJsonLd items={[{ name: "Referenzen" }]} />
   <section class="bg-[#0a0a0a] text-white">
     <Wrapper variant="standard" class="py-16 lg:py-24">
       <h1 class="font-serif italic text-3xl md:text-5xl font-medium tracking-tight">

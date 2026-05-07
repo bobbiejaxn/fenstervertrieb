@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import Wrapper from "@/components/fundations/containers/Wrapper.astro";
+import BreadcrumbJsonLd from "@/components/fundations/head/BreadcrumbJsonLd.astro";
 import { getCollection } from "astro:content";
 
 const allPosts = await getCollection("posts");
@@ -11,6 +12,7 @@ const posts = allPosts.sort(
 ---
 
 <BaseLayout title="Blog — Fenstervertrieb" description="Fachwissen und Ratgeber rund um Schüco Aluminium-Fenster, Energieeffizienz, Förderungen und mehr.">
+  <BreadcrumbJsonLd items={[{ name: "Blog & Ratgeber" }]} />
   <section class="bg-[#0a0a0a] text-white">
     <Wrapper variant="standard" class="py-16 lg:py-24">
       <h1 class="font-serif italic text-3xl md:text-5xl font-medium tracking-tight">

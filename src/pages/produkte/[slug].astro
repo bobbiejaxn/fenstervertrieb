@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import Wrapper from "@/components/fundations/containers/Wrapper.astro";
+import BreadcrumbJsonLd from "@/components/fundations/head/BreadcrumbJsonLd.astro";
 import { getCollection } from "astro:content";
 
 export async function getStaticPaths() {
@@ -23,7 +24,7 @@ const jsonLd = {
   name: product.data.title,
   description: product.data.description,
   image: product.data.image.startsWith("/")
-    ? `https://fenstervertrieb.de${product.data.image}`
+    ? `https://fenstervertrieb.debored.ai${product.data.image}`
     : product.data.image,
   brand: {
     "@type": "Brand",
@@ -41,13 +42,14 @@ const jsonLd = {
     seller: {
       "@type": "Organization",
       name: "Fenstervertrieb GmbH",
-      url: "https://fenstervertrieb.de"
+      url: "https://fenstervertrieb.debored.ai"
     },
   },
 };
 ---
 
 <BaseLayout title={`${product.data.title} — Fenstervertrieb`} description={product.data.description?.slice(0, 160) || "Schüco Premium-Systeme"}>
+  <BreadcrumbJsonLd items={[{ name: "Produkte", href: "/produkte" }, { name: product.data.title }]} />
   <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
   <section class="bg-[#0a0a0a] text-white">
     <Wrapper variant="standard" class="py-16 lg:py-24">

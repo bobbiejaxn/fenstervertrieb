@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import Wrapper from "@/components/fundations/containers/Wrapper.astro";
+import BreadcrumbJsonLd from "@/components/fundations/head/BreadcrumbJsonLd.astro";
 import { getCollection, render } from "astro:content";
 
 export async function getStaticPaths() {
@@ -16,6 +17,7 @@ const { Content } = await render(post);
 ---
 
 <BaseLayout title={`${post.data.title} — Fenstervertrieb Blog`} description={post.data.description}>
+  <BreadcrumbJsonLd items={[{ name: "Blog & Ratgeber", href: "/blog" }, { name: post.data.title }]} />
   <section class="bg-[#0a0a0a] text-white">
     <Wrapper variant="standard" class="py-16 lg:py-24">
       <a href="/blog" class="text-sm text-gray-400 hover:text-white transition-colors">

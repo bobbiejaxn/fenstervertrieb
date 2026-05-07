@@ -1,0 +1,29 @@
+---
+// BreadcrumbList structured data — used on sub-pages
+// Usage: <BreadcrumbJsonLd items={[{name: "Produkte", href: "/produkte"}, {name: "AWS 70.HI"}]} />
+
+const ORIGIN = "https://fenstervertrieb.debored.ai";
+
+interface BreadcrumbItem {
+  name: string;
+  href?: string; // omit for last item (current page)
+}
+
+const { items }: { items: BreadcrumbItem[] } = Astro.props;
+
+// Always start with Home
+const allItems = [{ name: "Startseite", href: "/" }, ...items];
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: allItems.map((item, index) => ({
+    "@type": "ListItem",
+    position: index + 1,
+    name: item.name,
+    ...(item.href ? { item: `${ORIGIN}${item.href}` } : {}),
+  })),
+};
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />

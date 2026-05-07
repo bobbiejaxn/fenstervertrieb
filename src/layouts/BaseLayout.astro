@@ -2,6 +2,7 @@
 // Fundations
 import "@/styles/global.css";
 import BaseHead from "@/components/fundations/head/BaseHead.astro";
+import OrganizationJsonLd from "@/components/fundations/head/OrganizationJsonLd.astro";
 // Components
 import Footer from "@/components/global/Footer.astro";
 import Navigation from "@/components/global/Navigation.astro";
@@ -12,6 +13,7 @@ const { hideNav = false, hideFooter = false, title, description } = Astro.props;
 <html lang="de" class="">
   <head>
     <BaseHead title={title} description={description} />
+    <OrganizationJsonLd />
     <script defer src="https://analytics.debored.ai/script.js" data-website-id="64ccf84d-bcd9-47e7-85a8-b6b891df2e0f"></script>
   </head>
   <body class="flex flex-col bg-[#0a0a0a] min-h-svh">

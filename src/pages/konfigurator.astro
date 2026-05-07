@@ -3,6 +3,7 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
 import Wrapper from "@/components/fundations/containers/Wrapper.astro";
 import { getCollection } from "astro:content";
 import ConfiguratorWizard from "@/components/configurator/ConfiguratorWizard.astro";
+import BreadcrumbJsonLd from "@/components/fundations/head/BreadcrumbJsonLd.astro";
 
 const allProducts = await getCollection("products");
 const productsData = allProducts.map((p) => ({
@@ -24,11 +25,11 @@ const jsonLd = {
   name: "Produktkonfigurator — Fenstervertrieb",
   description:
     "Konfigurieren Sie Ihr Schüco Fenstersystem Schritt für Schritt — Kategorie, System, Größe, Farbe und Öffnungsart.",
-  url: "https://fenstervertrieb.de/konfigurator",
+  url: "https://fenstervertrieb.debored.ai/konfigurator",
   isPartOf: {
     "@type": "WebSite",
     name: "Fenstervertrieb",
-    url: "https://fenstervertrieb.de",
+    url: "https://fenstervertrieb.debored.ai",
   },
 };
 ---
@@ -37,6 +38,7 @@ const jsonLd = {
   title="Produktkonfigurator — Fenstervertrieb"
   description="Konfigurieren Sie Ihr Schüco Fenstersystem in 4 einfachen Schritten. Individuelle Beratung für Premium-Fenster und Türen in Deutschland."
 >
+  <BreadcrumbJsonLd items={[{ name: "Konfigurator", href: "/konfigurator" }]} />
   <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
 
   <!-- Hero -->

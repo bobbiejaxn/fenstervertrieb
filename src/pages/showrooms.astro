@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import Wrapper from "@/components/fundations/containers/Wrapper.astro";
+import BreadcrumbJsonLd from "@/components/fundations/head/BreadcrumbJsonLd.astro";
 
 // ⚠️ MOCK DATA — Replace with real showroom locations before going live
 // Remove entries that don't have real addresses yet, or replace with actual data
@@ -23,6 +24,7 @@ const showrooms = [
 ---
 
 <BaseLayout title="Showrooms — Fenstervertrieb" description="Erleben Sie Schüco Premium-Systeme live in unserem Showroom in Leverkusen.">
+  <BreadcrumbJsonLd items={[{ name: "Showrooms" }]} />
   <section class="bg-[#0a0a0a] text-white">
     <Wrapper variant="standard" class="py-16 lg:py-24">
       <h1 class="font-serif italic text-3xl md:text-5xl font-medium tracking-tight">

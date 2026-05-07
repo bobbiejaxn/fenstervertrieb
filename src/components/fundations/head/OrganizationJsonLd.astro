@@ -1,0 +1,74 @@
+---
+// Organization + LocalBusiness structured data — injected site-wide
+const ORIGIN = "https://fenstervertrieb.debored.ai";
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": ["LocalBusiness", "Organization"],
+  name: "Fenstervertrieb GmbH",
+  url: ORIGIN,
+  logo: `${ORIGIN}/images/hero-building.jpg`,
+  image: `${ORIGIN}/images/hero-building.jpg`,
+  description:
+    "Offizieller Schüco Partner für Premium-Fenster und Türen in Deutschland. Schüco Aluminium-Systeme mit höchster Energieeffizienz.",
+  telephone: "+49 173 1001726",
+  email: "info@fenstervertrieb.de",
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: "Burscheider Str. 157",
+    addressLocality: "Leverkusen",
+    postalCode: "51381",
+    addressCountry: "DE",
+    addressRegion: "Nordrhein-Westfalen",
+  },
+  geo: {
+    "@type": "GeoCoordinates",
+    latitude: 51.045,
+    longitude: 7.008,
+  },
+  openingHoursSpecification: [
+    {
+      "@type": "OpeningHoursSpecification",
+      dayOfWeek: [
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+      ],
+      opens: "07:00",
+      closes: "18:00",
+    },
+    {
+      "@type": "OpeningHoursSpecification",
+      dayOfWeek: "Saturday",
+      opens: "00:00",
+      closes: "00:00",
+      description: "Nach Vereinbarung",
+    },
+  ],
+  sameAs: [
+    "https://www.linkedin.com/company/fenstervertrieb",
+    "https://www.instagram.com/fenstervertrieb",
+  ],
+  brand: {
+    "@type": "Brand",
+    name: "Schüco",
+  },
+  priceRange: "€€",
+  areaServed: {
+    "@type": "Country",
+    name: "Germany",
+  },
+  knowsAbout: [
+    "Aluminium-Fenster",
+    "Energiesparende Fenster",
+    "Schüco Systeme",
+    "Hebeschiebetüren",
+    "Fassadensysteme",
+    "Smart-Home-Gebäudetechnik",
+  ],
+};
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
