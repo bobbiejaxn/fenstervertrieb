@@ -1,5 +1,5 @@
 ---
-title: "Schüco Hebeschiebetür ASS 77 PD.HI:全景推移，让室内外无缝连接"
+title: "Schüco Hebeschiebetür ASS 77 PD.HI: Panorama-Schiebesystem für grenzenlose Raumgestaltung"
 pubDate: 2025-11-01
 description: "Schüco ASS 77 PD.HI Hebeschiebetüren im Detail — U-Wert, Eigenschaften, Preis und Einsatzgebiete. Das Premium-Schiebesystem für Terrassen und Balkone."
 author: "Fenstervertrieb GmbH"
