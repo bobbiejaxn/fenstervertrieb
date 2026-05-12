@@ -1,6 +1,9 @@
 ---
 name: sre
-description: Expert site reliability engineer specializing in SLOs, error budgets, observability, chaos engineering, and toil reduction for production systems at scale.
+description: >
+  Expert site reliability engineer specializing in SLOs, error budgets,
+  observability, chaos engineering, and toil reduction for production systems
+  at scale.
 tools: read, bash, grep, glob
 model: minimax-m2.7:cloud
 color: "#e63946"

@@ -1,6 +1,13 @@
 ---
 name: adversarial-tester
-description: Active red-team agent that tries to break implementations. Feeds edge-case inputs, tests boundary conditions, probes RBAC bypass, challenges specs, and hunts failure modes the happy-path tests miss. Returns BROKEN or SURVIVED with specific reproducible attack vectors. Run after reviewer passes, before gate-skeptic. Do NOT use for: code review (use reviewer), security audit (use security-reviewer), readiness check (use gate-skeptic), or fixing code (use implementer).
+description: >
+  Active red-team agent that tries to break implementations. Feeds edge-case
+  inputs, tests boundary conditions, probes RBAC bypass, challenges specs, and
+  hunts failure modes the happy-path tests miss. Returns BROKEN or SURVIVED
+  with specific reproducible attack vectors. Run after reviewer passes, before
+  gate-skeptic. Do NOT use for: code review (use reviewer), security audit
+  (use security-reviewer), readiness check (use gate-skeptic), or fixing code
+  (use implementer).
 tools: read, bash, grep, edit, write
 model: deepseek-v4-pro:cloud
 ---

@@ -316,7 +316,15 @@ async function runSingleAgent(
 		args.push(`Task: ${task}`);
 		let wasAborted = false;
 
+		// Default subagent timeout: 3 minutes. Prevents indefinite hangs.
+		const SUBAGENT_TIMEOUT_MS = 3 * 60 * 1000;
+
 		const exitCode = await new Promise<number>((resolve) => {
+			let settled = false;
+			const done = (code: number) => {
+				if (!settled) { settled = true; resolve(code); }
+			};
+
 			const proc = spawn("pi", args, {
 				cwd: cwd ?? defaultCwd,
 				shell: false,
@@ -327,6 +335,7 @@ async function runSingleAgent(
 					// Falls back to reading .pi/traces/current-run-id if env var not set.
 					TRACE_RUN_ID: resolveTraceRunId(defaultCwd),
 					TRACE_AGENT_NAME: agentName,
+					...(process.env.TRACE_PHASE ? { TRACE_PHASE: process.env.TRACE_PHASE } : {}),
 				},
 			});
 			let buffer = "";
@@ -381,15 +390,30 @@ async function runSingleAgent(
 
 			proc.on("close", (code) => {
 				if (buffer.trim()) processLine(buffer);
-				resolve(code ?? 0);
+				done(code ?? 0);
 			});
 
 			proc.on("error", () => {
-				resolve(1);
+				done(1);
 			});
+
+			// Auto-kill after timeout so the orchestrator doesn't hang forever
+			const timeoutId = setTimeout(() => {
+				if (!proc.killed) {
+					wasAborted = true;
+					proc.kill("SIGTERM");
+					setTimeout(() => { if (!proc.killed) proc.kill("SIGKILL"); }, 5000);
+					currentResult.stderr += "\nSubagent timed out after " + (SUBAGENT_TIMEOUT_MS / 1000) + "s";
+					done(1);
+				}
+			}, SUBAGENT_TIMEOUT_MS);
+
+			// Clear timeout on normal exit
+			proc.on("close", () => clearTimeout(timeoutId));
 
 			if (signal) {
 				const killProc = () => {
+					clearTimeout(timeoutId);
 					wasAborted = true;
 					proc.kill("SIGTERM");
 					setTimeout(() => {

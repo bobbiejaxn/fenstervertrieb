@@ -1,3 +1,8 @@
+---
+name: builder-ethos
+description: Builder ethos principles for AI-assisted shipping. Extracted from gstack by Garry Tan (YC). Three principles that change how every agent makes build-vs-skip decisions. Load when any agent starts a task.
+---
+
 # Builder Ethos — Principles for AI-Assisted Shipping
 
 Extracted from [gstack](https://github.com/garrytan/gstack) by Garry Tan (YC). These three principles change how every agent makes build-vs-skip decisions.

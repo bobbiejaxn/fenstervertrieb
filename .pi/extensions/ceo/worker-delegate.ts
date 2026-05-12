@@ -13,6 +13,19 @@ export interface WorkerResult {
   stderr: string;
 }
 
+
+/** Resolve trace run ID from env var or current-run-id file (matches subagent pattern) */
+function resolveTraceRunId(cwd: string): string {
+  if (process.env.TRACE_RUN_ID) return process.env.TRACE_RUN_ID;
+  try {
+    const runIdFile = path.join(cwd, ".pi", "traces", "current-run-id");
+    if (fs.existsSync(runIdFile)) {
+      return fs.readFileSync(runIdFile, "utf-8").trim();
+    }
+  } catch { /* ignore */ }
+  return "";
+}
+
 function writePromptToTempFile(agentName: string, prompt: string): { dir: string; filePath: string } {
   const tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), "pi-ceo-worker-"));
   const safeName = agentName.replace(/[^\w.-]+/g, "_");
@@ -45,7 +58,17 @@ export async function delegateToWorker(
     args.push(`Task: ${taskPrompt}`);
 
     const { exitCode, stdout, stderr } = await new Promise<{ exitCode: number; stdout: string; stderr: string }>((resolve) => {
-      const proc = spawn("pi", args, { cwd, shell: false, stdio: ["ignore", "pipe", "pipe"] });
+      const proc = spawn("pi", args, {
+      cwd,
+      shell: false,
+      stdio: ["ignore", "pipe", "pipe"],
+      env: {
+        ...process.env,
+        TRACE_AGENT_NAME: agent.name,
+        TRACE_RUN_ID: resolveTraceRunId(cwd),
+        ...(process.env.TRACE_PHASE ? { TRACE_PHASE: process.env.TRACE_PHASE } : {}),
+      },
+    });
       let stdout = "";
       let stderr = "";
 

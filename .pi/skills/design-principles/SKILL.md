@@ -1,3 +1,8 @@
+---
+name: design-principles
+description: Universal anti-slop design rules for all agents. Extracted from huashu-design by 花叔 (Huasheng). Prevents AI design slop, enforces brand fidelity, and ensures distinctive frontend interfaces. Load when any agent writes or reviews UI code.
+---
+
 # Design Principles — Universal Anti-Slop Design Rules for All Agents
 
 Universal design principles extracted from [huashu-design](https://github.com/alchaincyf/huashu-design) by 花叔 (Huasheng). Loaded by any agent that writes or reviews UI code. Prevents AI design slop and enforces brand fidelity.

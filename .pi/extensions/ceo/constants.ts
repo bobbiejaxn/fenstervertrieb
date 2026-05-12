@@ -10,7 +10,9 @@ export const DECISIONS_TOKEN_THRESHOLD = 8000;
 
 export const VERIFICATION_CONFIDENCE_THRESHOLD = 80;
 
-export const CEO_MODEL = "anthropic/claude-opus-4-6";
+// CEO reasoning model — configurable via env var. Defaults to zai/glm-5.1
+// (Ollama Cloud). Set CEO_MODEL to override, e.g. "anthropic/claude-opus-4-6".
+export const CEO_MODEL = process.env.CEO_MODEL || "zai/glm-5.1";
 
 export const SESSIONS_DIR = ".pi/ceo-sessions";
 export const LATEST_SESSION_FILE = "latest.json";

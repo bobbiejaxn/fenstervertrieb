@@ -5,7 +5,7 @@ description: >
   and optional audit results to generate structured campaign concepts, messaging
   pillars, and creative direction for each platform. Produces the strategic
   sections of campaign-brief.md.
-model: deepseek-v4-pro:cloud
+model: minimax-m2.7:cloud
 maxTurns: 25
 tools: Read, Write, Glob
 ---

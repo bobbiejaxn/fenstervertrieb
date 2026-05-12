@@ -1,8 +1,10 @@
 ---
 name: ceo
-description: Autonomous CEO agent that plans, delegates, reviews, and iterates toward a high-level goal
+description: >
+  Autonomous CEO agent that plans, delegates, reviews, and iterates toward a
+  high-level goal
 tools: read, grep, bash
-model: minimax-m2.7:cloud
+model: deepseek-v4-pro:cloud
 ---
 
 # CEO Agent

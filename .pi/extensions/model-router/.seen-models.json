@@ -1,5 +1,4 @@
 [
   "llama3.2:1b",
-  "qwen3:4b",
-  "mxbai-embed-large:latest"
+  "mistral:7b"
 ]

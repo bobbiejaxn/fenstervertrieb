@@ -1,6 +1,11 @@
 ---
 name: security-reviewer
-description: Audits features for security vulnerabilities. Specializes in RBAC gaps, cross-tenant data leakage, secret exposure, unauthenticated endpoints, and input validation gaps. Read-only. Returns SECURE or FINDINGS with severity-ranked issues. Run before any feature that touches auth, user data, billing, or HTTP endpoints.
+description: >
+  Audits features for security vulnerabilities. Specializes in RBAC gaps,
+  cross-tenant data leakage, secret exposure, unauthenticated endpoints, and
+  input validation gaps. Read-only. Returns SECURE or FINDINGS with
+  severity-ranked issues. Run before any feature that touches auth, user data,
+  billing, or HTTP endpoints.
 tools: read, grep, bash
 model: deepseek-v4-pro:cloud
 ---

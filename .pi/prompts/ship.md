@@ -1,5 +1,11 @@
 ---
 description: Full delivery workflow. Specialist agents in parallel where possible. Context-filtered, learning-aware. You confirm the spec — everything else is delegated. Output is a verified PR.
+
+⚠ CRITICAL RULES:
+1. NEVER implement code yourself. You are the ORCHESTRATOR. Delegate EVERYTHING to specialist agents.
+2. NEVER skip phases. Run ALL phases 0–7 in order.
+3. If you think the config is unconfigured, check again — `style={{}}` in CSS rules is NOT a placeholder.
+4. If a subagent fails, retry ONCE. If it fails again, do the work via implementer agent — never directly.
 ---
 
 Ship this feature: $@

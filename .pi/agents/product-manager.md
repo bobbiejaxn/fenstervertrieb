@@ -1,6 +1,9 @@
 ---
 name: product-manager
-description: Interviews the user as an AI Product Manager, produces a confirmed spec doc and USVA file. Use at the start of every /ship run. No code access — product thinking only.
+description: >
+  Interviews the user as an AI Product Manager, produces a confirmed spec doc
+  and USVA file. Use at the start of every /ship run. No code access — product
+  thinking only.
 tools: read
 model: minimax-m2.7:cloud
 ---

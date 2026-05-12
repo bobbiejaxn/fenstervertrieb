@@ -1,6 +1,8 @@
 ---
 name: harness-evolver
-description: Optimize harness from traces — reads execution logs, diagnoses failures, proposes targeted improvements to agent prompts, skills, and config.
+description: >
+  Optimize harness from traces — reads execution logs, diagnoses failures,
+  proposes targeted improvements to agent prompts, skills, and config.
 tools: read, grep, bash
 model: deepseek-v4-pro:cloud
 ---

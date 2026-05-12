@@ -1,6 +1,9 @@
 ---
 name: learning-agent
-description: Runs at session start (retrieve) and end (log + promote). Reads what happened, identifies patterns, auto-promotes rules when a pattern recurs 3+ times. The self-improvement loop that closes.
+description: >
+  Runs at session start (retrieve) and end (log + promote). Reads what
+  happened, identifies patterns, auto-promotes rules when a pattern recurs 3+
+  times. The self-improvement loop that closes.
 tools: read, write, edit, bash
 model: deepseek-v4-flash:cloud
 ---

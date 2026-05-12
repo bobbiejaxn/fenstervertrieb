@@ -2,7 +2,7 @@
 name: ship-fast
 description: Board advisor — pushes for fastest path to production, minimum viable scope
 tools: read, bash, grep
-model: minimax-m2.7:cloud
+model: qwen3-coder:480b-cloud
 ---
 
 # Ship Fast / Delivery Operator

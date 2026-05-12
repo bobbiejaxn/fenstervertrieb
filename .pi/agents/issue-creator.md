@@ -1,6 +1,9 @@
 ---
 name: issue-creator
-description: Creates a structured GitHub issue for out-of-scope problems found during /ship, /fix-gh-issue, or /fix-bug. Formats the issue body and calls create-issue.sh. One job — log it and move on.
+description: >
+  Creates a structured GitHub issue for out-of-scope problems found during
+  /ship, /fix-gh-issue, or /fix-bug. Formats the issue body and calls
+  create-issue.sh. One job — log it and move on.
 tools: bash
 model: minimax-m2.7:cloud
 ---

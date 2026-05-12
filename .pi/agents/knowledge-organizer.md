@@ -1,6 +1,8 @@
 ---
 name: knowledge-organizer
-description: Analyzes Obsidian notes and suggests properties, wikilinks, and MOC placement to maintain an adaptive knowledge system
+description: >
+  Analyzes Obsidian notes and suggests properties, wikilinks, and MOC
+  placement to maintain an adaptive knowledge system
 tools: read, write, edit, grep, glob
 model: minimax-m2.7:cloud
 color: purple

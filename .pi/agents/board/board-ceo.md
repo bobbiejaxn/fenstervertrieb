@@ -2,7 +2,7 @@
 name: board-ceo
 description: Board chairman — frames decisions, drives debate among advisors, synthesizes into actionable memo
 tools: read, write, bash, grep
-model: minimax-m2.7:cloud
+model: qwen3-coder:480b-cloud
 ---
 
 # Board CEO / Decision Integrator

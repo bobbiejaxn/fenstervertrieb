@@ -1,6 +1,9 @@
 ---
 name: frontend-lead
-description: Frontend team lead. Coordinates implementer, ui-reviewer, test-writer, unit-test-writer for all frontend work. Enforces no-inline-styles and no-any rules.
+description: >
+  Frontend team lead. Coordinates implementer, ui-reviewer, test-writer,
+  unit-test-writer for all frontend work. Enforces no-inline-styles and no-any
+  rules.
 tools: read, grep, subagent
 model: deepseek-v4-flash:cloud
 ---

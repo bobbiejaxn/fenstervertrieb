@@ -1,6 +1,9 @@
 ---
 name: architect
-description: Reads the confirmed USVA spec and the codebase, produces a precise implementation plan listing every file to change, every index needed, every schema edit. Read-only — no code changes.
+description: >
+  Reads the confirmed USVA spec and the codebase, produces a precise
+  implementation plan listing every file to change, every index needed, every
+  schema edit. Read-only — no code changes.
 tools: read, grep, glob, find, bash
 model: kimi-k2.6:cloud
 ---

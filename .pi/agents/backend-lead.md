@@ -1,8 +1,11 @@
 ---
 name: backend-lead
-description: Backend team lead. Coordinates implementer, database-optimizer, sre, unit-test-writer for all backend work. Enforces no-any and explicit-return-types rules.
+description: >
+  Backend team lead. Coordinates implementer, database-optimizer, sre,
+  unit-test-writer for all backend work. Enforces no-any and
+  explicit-return-types rules.
 tools: read, grep, subagent
-model: glm-5.1:cloud
+model: zai/glm-5.1
 ---
 
 # Backend Team Lead

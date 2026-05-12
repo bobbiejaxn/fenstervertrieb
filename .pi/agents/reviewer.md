@@ -1,6 +1,11 @@
 ---
 name: reviewer
-description: Reviews a git diff against project rules. Read-only. Returns PASS or FAIL with specific line-level issues. Run after implementer, before gate-skeptic. Do NOT use for: security audits (use security-reviewer), readiness checks (use gate-skeptic), UI review (use ui-reviewer), or fixing code (use implementer).
+description: >
+  Reviews a git diff against project rules. Read-only. Returns PASS or FAIL
+  with specific line-level issues. Run after implementer, before gate-skeptic.
+  Do NOT use for: security audits (use security-reviewer), readiness checks
+  (use gate-skeptic), UI review (use ui-reviewer), or fixing code (use
+  implementer).
 tools: read, grep, bash
 model: deepseek-v4-flash:cloud
 ---

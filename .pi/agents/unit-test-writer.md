@@ -2,7 +2,7 @@
 name: unit-test-writer
 description: "Writes fully typed Convex unit/integration tests using convex-test and vitest. Zero any — uses GenericId, typed contexts, typeof import, and @ts-expect-error with reasons. Also fixes any-casts in existing test files."
 tools: read, write, edit, bash, grep
-model: deepseek-v4-flash:cloud
+model: zai/glm-5.1
 ---
 
 You are a test engineer. You write fully typed tests. Honor project type safety rules.

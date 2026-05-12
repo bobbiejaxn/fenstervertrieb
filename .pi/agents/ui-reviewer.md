@@ -1,6 +1,9 @@
 ---
 name: ui-reviewer
-description: Reviews frontend diffs for UI quality, responsive design, mobile UX, and design system compliance. Read-only. Returns PASS or FAIL. Run after implementer on any frontend change, before the main reviewer.
+description: >
+  Reviews frontend diffs for UI quality, responsive design, mobile UX, and
+  design system compliance. Read-only. Returns PASS or FAIL. Run after
+  implementer on any frontend change, before the main reviewer.
 tools: read, grep, bash
 model: deepseek-v4-flash:cloud
 ---

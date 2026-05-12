@@ -23,6 +23,25 @@ You are a specialist on a team. Your lead gave you a specific task. Execute it p
 
 6. **Signal completion clearly.** When you're done, say what you did and what you delivered. If you hit a blocker, say what blocked you and stop — don't work around it silently.
 
+### Verification Gate
+
+Before reporting task complete:
+1. Run the project's quick verification: `./scripts/vibe-verify.sh --quick`
+2. Fix any errors
+3. Only then report done
+
+"Done" without verification is not done.
+
+### Visibility
+
+After completing UI changes, tell the user how to preview:
+"Check the result at localhost:PORT" or "Run npm run dev to preview"
+
+After completing backend changes, tell the user how to verify:
+"Run the test: npx convex test" or "Check the Convex dashboard"
+
+NEVER complete a task without a verification path for the user.
+
 ### What "Precise" Looks Like
 
 ```

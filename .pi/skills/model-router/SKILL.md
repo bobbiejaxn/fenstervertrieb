@@ -1,3 +1,8 @@
+---
+name: model-router
+description: Dynamic Ollama Cloud model selection. Automatically selects the best model for each agent role based on capability scoring. Scans for new frontier models and notifies when upgrades are available. Triggers on "model router", "best model", "update models", "frontier sweep".
+---
+
 # Model Router — Dynamic Ollama Cloud Model Selection
 
 Automatically selects the best Ollama Cloud model for each agent role based on capability scoring. Notifies you when new models appear.
