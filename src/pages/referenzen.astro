@@ -3,50 +3,50 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
 import Wrapper from "@/components/fundations/containers/Wrapper.astro";
 import BreadcrumbJsonLd from "@/components/fundations/head/BreadcrumbJsonLd.astro";
 
-// ⚠️ MOCK DATA — These are example projects, not real references.
-// Replace with actual project references before going live with real customer names.
+// ⚠️ MOCK DATA — Beispielprojekte für Demonstrationszwecke.
+// Durch echte Kundenreferenzen ersetzen, sobald verfügbar.
 const references = [
   {
-    project: "Residencial Costa Cálida",
-    location: "Murcia, Spanien",
-    type: "Wohnanlage — 48 Wohnungen",
+    project: "Wohnpark Rheinauhafen",
+    location: "Köln, Nordrhein-Westfalen",
+    type: "Wohnanlage — 36 Wohnungen",
     system: "AWS 70.HI + ADS 75",
-    description: "Energetische Sanierung einer Wohnanlage am Mittelmeer mit Schüco Aluminium-Fenstern und -Türen.",
+    description: "Neubau einer gehobenen Wohnanlage im Kölner Rheinauhafen mit energieeffizienten Schüco Aluminium-Fenstern und -Türen.",
   },
   {
-    project: "Villa Etna View",
-    location: "Catania, Sizilien",
+    project: "Landhaus Bergstraße",
+    location: "Bensheim, Hessen",
     type: "Privatvilla",
     system: "AWS 90.SI+ + ASS 77 PD.HI",
-    description: "Premium-Villa mit Passivhaus-Fenstern und Panorama-Schiebetüren mit Blick auf den Ätna.",
+    description: "Premium-Villa mit Passivhaus-zertifizierten Fenstern und bodentiefen Panorama-Schiebetüren in Edelstahl-Optik.",
   },
   {
-    project: "Centro Comercial Mediterráneo",
-    location: "Murcia, Spanien",
+    project: "Technologiezentrum Leverkusen",
+    location: "Leverkusen, Nordrhein-Westfalen",
     type: "Gewerbekomplex",
     system: "FWS 50 + FWS 60+",
-    description: "Moderne Fassadenlösung für ein Einkaufszentrum mit integrierten Schüco Fassadensystemen.",
+    description: "Moderne Pfosten-Riegel-Fassade für ein Büro- und Technologiezentrum mit Sichtbeton-Elementen und Schüco Fassadensystemen.",
   },
   {
-    project: "Palazzo Catania",
-    location: "Catania, Sizilien",
+    project: "Stadthaus Altstadt",
+    location: "Münster, Nordrhein-Westfalen",
     type: "Historische Renovierung",
     system: "LivIng 82 + ADS 90",
-    description: "Sensibler Umbau eines historischen Palazzos mit energieeffizienten Fenstern und Türen.",
+    description: "Denkmalgerechte Sanierung eines Stadthauses aus dem 19. Jahrhundert mit schmalen Schüco Aluminium-Profilen für optimalen Wärmeschutz.",
   },
   {
-    project: "Smart Home Murcia",
-    location: "Murcia, Spanien",
+    project: "Einfamilienhaus Moderne",
+    location: "Bergisch Gladbach, Nordrhein-Westfalen",
     type: "Modernes Einfamilienhaus",
     system: "Schüco TipTronic + AWS 70.HI",
-    description: "Vollautomatisierte Fenstertechnik mit smartem Schüco TipTronic System für maximale Energieeffizienz.",
+    description: "Vollautomatisierte Fenstertechnik mit smartem Schüco TipTronic System und zentraler Steuerung für maximale Energieeffizienz.",
   },
   {
-    project: "Torre del Sol",
-    location: "Alicante, Spanien",
-    type: "Hochhaus — 14 Etagen",
+    project: "Bürozentrum Mediapark",
+    location: "Köln, Nordrhein-Westfalen",
+    type: "Geschäftshaus — 12 Etagen",
     system: "FWS 60+ + AWS 90.SI+",
-    description: "Energieeffiziente Fassaden- und Fenstersysteme für ein Hochhaus an der Costa Blanca.",
+    description: "Energieeffiziente Fassaden- und Fenstersysteme für ein 12-geschossiges Bürogebäude im Kölner Mediapark.",
   },
 ];
 ---
