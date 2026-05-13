@@ -1,0 +1,150 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Wrapper from "@/components/fundations/containers/Wrapper.astro";
+import BreadcrumbJsonLd from "@/components/fundations/head/BreadcrumbJsonLd.astro";
+import FaqPageJsonLd from "@/components/fundations/head/FaqPageJsonLd.astro";
+
+const faqs = [
+  {
+    q: "Was kosten Schüco Fenster?",
+    a: 'Schüco Aluminium-Fenster liegen je nach System zwischen 500 € und 1.200 € pro m². Der <strong>AWS 75.SI+</strong> ist preiswerter, der <strong>AWS 90.SI+</strong> für Passivhaus-Standard kostet mehr. <a href="/konfigurator/" class="text-[#1c69d4] underline">Online-Konfigurator nutzen</a>.',
+    cta: "Jetzt konfigurieren →",
+    ctaHref: "/konfigurator/",
+  },
+  {
+    q: "Wie lange hält ein Qualitätsfenster von Schüco?",
+    a: 'Schüco Aluminium-Fenster haben eine Lebensdauer von <strong>30 bis 50 Jahren</strong>. Aluminium ist wartungsarm, korrosionsbeständig und muss nie gestrichen werden.',
+    cta: "Systeme entdecken →",
+    ctaHref: "/produkte/",
+  },
+  {
+    q: "Welches Fenstersystem ist das richtige für mich?",
+    a: 'Der <strong>AWS 75.SI+</strong> ist Preis-Leistungs-Sieger für Standard-Wärmeschutz. Der <strong>AWS 90.SI+</strong> erreicht Passivhaus-Standard (U-Wert 0,64). Das <strong>ASS 77 PD.HI</strong> für Panorama-Lösungen.',
+    cta: "Beratung anfragen →",
+    ctaHref: "/kontakt/",
+  },
+  {
+    q: "Wie lange dauert der Fensteraustausch?",
+    a: 'Nach dem Aufmaß-Termin (ca. 1 Std.) beträgt die Produktion <strong>3-5 Wochen</strong>. Der Einbau dauert bei einem EFH <strong>1-2 Tage</strong>.',
+    cta: "Termin vereinbaren →",
+    ctaHref: "/kontakt/",
+  },
+  {
+    q: "Gibt es Förderung für neue Fenster?",
+    a: 'Ja! Über <strong>BAFA</strong> bis zu 20 % Direktzuschuss, über <strong>KfW</strong> (430) bis zu 35 % Tilgungszuschuss. Voraussetzung: U-Wert unter 1,1.',
+    cta: "Förderung prüfen →",
+    ctaHref: "/foerderungen/",
+  },
+  {
+    q: "Kann ich Fenster schrittweise austauschen?",
+    a: 'Ja, ein <strong>schrittweiser Austausch</strong> ist jederzeit möglich. Beginnen Sie mit der Nord-/Ostseite. So verteilen Sie die Kosten.',
+    cta: "Strategie besprechen →",
+    ctaHref: "/kontakt/",
+  },
+  {
+    q: "Aluminium- oder Kunststofffenster?",
+    a: 'Aluminium: <strong>30-50 Jahre</strong>, schmalere Profile, nie streichen. Kunststoff: günstiger, aber weniger langlebig. Schüco ist Premium-Aluminium.',
+    cta: "Vergleich anfordern →",
+    ctaHref: "/kontakt/",
+  },
+  {
+    q: "Brauche ich eine Genehmigung für den Austausch?",
+    a: 'Bei <strong>farb- und formatgleichem Austausch</strong> meist nicht. Bei Änderungen oder Denkmalschutz kann eine Genehmigung nötig sein. Wir prüfen das.',
+    cta: "Prüfen lassen →",
+    ctaHref: "/kontakt/",
+  },
+  {
+    q: "Sind Schüco-Fenster einbruchshemmend?",
+    a: 'Ja, serienmäßig <strong>RC2N</strong> (Widerstandsklasse 2), auf Wunsch RC3. Pilzkopfverriegelung schützt effektiv. Versicherungsrabatt möglich.',
+    cta: "Sicherheitspaket →",
+    ctaHref: "/kontakt/",
+  },
+  {
+    q: "Wie viel Heizkosten spare ich?",
+    a: 'Alte Fenster (U-Wert 3,0) → neue (U-Wert 0,64): <strong>bis zu 30 % Ersparnis</strong>. Amortisation: 8-12 Jahre (ohne Förderung), 5-8 Jahre (mit).',
+    cta: "Ersparnis berechnen →",
+    ctaHref: "/konfigurator/",
+  },
+  {
+    q: "Bieten Sie auch Montage und Einbau?",
+    a: 'Ja, <strong>Komplett-Service</strong>: Maßaufnahme, Produktion, Einbau, Entsorgung. Partner FB Baukonzept mit 15+ Jahren Erfahrung.',
+    cta: "Komplett-Angebot →",
+    ctaHref: "/kontakt/",
+  },
+];
+---
+
+<BaseLayout
+  title="Fenster FAQ: 11 Fragen &amp; Antworten — Fenstervertrieb"
+  description="Alles rund um Schüco Fenster: Kosten, Förderung, Einbau, Lebensdauer, Sicherheit und Unterschiede."
+>
+  <BreadcrumbJsonLd items={[{ name: "FAQ — Fensterkauf" }]} />
+  <FaqPageJsonLd />
+
+  <section class="bg-[#0a0a0a] text-white">
+    <Wrapper variant="standard" class="py-16 lg:py-24">
+      <h1 class="font-serif italic text-3xl md:text-5xl font-medium tracking-tight">
+        FAQ — Fensterkauf
+      </h1>
+      <p class="mt-4 text-gray-400 max-w-xl">
+        Die wichtigsten Fragen rund um Schüco Aluminium-Fenster, Kosten, Einbau,
+        Förderung und mehr — praxisnah beantwortet von Ihrem Fachpartner aus Leverkusen.
+      </p>
+    </Wrapper>
+  </section>
+
+  <section class="bg-white">
+    <Wrapper variant="standard" class="py-16">
+      <div class="max-w-3xl mx-auto">
+        <div class="space-y-2">
+          {faqs.map((faq, i) => (
+            <details class="group border border-gray-200 rounded-lg overflow-hidden">
+              <summary class="flex items-center justify-between cursor-pointer px-6 py-5 text-base font-medium text-gray-900 transition-colors group-open:bg-gray-50">
+                <span class="flex items-center gap-3">
+                  <span class="flex-shrink-0 w-7 h-7 rounded-full bg-[#1c69d4]/10 text-[#1c69d4] flex items-center justify-center text-sm font-bold">
+                    {i + 1}
+                  </span>
+                  <span>{faq.q}</span>
+                </span>
+                <svg class="w-5 h-5 text-gray-400 transition-transform group-open:rotate-180 flex-shrink-0 ml-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+                </svg>
+              </summary>
+              <div class="px-6 pb-5 pt-2 text-gray-600 leading-relaxed border-t border-gray-100">
+                <p set:html={faq.a}></p>
+                <a href={faq.ctaHref} class="inline-block mt-4 text-sm font-medium text-[#1c69d4] hover:underline">
+                  {faq.cta}
+                </a>
+              </div>
+            </details>
+          ))}
+        </div>
+      </div>
+    </Wrapper>
+  </section>
+
+  <section class="bg-gray-50">
+    <Wrapper variant="standard" class="py-16 text-center">
+      <h2 class="font-serif italic text-2xl md:text-3xl text-gray-900 font-medium">
+        Haben Sie weitere Fragen?
+      </h2>
+      <p class="mt-3 text-gray-600 max-w-lg mx-auto">
+        Wir beraten Sie persönlich zu Ihrem Projekt.
+      </p>
+      <div class="mt-8 flex flex-wrap justify-center gap-4">
+        <a href="/kontakt/" class="inline-flex items-center gap-2 bg-[#1c69d4] text-white px-6 py-3 rounded-lg font-medium hover:bg-[#1550a8] transition-colors">
+          Beratung anfragen
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+          </svg>
+        </a>
+        <a href="/konfigurator/" class="inline-flex items-center gap-2 border border-gray-300 text-gray-700 px-6 py-3 rounded-lg font-medium hover:bg-gray-100 transition-colors">
+          Online konfigurieren
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
+          </svg>
+        </a>
+      </div>
+    </Wrapper>
+  </section>
+</BaseLayout>

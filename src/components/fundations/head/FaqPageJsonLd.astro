@@ -1,0 +1,76 @@
+---
+const ORIGIN = "https://fenstervertrieb.debored.ai";
+
+const faqs = [
+  {
+    question: "Was kosten Schüco Fenster?",
+    answer:
+      "Schüco Aluminium-Fenster liegen je nach System, Verglasung und Größe zwischen 500 € und 1.200 € pro m². Der AWS 75.SI+ als Einstiegssystem ist preiswerter, der AWS 90.SI+ für Passivhaus-Standard kostet mehr. Hinzu kommen Einbaukosten. Für einen verbindlichen Preis nutzen Sie einfach unseren Online-Konfigurator.",
+  },
+  {
+    question: "Wie lange hält ein Qualitätsfenster von Schüco?",
+    answer:
+      "Schüco Aluminium-Fenster haben eine Lebensdauer von 30 bis 50 Jahren. Aluminium ist wartungsarm, korrosionsbeständig und benötigt anders als Holz oder Kunststoff kein Nachstreichen. Die Schüco-Herstellergarantie plus unsere Einbaugarantie geben Ihnen zusätzliche Sicherheit.",
+  },
+  {
+    question: "Welches Fenstersystem ist das richtige für mich?",
+    answer:
+      "Der AWS 75.SI+ ist unser Preis-Leistungs-Sieger für Standard-Wärmeschutz. Der AWS 90.SI+ erreicht Passivhaus-Standard mit U-Werten bis 0,64 W/m²K. Für bodentiefe Panorama-Lösungen empfehlen wir das ASS 77 PD.HI Hebe-Schiebesystem. Wir beraten Sie gern zu Ihrem konkreten Projekt.",
+  },
+  {
+    question: "Wie lange dauert der Fensteraustausch?",
+    answer:
+      "Nach der Aufmaß-Termin (ca. 1 Stunde) beträgt die Produktionszeit 3 bis 5 Wochen. Der Einbau dauert bei einem Einfamilienhaus 1 bis 2 Tage. Bei schrittweisem Austausch planen wir je nach Anzahl der Fenster pro Etappe. Wir vereinbaren alle Termine, damit Sie genau wissen, wann gearbeitet wird.",
+  },
+  {
+    question: "Gibt es Förderung für neue Fenster?",
+    answer:
+      "Ja! Über die BAFA erhalten Sie bis zu 20 % Direktzuschuss beim Einzelaustausch von Fenstern. Über die KfW (Programm 430) sind bei Sanierung zum Effizienzhaus bis zu 35 % Tilgungszuschuss möglich. Voraussetzung: Die Fenster müssen einen U-Wert unter 1,1 W/m²K erreichen. Schüco-Systeme erfüllen das problemlos.",
+  },
+  {
+    question: "Kann ich meine Fenster schrittweise austauschen?",
+    answer:
+      "Ja, ein schrittweiser Austausch ist jederzeit möglich. Wir empfehlen, mit der Nord- und Ostseite zu beginnen, da diese meist der Witterung am stärksten ausgesetzt sind. So verteilen Sie die Kosten auf mehrere Etappen ohne finanziellen Engpass. Jede Etappe wird sauber abgeschlossen, bevor die nächste beginnt.",
+  },
+  {
+    question: "Was ist der Unterschied zwischen Aluminium- und Kunststofffenstern?",
+    answer:
+      "Aluminium-Fenster sind langlebiger (30–50 Jahre vs. 20–30 Jahre), schmaler in der Ansicht (mehr Lichtfläche), müssen nie gestrichen werden und bieten schmalere Profile bei gleicher Stabilität. Kunststofffenster sind günstiger in der Anschaffung, aber weniger langlebig und bieten weniger Design-Vielfalt. Schüco-Fenster sind Premium-Aluminium.",
+  },
+  {
+    question: "Brauche ich eine Genehmigung für den Fensteraustausch?",
+    answer:
+      "Bei farb- und formatgleichem Austausch ist meist keine Baugenehmigung nötig. Wenn Sie Fensterformat oder -anordnung ändern, kann eine Genehmigung erforderlich sein. Bei Denkmalschutzauflagen ist eine Sondergenehmigung nötig. Wir prüfen das für Sie vor dem Projekt und kümmern uns um alle behördlichen Schritte.",
+  },
+  {
+    question: "Sind Schüco-Fenster einbruchshemmend?",
+    answer:
+      "Ja, Schüco-Fenster sind serienmäßig in RC2N (Widerstandsklasse 2) ausgeführt. Auf Wunst ist RC3 möglich. Die Pilzkopfverriegelung und Mehrfachverriegelung bieten hohen Einbruchschutz. Viele Versicherungen senken die Prämie bei RC2-Fenstern. Fragen Sie uns nach unserem Sicherheits-Paket.",
+  },
+  {
+    question: "Wie wirkt sich der Fensteraustausch auf die Heizkosten aus?",
+    answer:
+      "Alte Fenster mit U-Wert 3,0 W/m²K verursachen hohe Wärmeverluste. Neue Schüco-Fenster erreichen U-Werte bis 0,64 W/m²K. Das spart bis zu 30 % Heizkosten. Bei einem typischen Einfamilienhaus amortisieren sich die Kosten in 8–12 Jahren (ohne Förderung) bzw. 5–8 Jahren mit Förderung.",
+  },
+  {
+    question: "Bieten Sie auch Montage und Einbau an?",
+    answer:
+      "Ja, wir bieten den Komplett-Service: Maßaufnahme, Produktion, fachgerechter Einbau und Entsorgung Ihrer alten Fenster. Unser Partner FB Baukonzept bringt über 15 Jahre Einbauerfahrung mit. Fordern Sie ein Komplett-Angebot an — alles aus einer Hand, inklusive Koordination aller Förderanträge.",
+  },
+];
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faqs.map((faq) => ({
+    "@type": "Question",
+    name: faq.question,
+    acceptedAnswer: {
+      "@type": "Answer",
+      text: faq.answer,
+    },
+  })),
+};
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
