@@ -1,7 +1,7 @@
 ---
 title: "Schüco Fenster Preise 2025: Kostenvergleich aller Systeme — Fenstervertrieb GmbH"
 pubDate: 2025-07-15
-description: "Schüco Fenster Preise 2025 im Überblick: Was kosten AWS 70.HI, AWS 90.SI+, LivIng 82 und ADS 90? Preisvergleich aller Systeme, Einbaukosten und Förderungen für Spanien und Italien."
+description: "Schüco Fenster Preise 2025 im Überblick: Was kosten AWS 70.HI, AWS 90.SI+, LivIng 82 und ADS 90? Preisvergleich aller Systeme, Einbaukosten und Förderungen in Deutschland."
 author: "Fenstervertrieb GmbH"
 image:
   url: "/images/hero-building.jpg"
@@ -117,13 +117,13 @@ Die Einbaukosten für Schüco Fenster variieren je nach Aufwand:
 
 ## Förderungen: Bis zu 25% Zuschuss möglich
 
-In Spanien und Italien gibt es attraktive Förderprogramme für energieeffiziente Fenster:
+In Deutschland gibt es attraktive staatliche Förderprogramme für energieeffiziente Fenster über die KfW und BAFA:
 
 | Land | Programm | Förderung | Voraussetzung |
 |------|----------|-----------|---------------|
-| **Spanien** | Plan de Recuperación (NextGenerationEU) | bis 40% | U-Wert < 1,0 W/m²K |
-| **Italien** | Ecobonus 2025 | 50–65% Steuerabschreibung | Energieeffizienz-Klasse A oder besser |
-| **Italien** | Superbonus (eingeschränkt) | 70% | Gesamtsanierung mit Fenstertausch |
+| **KfW 261** | Zuschuss für energieeffiziente Sanierung | 10-20% | U-Wert < 0,95 W/m²K |
+| **BAFA** | Bundesförderung für effiziente Gebäude (BEG) | 15-25% | Sanierungsfahrplan erforderlich |
+| **KfW 358** | Baubegleitung und Fachplanung | bis 50% | Energieeffizienz-Experte erforderlich |
 
 > **Tipp:** Wir unterstützen Sie bei der Beantragung der Förderungen. Kontaktieren Sie uns für eine kostenlose Erstberatung.
 
@@ -147,7 +147,7 @@ Schüco liegt preislich im oberen Segment, bietet aber **beste Wärmedämmung, 1
 
 1. **Standardmaße wählen** — Sondergrößen kosten 15–30% Aufpreis
 2. **Kombi-Angebote** — Fenster + Türen zusammen bestellen spart bis zu 10%
-3. **Förderungen nutzen** — Ecobonus und NextGenerationEU senken die Nettokosten deutlich
+3. **Förderungen nutzen** — KfW-Zuschüsse und BEG-Förderung senken die Nettokosten deutlich
 4. **Vor-Ort-Vermessung** — Garantieren Sie passgenaue Fenster und vermeiden Sie Nachbesserungskosten
 5. **Mengenrabatt** — Ab 10 Fenstern erhalten Sie bei uns Sonderkonditionen
 
