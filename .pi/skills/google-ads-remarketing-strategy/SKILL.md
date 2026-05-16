@@ -1,5 +1,5 @@
 ---
-name: remarketing-strategy
+name: google-ads-remarketing-strategy
 description: >-
   The Remarketing Strategy skill designs and implements cross-channel remarketing architectures that re-engage users at every stage of the conversion funnel.
 ---

@@ -1,0 +1,40 @@
+{
+  "project": "fenstervertrieb",
+  "last_check": "2026-05-16T17:41:00Z",
+  "cycle": 29,
+  "health_status": "healthy",
+  "health_summary": "All 4 containers up (storefront 2d, medusa 6d, postgres 6d, redis 6d). All 11 main routes HTTP 200. All 9 product pages HTTP 200. Blog HTTP 200. Sitemap (31 URLs) and robots.txt HTTP 200. JSON-LD present (1 block). No Spanish/Italian leaks. Umami tracking present. SSL valid until Aug 3 2026.",
+  "containers": {
+    "storefront": "Up 2 days",
+    "medusa": "Up 6 days",
+    "postgres": "Up 6 days (healthy)",
+    "redis": "Up 6 days (healthy)"
+  },
+  "pages_checked": {
+    "main_routes": "11/11 HTTP 200",
+    "product_pages": "9/9 HTTP 200"
+  },
+  "sitemap_urls": 31,
+  "content_issues": {
+    "spanish_italian_leaks": "CLEAN — no foreign program mentions",
+    "impressum_placeholders": "UNFIXED (#15) — [Name], [Registernummer] still visible",
+    "whatsapp_spanish_number": "UNFIXED (#14) — wa.me/34968 still present on kontakt page",
+    "phone_placeholder": "UNFIXED (#16) — +49 214 XXX XXXX still in footer",
+    "team_emoji_placeholders": "UNFIXED (#5) — blocked on MG",
+    "product_stock_images": "UNFIXED (#3, #4) — blocked on MG"
+  },
+  "existing_open_issues": 8,
+  "issues_fixed_this_cycle": 0,
+  "new_issues_created": 0,
+  "notable_changes": ["Containers stable with increased uptime vs last cycle (storefront: 3h→2d, all others 4d→6d)"],
+  "actions_taken_this_cycle": ["Full health scan — no regressions detected"],
+  "next_priorities": ["All 8 open issues require MG input — no progress possible without real business data"],
+  "blockers": [
+    "Impressum placeholders need real business registration data from MG",
+    "WhatsApp/phone need real German numbers from MG",
+    "Product images need real Schüco photos from MG",
+    "Team section needs real team info from MG",
+    "Preisrechner (#22) needs pricing strategy from MG",
+    "Google Ads (#13) needs budget from MG"
+  ]
+}

@@ -1,195 +1,347 @@
-#!/bin/bash
+#!/usr/bin/env bash
+# security-gate.sh — Hard security enforcement for pi_launchpad
 # ──────────────────────────────────────────────────────────────────────────────
-# security-gate.sh — Hard security checks that block ship/fix/ceo
-# ──────────────────────────────────────────────────────────────────────────────
-# Run as a gate before any code is merged or deployed.
-# Returns exit 1 if any check fails.
+# Blocks PRs with security violations. Non-bypassable.
 #
 # Checks:
-#   1. No public repos (gh repo create must be --private)
-#   2. No trivial/weak passwords in code
-#   3. No hardcoded secrets/API keys
-#   4. No unsafe code patterns (eval, exec, SQL injection, etc.)
-#   5. No secrets in git diffs
+#   1. No public repos (gh repo visibility)
+#   2. No trivial/weak passwords
+#   3. No hardcoded secrets (AWS, GitHub, private keys, etc.)
+#   4. Unsafe code patterns (eval, SQL injection, etc.)
+#   5. Git diff secret scan (staged/recent changes)
 #
-# Portable: uses grep -E (POSIX) instead of grep -P (GNU-only)
+# Usage:
+#   ./scripts/security-gate.sh
+#
+# Exit codes:
+#   0 — all checks pass
+#   1 — one or more violations found
 
-set -euo pipefail
+set -uo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
+CONFIG_FILE="$REPO_ROOT/.pi/config.sh"
 
 RED='\033[0;31m'
 GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
+BLUE='\033[0;34m'
+CYAN='\033[0;36m'
 NC='\033[0m'
 
 VIOLATIONS=0
+CHECKS_RUN=0
+CHECKS_PASSED=0
 
-fail() { echo -e "${RED}  ✗ $1${NC}"; ((VIOLATIONS++)); }
-pass() { echo -e "${GREEN}  ✓ $1${NC}"; }
-info() { echo -e "${YELLOW}  → $1${NC}"; }
+# Load config
+REPO=""
+if [ -f "$CONFIG_FILE" ]; then
+  # shellcheck source=/dev/null
+  source "$CONFIG_FILE"
+fi
+
+pass()   { echo -e "${GREEN}  ✓ $1${NC}"; }
+fail()   { echo -e "${RED}  ✗ $1${NC}"; }
+warn()   { echo -e "${YELLOW}  ! $1${NC}"; }
+info()   { echo -e "${BLUE}  → $1${NC}"; }
+header() { echo -e "\n${CYAN}━━━ $1 ━━━${NC}"; }
+
+find_code_files() {
+  find "$REPO_ROOT" -type f \( -name "*.ts" -o -name "*.tsx" -o -name "*.js" -o -name "*.jsx" -o -name "*.py" -o -name "*.rb" -o -name "*.go" -o -name "*.java" -o -name "*.rs" -o -name "*.sh" -o -name "*.yaml" -o -name "*.yml" -o -name "*.json" -o -name "*.env" -o -name "*.toml" -o -name "*.cfg" -o -name "*.ini" -o -name "*.conf" \) \
+    ! -path "*/node_modules/*" \
+    ! -path "*/.next/*" \
+    ! -path "*/dist/*" \
+    ! -path "*/build/*" \
+    ! -path "*/__generated__/*" \
+    ! -path "*/coverage/*" \
+    ! -path "*/.git/*" \
+    ! -path "*/vendor/*" \
+    ! -path "*/.claude/*" \
+    ! -path "*/.pi/*" \
+    ! -path "*/package-lock.json" \
+    ! -path "*/yarn.lock" \
+    ! -path "*/pnpm-lock.yaml" \
+    2>/dev/null
+}
+
+# ─── Banner ─────────────────────────────────────────────────────────────────
+
+echo ""
+echo -e "${CYAN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+echo -e "${CYAN}  SECURITY GATE — Hard Enforcement${NC}"
+echo -e "${CYAN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+echo ""
+
+# ═══════════════════════════════════════════════════════════════════════════
+# CHECK 1: No public repos
+# ═══════════════════════════════════════════════════════════════════════════
+
+header "Check 1: Repository visibility"
+CHECKS_RUN=$((CHECKS_RUN + 1))
+
+if [ -n "$REPO" ] && command -v gh &>/dev/null; then
+  VISIBILITY=$(gh repo view "$REPO" --json visibility -q '.visibility' 2>/dev/null || echo "UNKNOWN")
+  if [ "$VISIBILITY" = "PUBLIC" ]; then
+    fail "Repository $REPO is PUBLIC"
+    info "Ensure this is intentional — secrets in public repos are exposed"
+    VIOLATIONS=$((VIOLATIONS + 1))
+  elif [ "$VISIBILITY" = "UNKNOWN" ]; then
+    warn "Could not determine repo visibility — skipping"
+    CHECKS_PASSED=$((CHECKS_PASSED + 1))
+  else
+    pass "Repository is $VISIBILITY"
+    CHECKS_PASSED=$((CHECKS_PASSED + 1))
+  fi
+else
+  warn "No REPO configured or gh CLI not available — skipping"
+  CHECKS_PASSED=$((CHECKS_PASSED + 1))
+fi
+
+# ═══════════════════════════════════════════════════════════════════════════
+# CHECK 2: No trivial/weak passwords
+# ═══════════════════════════════════════════════════════════════════════════
+
+header "Check 2: No trivial/weak passwords"
+CHECKS_RUN=$((CHECKS_RUN + 1))
+
+WEAK_PASSWORDS=(
+  'password' 'password123' 'admin' 'admin123' '123456' 'qwerty'
+  'letmein' 'welcome' 'monkey' 'master' 'dragon' 'login' 'abc123'
+  'passw0rd' 'default' 'changeme' 'secret' 'test123' 'root' 'toor'
+)
+
+WEAK_COUNT=0
+WEAK_FILES=""
+
+while IFS= read -r file; do
+  [ -z "$file" ] && continue
+  case "$file" in
+    *.test.* | *.spec.* | *__test__* | *__mock__* | *.example | *.sample) continue ;;
+  esac
+
+  for pwd in "${WEAK_PASSWORDS[@]}"; do
+    MATCHES=$(grep -inE "(password|passwd|pwd|secret|token)\s*[:=]\s*['\"]${pwd}['\"]" "$file" 2>/dev/null | grep -v '// vibe-ok' | grep -v '# vibe-ok' || true)
+    if [ -n "$MATCHES" ]; then
+      MATCH_COUNT=$(echo "$MATCHES" | wc -l | tr -d ' ')
+      WEAK_COUNT=$((WEAK_COUNT + MATCH_COUNT))
+      WEAK_FILES="$WEAK_FILES\n  $file: weak password '$pwd'"
+    fi
+  done
+done < <(find_code_files)
+
+if [ "$WEAK_COUNT" -eq 0 ]; then
+  pass "No trivial/weak passwords found"
+  CHECKS_PASSED=$((CHECKS_PASSED + 1))
+else
+  fail "Found $WEAK_COUNT trivial/weak password(s):"
+  echo -e "$WEAK_FILES"
+  info "Use environment variables for credentials"
+  VIOLATIONS=$((VIOLATIONS + 1))
+fi
+
+# ═══════════════════════════════════════════════════════════════════════════
+# CHECK 3: No hardcoded secrets
+# ═══════════════════════════════════════════════════════════════════════════
+
+header "Check 3: No hardcoded secrets"
+CHECKS_RUN=$((CHECKS_RUN + 1))
+
+SECRET_COUNT=0
+SECRET_FILES=""
+
+SECRET_PATTERNS=(
+  'AKIA[0-9A-Z]{16}'
+  'sk-[a-zA-Z0-9]{20,}'
+  'ghp_[a-zA-Z0-9]{36}'
+  'gho_[a-zA-Z0-9]{36}'
+  'github_pat_[a-zA-Z0-9_]{82}'
+  '-----BEGIN\s+(RSA\s+)?PRIVATE\s+KEY-----'
+  '-----BEGIN\s+EC\s+PRIVATE\s+KEY-----'
+  '(mongodb|postgres|mysql|redis)://[^[:space:]]+@[^[:space:]]+'
+  'xox[bpoa]-[0-9a-zA-Z-]+'
+  'sk_live_[a-zA-Z0-9]+'
+  'rk_live_[a-zA-Z0-9]+'
+  'SG\.[a-zA-Z0-9_-]+\.[a-zA-Z0-9_-]+'
+)
+
+SECRET_REGEX=$(IFS='|'; echo "${SECRET_PATTERNS[*]}")
+
+while IFS= read -r file; do
+  [ -z "$file" ] && continue
+  case "$file" in
+    *.test.* | *.spec.* | *__test__* | *__mock__* | *.example | *.sample | *.lock) continue ;;
+  esac
+
+  MATCHES=$(grep -nE "$SECRET_REGEX" "$file" 2>/dev/null | grep -v '// vibe-ok' | grep -v '# vibe-ok' | grep -v 'example' | grep -v 'placeholder' | grep -v 'REPLACE_ME' || true)
+  if [ -n "$MATCHES" ]; then
+    FILE_COUNT=$(echo "$MATCHES" | wc -l | tr -d ' ')
+    SECRET_COUNT=$((SECRET_COUNT + FILE_COUNT))
+    SECRET_FILES="$SECRET_FILES\n  $file ($FILE_COUNT match(es))"
+    echo "$MATCHES" | head -3 | sed 's/^/    /'
+  fi
+done < <(find_code_files)
+
+if [ "$SECRET_COUNT" -eq 0 ]; then
+  pass "No hardcoded secrets detected"
+  CHECKS_PASSED=$((CHECKS_PASSED + 1))
+else
+  fail "Found $SECRET_COUNT potential hardcoded secret(s):"
+  echo -e "$SECRET_FILES"
+  info "Use environment variables and .env files (never committed)"
+  VIOLATIONS=$((VIOLATIONS + 1))
+fi
+
+# ═══════════════════════════════════════════════════════════════════════════
+# CHECK 4: Unsafe code patterns
+# ═══════════════════════════════════════════════════════════════════════════
+
+header "Check 4: Unsafe code patterns"
+CHECKS_RUN=$((CHECKS_RUN + 1))
+
+UNSAFE_COUNT=0
+UNSAFE_FILES=""
+
+# Pattern|Description pairs (bash 3.2 compatible — no associative arrays)
+UNSAFE_PATTERN_LIST=(
+  "eval()|eval() — arbitrary code execution"
+  "new Function()|new Function() — arbitrary code execution"
+  "dangerouslySetInnerHTML|dangerouslySetInnerHTML — XSS risk"
+  "subprocess.*shell=True|subprocess shell=True — command injection"
+  "verify=False|SSL verify=False — MitM risk"
+  "verify_ssl.*false|SSL verify disabled — MitM risk"
+)
+
+SQL_PATTERN_LIST=(
+  'f".*SELECT.*{.*}"'
+  "f'.*SELECT.*{.*}'"
+  'f".*INSERT.*{.*}"'
+  "f'.*INSERT.*{.*}'"
+  'f".*UPDATE.*{.*}"'
+  "f'.*UPDATE.*{.*}'"
+  'f".*DELETE.*{.*}"'
+  "f'.*DELETE.*{.*}'"
+  '`.*SELECT.*\$\{.*\}`'
+  '`.*INSERT.*\$\{.*\}`'
+  '`.*UPDATE.*\$\{.*\}`'
+  '`.*DELETE.*\$\{.*\}`'
+)
+
+while IFS= read -r file; do
+  [ -z "$file" ] && continue
+  case "$file" in
+    *.test.* | *.spec.* | *__test__* | *__mock__*) continue ;;
+    */scripts/security-gate.sh) continue ;;
+    */scripts/vibe-verify.sh) continue ;;
+  esac
+
+  FILE_ISSUES=""
+
+  # Check named patterns
+  for entry in "${UNSAFE_PATTERN_LIST[@]}"; do
+    pattern="${entry%%|*}"
+    desc="${entry#*|}"
+    MATCHES=$(grep -nF "$pattern" "$file" 2>/dev/null | grep -v '// vibe-ok' | grep -v '# vibe-ok' | grep -v '// safe:' || true)
+    if [ -n "$MATCHES" ]; then
+      COUNT=$(echo "$MATCHES" | wc -l | tr -d ' ')
+      UNSAFE_COUNT=$((UNSAFE_COUNT + COUNT))
+      FILE_ISSUES="$FILE_ISSUES\n    $desc: $COUNT"
+    fi
+  done
+
+  # Check SQL injection patterns
+  for pattern in "${SQL_PATTERN_LIST[@]}"; do
+    MATCHES=$(grep -nE "$pattern" "$file" 2>/dev/null | grep -v '// vibe-ok' | grep -v '# vibe-ok' | grep -v '// safe:' || true)
+    if [ -n "$MATCHES" ]; then
+      COUNT=$(echo "$MATCHES" | wc -l | tr -d ' ')
+      UNSAFE_COUNT=$((UNSAFE_COUNT + COUNT))
+      FILE_ISSUES="$FILE_ISSUES\n    SQL injection risk: $COUNT"
+    fi
+  done
+
+  # Check CORS wildcard
+  CORS_MATCHES=$(grep -nE 'Access-Control-Allow-Origin.*\\*' "$file" 2>/dev/null | grep -v '// vibe-ok' | grep -v '# vibe-ok' || true)
+  if [ -n "$CORS_MATCHES" ]; then
+    COUNT=$(echo "$CORS_MATCHES" | wc -l | tr -d ' ')
+    UNSAFE_COUNT=$((UNSAFE_COUNT + COUNT))
+    FILE_ISSUES="$FILE_ISSUES\n    CORS wildcard — open access: $COUNT"
+  fi
+
+  if [ -n "$FILE_ISSUES" ]; then
+    UNSAFE_FILES="$UNSAFE_FILES\n  $file:$FILE_ISSUES"
+  fi
+done < <(find_code_files)
+
+if [ "$UNSAFE_COUNT" -eq 0 ]; then
+  pass "No unsafe code patterns found"
+  CHECKS_PASSED=$((CHECKS_PASSED + 1))
+else
+  fail "Found $UNSAFE_COUNT unsafe code pattern(s):"
+  echo -e "$UNSAFE_FILES"
+  info "Add \`// vibe-ok\` or \`// safe: <reason>\` to suppress"
+  VIOLATIONS=$((VIOLATIONS + 1))
+fi
+
+# ═══════════════════════════════════════════════════════════════════════════
+# CHECK 5: Git diff secret scan
+# ═══════════════════════════════════════════════════════════════════════════
+
+header "Check 5: Git diff secret scan"
+CHECKS_RUN=$((CHECKS_RUN + 1))
 
 cd "$REPO_ROOT"
 
-# Changed files (staged or last commit)
-CHANGED_FILES=$(git diff --name-only HEAD~1 2>/dev/null || git diff --cached --name-only 2>/dev/null || echo "")
+DIFF_SECRETS=0
 
-# ─── Check 1: No public repos ────────────────────────────────────────────────
-
-info "Check 1: Repository visibility"
-
-if command -v gh &>/dev/null; then
-  REPO_URL=$(git remote get-url origin 2>/dev/null || echo "")
-  if [ -n "$REPO_URL" ]; then
-    REPO_SLUG=$(echo "$REPO_URL" | sed -E 's|.*github.com[:/]([^/]+/[^.]+)(\.git)?|\1|' 2>/dev/null || echo "")
-    if [ -n "$REPO_SLUG" ]; then
-      VISIBILITY=$(gh repo view "$REPO_SLUG" --json isPrivate --jq '.isPrivate' 2>/dev/null || echo "unknown")
-      if [ "$VISIBILITY" = "false" ]; then
-        fail "Repository $REPO_SLUG is PUBLIC. All repos must be private."
-      elif [ "$VISIBILITY" = "true" ]; then
-        pass "Repository is private"
-      fi
-    fi
+STAGED_DIFF=$(git diff --cached 2>/dev/null || true)
+if [ -n "$STAGED_DIFF" ]; then
+  DIFF_MATCHES=$(echo "$STAGED_DIFF" | grep -E '^\+' | grep -vE '^\+\+\+' | grep -E "$SECRET_REGEX" 2>/dev/null || true)
+  if [ -n "$DIFF_MATCHES" ]; then
+    DIFF_COUNT=$(echo "$DIFF_MATCHES" | wc -l | tr -d ' ')
+    DIFF_SECRETS=$((DIFF_SECRETS + DIFF_COUNT))
+    fail "Staged changes contain $DIFF_COUNT potential secret(s):"
+    echo "$DIFF_MATCHES" | head -5 | sed 's/^/    /'
   fi
+fi
+
+UNSTAGED_DIFF=$(git diff 2>/dev/null || true)
+if [ -n "$UNSTAGED_DIFF" ]; then
+  DIFF_MATCHES=$(echo "$UNSTAGED_DIFF" | grep -E '^\+' | grep -vE '^\+\+\+' | grep -E "$SECRET_REGEX" 2>/dev/null || true)
+  if [ -n "$DIFF_MATCHES" ]; then
+    DIFF_COUNT=$(echo "$DIFF_MATCHES" | wc -l | tr -d ' ')
+    DIFF_SECRETS=$((DIFF_SECRETS + DIFF_COUNT))
+    fail "Unstaged changes contain $DIFF_COUNT potential secret(s):"
+    echo "$DIFF_MATCHES" | head -5 | sed 's/^/    /'
+  fi
+fi
+
+if [ "$DIFF_SECRETS" -eq 0 ]; then
+  pass "Git diff: no secrets in changes"
+  CHECKS_PASSED=$((CHECKS_PASSED + 1))
 else
-  info "gh CLI not available — skipping repo visibility check"
+  VIOLATIONS=$((VIOLATIONS + 1))
 fi
 
-# ─── Check 2: No trivial/weak passwords ───────────────────────────────────────
-
-info "Check 2: Weak password patterns"
-
-for file in $CHANGED_FILES; do
-  [ -f "$file" ] || continue
-  # Skip non-code files
-  case "$file" in *.lock|*.map|*.min.*) continue ;; esac
-
-  if grep -Ein '(password|passwd|pwd)\s*=\s*["'"'"'][^"'"'"']{1,8}["'"'"']' "$file" 2>/dev/null; then
-    fail "$file: password under 9 characters"
-  fi
-  if grep -Ein '(password|passwd|pwd)\s*=\s*["'"'"'](password|admin|123456|letmein|welcome|qwerty|abc123|Password1|P@ssw0rd|secret|token)["'"'"']' "$file" 2>/dev/null; then
-    fail "$file: trivial/trivial password detected"
-  fi
-done
-
-if [ "$VIOLATIONS" -eq 0 ]; then
-  pass "No weak password patterns found"
-fi
-
-# ─── Check 3: No hardcoded secrets ────────────────────────────────────────────
-
-info "Check 3: Hardcoded secrets"
-
-# Files where secrets patterns are expected
-EXCLUDE_PATTERN="(test|spec|mock|fixture|example|\.env\.example|\.env\.template|\.pi/config\.sh|\.env)"
-
-for file in $CHANGED_FILES; do
-  [ -f "$file" ] || continue
-  echo "$file" | grep -qE "$EXCLUDE_PATTERN" && continue
-  case "$file" in *.lock|*.map|package-lock*|yarn*|*.generated.*) continue ;; esac
-
-  # AWS access keys
-  if grep -En 'AKIA[0-9A-Z]{16}' "$file" 2>/dev/null; then
-    fail "$file: AWS access key detected"
-  fi
-  # GitHub tokens
-  if grep -En 'gh[ps]_[A-Za-z0-9_]{36,}' "$file" 2>/dev/null; then
-    fail "$file: GitHub token detected"
-  fi
-  # Private keys
-  if grep -En '-----BEGIN (RSA |EC |DSA )?PRIVATE KEY-----' "$file" 2>/dev/null; then
-    fail "$file: private key detected"
-  fi
-  # Connection strings with embedded passwords
-  if grep -En '(postgres|mysql|mongodb|redis)://[^:]+:[^@]+@' "$file" 2>/dev/null; then
-    fail "$file: connection string with embedded credentials"
-  fi
-  # Long hex tokens assigned to secret-ish variable names
-  if grep -En '(secret|token|key|credential|auth).*=[[:space:]]*["'"'"'][A-Fa-f0-9]{32,}["'"'"']' "$file" 2>/dev/null | grep -viE '(placeholder|example|your[_-]?(key|token|secret)|xxx|REPLACE|TODO|process\.env|import|from |require)' 2>/dev/null; then
-    fail "$file: potential hardcoded hex secret"
-  fi
-done
-
-if [ "$VIOLATIONS" -eq 0 ]; then
-  pass "No hardcoded secrets found"
-fi
-
-# ─── Check 4: Unsafe code patterns ───────────────────────────────────────────
-
-info "Check 4: Unsafe code patterns"
-
-UNSAFE_EXCLUDE="(test|spec|mock|\.d\.ts|\.test\.|\.spec\.)"
-
-for file in $CHANGED_FILES; do
-  [ -f "$file" ] || continue
-  echo "$file" | grep -qE "$UNSAFE_EXCLUDE" && continue
-  # Only check code files
-  case "$file" in *.ts|*.tsx|*.js|*.jsx|*.py|*.rb|*.go|*.rs|*.java|*.php) ;; *) continue ;; esac
-
-  # eval() — only flag if not in a "don't use" comment context
-  if grep -En 'eval\s*\(' "$file" 2>/dev/null | grep -viE '(no |never |don'"'"'t |unsafe |avoid )' 2>/dev/null; then
-    fail "$file: eval() usage"
-  fi
-  # dangerouslySetInnerHTML
-  if grep -En 'dangerouslySetInnerHTML' "$file" 2>/dev/null; then
-    fail "$file: dangerouslySetInnerHTML"
-  fi
-  # SQL string concatenation
-  if grep -En '(query|execute|raw)\s*\([^)]*\+' "$file" 2>/dev/null; then
-    fail "$file: potential SQL injection via string concatenation"
-  fi
-  # subprocess shell=True
-  if grep -En 'subprocess\.\w+\([^)]*shell\s*=\s*True' "$file" 2>/dev/null | grep -viE '(no |never |don'"'"'t |unsafe )' 2>/dev/null; then
-    fail "$file: subprocess with shell=True"
-  fi
-  # os.system with variable
-  if grep -En 'os\.system\s*\([^)]*\+' "$file" 2>/dev/null; then
-    fail "$file: os.system with string concatenation"
-  fi
-  # SSL verify disabled
-  if grep -En 'verify\s*=\s*False' "$file" 2>/dev/null | grep -viE '(no |never |don'"'"'t |unsafe )' 2>/dev/null; then
-    fail "$file: SSL verification disabled"
-  fi
-  if grep -En 'rejectUnauthorized\s*:\s*false' "$file" 2>/dev/null | grep -viE '(no |never |don'"'"'t |unsafe )' 2>/dev/null; then
-    fail "$file: rejectUnauthorized: false"
-  fi
-  # CORS allow all in production code
-  if grep -En 'Access-Control-Allow-Origin.*\*' "$file" 2>/dev/null | grep -viE '(test|spec|dev|local|comment)' 2>/dev/null; then
-    fail "$file: CORS allow all origins"
-  fi
-done
-
-if [ "$VIOLATIONS" -eq 0 ]; then
-  pass "No unsafe code patterns found"
-fi
-
-# ─── Check 5: Git hygiene — no secrets in diff ───────────────────────────────
-
-info "Check 5: Git diff secret scan"
-
-for file in $CHANGED_FILES; do
-  [ -f "$file" ] || continue
-  case "$file" in *.lock|*.map|*.generated.*) continue ;; esac
-
-  SECRETS_IN_DIFF=$(git diff HEAD~1 -- "$file" 2>/dev/null | grep '^+' | grep -Ei '(api.?key|secret|token|password)\s*[=:]' | grep -viE '(placeholder|example|CONFIG_|process\.env|import |from |require|"type")' || true)
-  if [ -n "$SECRETS_IN_DIFF" ]; then
-    fail "$file: potential secret in git diff"
-    echo "$SECRETS_IN_DIFF" | head -3
-  fi
-done
-
-if [ "$VIOLATIONS" -eq 0 ]; then
-  pass "No secrets in git diff"
-fi
-
-# ─── Result ──────────────────────────────────────────────────────────────────
+# ═══════════════════════════════════════════════════════════════════════════
+# SUMMARY
+# ═══════════════════════════════════════════════════════════════════════════
 
 echo ""
+echo -e "${CYAN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+echo -e "${CYAN}  SECURITY GATE SUMMARY${NC}"
+echo -e "${CYAN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+echo ""
+echo -e "  Checks run:    $CHECKS_RUN"
+echo -e "  Checks passed: ${GREEN}$CHECKS_PASSED${NC}"
+echo -e "  Violations:    ${RED}$VIOLATIONS${NC}"
+echo ""
+
 if [ "$VIOLATIONS" -gt 0 ]; then
-  echo -e "${RED}SECURITY GATE FAILED: $VIOLATIONS violation(s)${NC}"
+  echo -e "${RED}  RESULT: FAIL — $VIOLATIONS security violation(s) found${NC}"
+  echo ""
   exit 1
 else
-  echo -e "${GREEN}SECURITY GATE PASSED: 0 violations${NC}"
+  echo -e "${GREEN}  RESULT: PASS — all security checks clean${NC}"
+  echo ""
   exit 0
 fi

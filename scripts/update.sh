@@ -75,41 +75,85 @@ cleanup() {
 trap cleanup EXIT
 
 if [ -z "$SOURCE" ]; then
-  # Download from GitHub
-  info "Downloading latest from $REPO/$BRANCH..."
-  TEMP_DIR=$(mktemp -d)
-  ZIP_URL="https://github.com/$REPO/archive/refs/heads/$BRANCH.zip"
+  # Strategy: 1) Auto-detect local clone, 2) gh CLI, 3) curl with token, 4) fail with helpful message
   
-  if command -v curl &>/dev/null; then
-    HTTP_CODE=$(curl -sL -w "%{http_code}" -o "$TEMP_DIR/source.zip" "$ZIP_URL")
-  elif command -v wget &>/dev/null; then
-    HTTP_CODE=$(wget -q -O "$TEMP_DIR/source.zip" "$ZIP_URL" 2>&1 | grep -o '[0-9]*' | tail -1)
-    HTTP_CODE=${HTTP_CODE:-200}
+  LOCAL_CLONE="$HOME/pi_launchpad"
+  if [ -d "$LOCAL_CLONE/.pi" ]; then
+    SOURCE="$LOCAL_CLONE"
+    done_msg "Auto-detected local clone: $SOURCE"
   else
-    err "Need curl or wget to download from GitHub"
-    exit 1
+    # Try gh CLI (handles private repos with auth)
+    if command -v gh &>/dev/null && gh auth status &>/dev/null; then
+      info "Downloading via gh CLI (authenticated)..."
+      TEMP_DIR=$(mktemp -d)
+      if gh repo clone "$REPO" "$TEMP_DIR/repo" -- --branch="$BRANCH" --depth=1 2>/dev/null; then
+        SOURCE="$TEMP_DIR/repo"
+        done_msg "Downloaded via gh CLI"
+      else
+        err "gh repo clone failed"
+        rm -rf "$TEMP_DIR"
+        exit 1
+      fi
+    elif [ -n "${GH_TOKEN:-}" ]; then
+      # Try curl with GH_TOKEN
+      info "Downloading via GH_TOKEN..."
+      TEMP_DIR=$(mktemp -d)
+      ZIP_URL="https://github.com/$REPO/archive/refs/heads/$BRANCH.zip"
+      HTTP_CODE=$(curl -sL -w "%{http_code}" -H "Authorization: token $GH_TOKEN" -o "$TEMP_DIR/source.zip" "$ZIP_URL")
+      
+      if [ "$HTTP_CODE" = "200" ]; then
+        cd "$TEMP_DIR" && unzip -q source.zip
+        SOURCE="$TEMP_DIR/pi_launchpad-main"
+      else
+        err "Failed to download (HTTP $HTTP_CODE)"
+        echo ""
+        echo "  The repo is private. Fix with one of:"
+        echo "    1. Keep a local clone at ~/pi_launchpad (auto-detected)"
+        echo "    2. Run: gh auth login (then retry)"
+        echo "    3. Run: ./scripts/update.sh --local /path/to/pi_launchpad"
+        rm -rf "$TEMP_DIR"
+        exit 1
+      fi
+    else
+      # Public repo fallback (curl without auth)
+      TEMP_DIR=$(mktemp -d)
+      ZIP_URL="https://github.com/$REPO/archive/refs/heads/$BRANCH.zip"
+      
+      if command -v curl &>/dev/null; then
+        HTTP_CODE=$(curl -sL -w "%{http_code}" -o "$TEMP_DIR/source.zip" "$ZIP_URL")
+      elif command -v wget &>/dev/null; then
+        HTTP_CODE=$(wget -q -O "$TEMP_DIR/source.zip" "$ZIP_URL" 2>&1 | grep -o '[0-9]*' | tail -1)
+        HTTP_CODE=${HTTP_CODE:-200}
+      else
+        err "Need curl or wget to download from GitHub"
+        exit 1
+      fi
+      
+      if [ "$HTTP_CODE" != "200" ]; then
+        err "Failed to download (HTTP $HTTP_CODE)"
+        echo ""
+        echo "  The repo may be private. Fix with one of:"
+        echo "    1. Keep a local clone at ~/pi_launchpad (auto-detected)"
+        echo "    2. Run: gh auth login (then retry)"
+        echo "    3. Run: ./scripts/update.sh --local /path/to/pi_launchpad"
+        rm -rf "$TEMP_DIR"
+        exit 1
+      fi
+      
+      cd "$TEMP_DIR" && unzip -q source.zip
+      SOURCE="$TEMP_DIR/pi_launchpad-main"
+    fi
+    
+    if [ ! -d "$SOURCE" ]; then
+      SOURCE=$(find "$TEMP_DIR" -maxdepth 1 -type d -not -name "$(basename "$TEMP_DIR")" | head -1)
+    fi
+    if [ ! -d "$SOURCE/.pi" ]; then
+      err "Downloaded archive doesn't contain .pi/ directory"
+      exit 1
+    fi
   fi
-  
-  if [ "$HTTP_CODE" != "200" ]; then
-    err "Failed to download (HTTP $HTTP_CODE)"
-    exit 1
-  fi
-  
-  cd "$TEMP_DIR"
-  unzip -q source.zip
-  # GitHub zip extracts to pi_launchpad-main/
-  SOURCE="$TEMP_DIR/pi_launchpad-main"
-  if [ ! -d "$SOURCE" ]; then
-    # Try other naming patterns
-    SOURCE=$(find "$TEMP_DIR" -maxdepth 1 -type d -not -name "$(basename "$TEMP_DIR")" | head -1)
-  fi
-  if [ ! -d "$SOURCE/.pi" ]; then
-    err "Downloaded archive doesn't contain .pi/ directory"
-    exit 1
-  fi
-  done_msg "Downloaded latest source"
 else
-  # Use local clone
+  # Use specified local clone
   if [ ! -d "$SOURCE/.pi" ]; then
     err "Local source $SOURCE doesn't have .pi/ directory"
     exit 1

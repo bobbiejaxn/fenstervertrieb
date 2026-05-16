@@ -1,5 +1,5 @@
 ---
-name: keyword-research
+name: google-ads-keyword-research
 description: >-
   The Keyword Research skill delivers a systematic approach to keyword discovery, expansion, and optimization for Google Ads campaigns.
 ---

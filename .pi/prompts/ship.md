@@ -228,28 +228,37 @@ After reviewer passes, run the adversarial-tester to actively break the implemen
 If BROKEN with CRITICAL/HIGH findings: send findings to implementer to fix, then re-run adversarial-tester. Max 2 rounds.
 If SURVIVED: proceed to gate-skeptic.
 
-#### Phase 5.5.5 — Live Verifier (optional, for critical features)
+#### Phase 5.5.5 — Verify-Loop (optional, for critical features)
 
-For critical features, launch the two-agent verifier system alongside the implementer:
+Run `/verify-loop` as a sidecar to re-check builder claims up to 3 iterations.
+Available domains: `typescript`, `python`, `sql`, `deploy`, `ui`, `generic`
 
-```bash
-./scripts/launch-verifier.sh --agent sqlite  # or python, image, verifier (generic)
+**Flat mode — run verifier agent directly:**
+
+```json
+{
+  "agent": "verifier-typescript",
+  "task": "Verify these builder claims for the feature.
+
+Claims:
+[paste key claims from implementer output]
+
+Changed files:
+[list from git diff]
+
+Source .pi/config.sh for verify commands and hard rules.",
+  "agentScope": "project"
+}
 ```
 
-The verifier watches the builder's session JSONL and sends corrective feedback in real-time.
-This is a separate Pi process running in its own terminal — not a subagent.
+Available verifier agents:
+- `verifier-typescript` — type-check, lint, no-any, no-eslint-disable, no-inline-styles
+- `verifier-python` — py_compile, ruff, mypy, no bare except
+- `verifier-sql` — schema integrity, FK constraints, index coverage, migration safety
+- `verifier-deploy` — health checks, CI status, env var presence
+- `verifier-ui` — responsive, a11y, no hardcoded colors, no inline styles, brand compliance
 
-To use programmatically in /ship:
-```bash
-# Start builder with verifier attached
-pi -e apps/verifier/verifiable.ts -e apps/verifier/cross-agent.ts --verifiable --verifier-agent verify_sqlite
-```
-
-Available domain verifiers:
-- `verify_sqlite` — schemas, FKs, indexes, integrity (script: verify_sqlite.py)
-- `verify_python` — type-check, lint, format, tests (script: verify_python.py)
-- `verify_image` — vision-based image verification
-- `verifier` — generic claim decomposition (no script)
+**Team mode — validation-lead coordinates verifiers automatically.**
 
 This phase is manual/opt-in. It does not block the /ship pipeline.
 If run, its findings supplement adversarial-tester output.

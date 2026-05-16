@@ -1,5 +1,5 @@
 ---
-name: audience-targeting
+name: google-ads-audience-targeting
 description: >-
   The Audience Targeting skill orchestrates Google Ads' full audience ecosystem to reach the right users at every stage of the conversion funnel.
 ---

@@ -1,5 +1,5 @@
 ---
-name: ad-copy-generation
+name: google-ads-ad-copy-generation
 description: >-
   The Ad Copy Generation skill produces high-performance responsive search ad (RSA) copy using AI-driven generation pipelines calibrated against millions of ad performance data points.
 ---

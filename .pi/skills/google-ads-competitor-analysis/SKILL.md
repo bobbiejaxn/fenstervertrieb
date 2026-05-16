@@ -1,5 +1,5 @@
 ---
-name: competitor-analysis
+name: google-ads-competitor-analysis
 description: >-
   The Competitor Analysis skill transforms Google Ads auction data into actionable competitive intelligence.
 ---

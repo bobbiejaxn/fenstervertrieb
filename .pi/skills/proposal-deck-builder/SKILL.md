@@ -1,5 +1,5 @@
 ---
-name: proposal-builder
+name: proposal-deck-builder
 version: 1.0.0
 description: Generate a complete client proposal (markdown document) and an interactive HTML pitch deck from a structured interview. Use when the user wants to create a proposal, pitch deck, or sales presentation for a service engagement. Produces both a written proposal and a self-contained HTML slide deck with scroll-snap navigation, reveal animations, and print-to-PDF support.
 ---

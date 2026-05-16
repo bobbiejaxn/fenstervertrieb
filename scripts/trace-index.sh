@@ -27,9 +27,10 @@ case "${1:-summary}" in
       
       RUN_ID=$(basename "$run_dir")
       
-      # Aggregate from manifest (array of agent entries)
+      # Aggregate from manifest (array of agent entries), but also
+      # parse JSONL files when manifest data is empty (session_end never fires)
       AGENTS=$(python3 -c "
-import json, sys
+import json, sys, os, glob
 try:
     data = json.load(open('$MANIFEST'))
     if not isinstance(data, list): data = [data]
@@ -40,15 +41,40 @@ try:
     tools = sum(d.get('tool_calls',0) for d in data)
     errors = sum(d.get('errors',0) for d in data)
     started = data[0].get('started','')
-    ended = data[-1].get('ended','')
+    ended = data[-1].get('ended','') or ''
     phase = data[0].get('phase','')
+
+    # If manifest has no real data, enrich from JSONL files
+    if tools == 0 and tok_in == 0:
+        run_dir = '$run_dir'
+        for jsonl in glob.glob(os.path.join(run_dir, '*.jsonl')):
+            agent_name = os.path.basename(jsonl).replace('.jsonl','')
+            if agent_name not in agents:
+                agents.append(agent_name)
+            with open(jsonl) as f:
+                for line in f:
+                    try:
+                        ev = json.loads(line)
+                        t = ev.get('type','')
+                        if t == 'tool_call': tools += 1
+                        elif t == 'message':
+                            d = ev.get('data',{})
+                            tok_in += d.get('tokensIn',0)
+                            tok_out += d.get('tokensOut',0)
+                            cost += d.get('cost',0)
+                        if not started and ev.get('timestamp'):
+                            started = ev['timestamp']
+                        if ev.get('timestamp'):
+                            ended = ev['timestamp']
+                    except: pass
+
     print(json.dumps({
         'run_id': '$RUN_ID', 'phase': phase, 'started': started, 'ended': ended,
         'agents': agents, 'total_cost_usd': round(cost,4),
         'total_tokens_in': tok_in, 'total_tokens_out': tok_out,
         'total_tool_calls': tools, 'total_errors': errors
     }))
-except: pass
+except Exception as e: pass
 " 2>/dev/null)
       
       if [ -n "$AGENTS" ]; then

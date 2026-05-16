@@ -268,7 +268,7 @@ async function runSingleAgent(
 		};
 	}
 
-	const args: string[] = ["--mode", "json", "-p", "--no-session"];
+	const args: string[] = ["--mode", "json", "-p", "--no-session", "--no-skills", "--no-context-files", "--no-prompt-templates"];
 	if (agent.model) args.push("--model", agent.model);
 
 	// Filter to built-in tools only — extension tools (like 'subagent') are not
@@ -316,8 +316,18 @@ async function runSingleAgent(
 		args.push(`Task: ${task}`);
 		let wasAborted = false;
 
-		// Default subagent timeout: 3 minutes. Prevents indefinite hangs.
-		const SUBAGENT_TIMEOUT_MS = 3 * 60 * 1000;
+		// DEBUG: log subagent spawn details
+		const debugPath = path.join(os.tmpdir(), `pi-subagent-debug-${agentName}-${Date.now()}.log`);
+		const debugLog = (msg: string) => { try { fs.appendFileSync(debugPath, `${new Date().toISOString()} ${msg}\n`); } catch {} };
+		debugLog(`SPAWN: pi ${args.join(' ')}`);
+		debugLog(`SIGNAL_ABORTED_AT_START: ${!!signal?.aborted}`);
+		debugLog(`DEBUG_FILE: ${debugPath}`);
+
+		// Default subagent timeout: 15 minutes. Prevents indefinite hangs but
+		// allows real implementation tasks to complete. Override via env var
+		// PI_SUBAGENT_TIMEOUT_MS (milliseconds) for faster smoke tests or
+		// slower deep-research tasks.
+		const SUBAGENT_TIMEOUT_MS = parseInt(process.env.PI_SUBAGENT_TIMEOUT_MS ?? "", 10) || 15 * 60 * 1000;
 
 		const exitCode = await new Promise<number>((resolve) => {
 			let settled = false;
@@ -390,10 +400,13 @@ async function runSingleAgent(
 
 			proc.on("close", (code) => {
 				if (buffer.trim()) processLine(buffer);
+				debugLog(`PROC_CLOSE code=${code}`);
+				clearTimeout(timeoutId);
 				done(code ?? 0);
 			});
 
-			proc.on("error", () => {
+			proc.on("error", (err) => {
+				debugLog(`PROC_ERROR: ${err.message}`);
 				done(1);
 			});
 
@@ -412,9 +425,13 @@ async function runSingleAgent(
 			proc.on("close", () => clearTimeout(timeoutId));
 
 			if (signal) {
+				debugLog(`SIGNAL_ABORTED_AT_REGISTER: ${!!signal.aborted}`);
 				const killProc = () => {
 					clearTimeout(timeoutId);
 					wasAborted = true;
+					debugLog('ABORT_SIGNAL_FIRED');
+					debugLog(`STDERR: ${currentResult.stderr.slice(-500)}`);
+					debugLog(`MSGS: ${currentResult.messages.length}`);
 					proc.kill("SIGTERM");
 					setTimeout(() => {
 						if (!proc.killed) proc.kill("SIGKILL");
@@ -426,7 +443,10 @@ async function runSingleAgent(
 		});
 
 		currentResult.exitCode = exitCode;
-		if (wasAborted) throw new Error("Subagent was aborted");
+		if (wasAborted) {
+			currentResult.stderr += `\nDEBUG_FILE: ${debugPath}`;
+			throw new Error("Subagent was aborted");
+		}
 		return currentResult;
 	} finally {
 		if (tmpPromptPath)
@@ -486,10 +506,15 @@ export default function (pi: ExtensionAPI) {
 		parameters: SubagentParams,
 
 		async execute(_toolCallId, params, signal, onUpdate, ctx) {
+			// ENTRY DEBUG
+			const _dbg = (msg: string) => { try { fs.appendFileSync(path.join(os.tmpdir(), `pi-subagent-entry-${Date.now()}.log`), `${new Date().toISOString()} ${msg}\n`); } catch {} };
+			_dbg(`ENTRY agent=${params.agent} signal_aborted=${!!signal?.aborted} hasUI=${ctx.hasUI} cwd=${ctx.cwd}`);
+
 			const agentScope: AgentScope = params.agentScope ?? "user";
 			const discovery = discoverAgents(ctx.cwd, agentScope);
 			const agents = discovery.agents;
 			const confirmProjectAgents = params.confirmProjectAgents ?? false;
+			_dbg(`DISCOVERED ${agents.length} agents: ${agents.map(a => a.name).join(',')}`);
 
 			const hasChain = (params.chain?.length ?? 0) > 0;
 			const hasTasks = (params.tasks?.length ?? 0) > 0;

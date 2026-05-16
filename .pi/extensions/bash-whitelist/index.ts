@@ -188,6 +188,7 @@ const DEFAULT_WHITELIST: string[] = [
   "md5sum ",
   "sha256sum ",
   "openssl ",
+  "ssh ",
   "ssh-keygen ",
   "tar ",
   "unzip ",

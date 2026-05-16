@@ -1,5 +1,5 @@
 ---
-name: landing-page-audit
+name: google-ads-landing-page-audit
 description: >-
   The Landing Page Audit skill performs comprehensive evaluations of post-click experiences, combining technical performance analysis with conversion rate optimization (CRO) assessment.
 ---

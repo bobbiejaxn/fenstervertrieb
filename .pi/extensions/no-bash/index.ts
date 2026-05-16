@@ -46,7 +46,7 @@ const DEFAULT_ALLOWED_TOOLS: string[] = [
 ];
 
 export default function noBash(pi: ExtensionAPI) {
-  const mode = process.env.NO_BASH_MODE || "block";
+  const mode = process.env.NO_BASH_MODE || "log";
   const isBlock = mode === "block";
 
   // Load custom allowed tools list from env

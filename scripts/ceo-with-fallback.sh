@@ -87,6 +87,13 @@ Report progress clearly. When done, say 'GOAL COMPLETE' and summarize what was a
     return 1
   fi
 
+  # Check for transient server errors (HTTP 500/502/503)
+  if echo "$output" | grep -qE "500|Internal Server Error|Bad Gateway|502|503|Service Unavailable"; then
+    echo "$(date '+%Y-%m-%d %H:%M:%S') - Transient server error on $model (HTTP 5xx)" >> /tmp/ceo-fallback.log
+    # Transient error -- retry is worthwhile, don't skip this model entirely
+    return 1
+  fi
+
   # Check for auth errors
   if echo "$output" | grep -qE "No API key found|Authentication Fails|401|invalid.*key"; then
     echo "$(date '+%Y-%m-%d %H:%M:%S') - Auth error on $model" >> /tmp/ceo-fallback.log
@@ -106,7 +113,7 @@ Report progress clearly. When done, say 'GOAL COMPLETE' and summarize what was a
   fi
 
   # Success - check for actual completion indicators
-  if echo "$output" | grep -qE "GOAL.*COMPLETE|complete|done|finished|PR created|Successfully"; then
+  if echo "$output" | grep -qE "GOAL COMPLETE|MISSION COMPLETE|All tasks complete|PR created successfully"; then
     echo "$output"
     return 0
   fi

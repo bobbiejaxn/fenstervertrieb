@@ -1,5 +1,5 @@
 ---
-name: shopping-ads
+name: google-ads-shopping-ads
 description: >-
   The Shopping Ads skill delivers end-to-end management of Google Shopping campaigns and Merchant Center product feeds.
 ---

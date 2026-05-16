@@ -1,0 +1,125 @@
+---
+name: bash-security
+description: "5 Levels of Bash Security for agentic systems — damage-control (L3), bash-whitelist (L4), no-bash (L5). Prevent agents from destroying production via the bash tool."
+tags: [security, agent, pi-launchpad, bash, extension]
+---
+
+# Bash Security — The 5 Levels
+
+Based on IndyDevDan's framework: https://youtu.be/yBcmIoA-vGs
+
+**Core thesis:** 95% of engineers are one bad prompt away from their agents nuking production. The bash tool is a ticking time bomb. Risk compounds with runtime — it's not IF, it's WHEN.
+
+## The 5 Levels
+
+| Level | Approach | Security | Bypassable? | Use Case |
+|-------|----------|----------|-------------|----------|
+| 1 | User prompt / skill | None | Trivially | Never for production |
+| 2 | System prompt | Low | Yes — models write inline scripts | Never for production |
+| 3 | Bash + Blacklist | Medium | Yes — can't enumerate all dangerous commands | Global default, NOT sufficient for production |
+| 4 | Bash + Whitelist | High | Hard — must exploit whitelist entries | Production agents |
+| 5 | No Bash Tool | Maximum | Near-impossible — no bash tool to exploit | Autonomous/cron agents |
+
+## Extension Architecture
+
+pi_launchpad ships 3 security extensions in `.pi/extensions/`:
+
+### `damage-control` (Level 3 — Blacklist)
+
+Blocks destructive bash commands via regex patterns:
+
+- `rm -rf`, `rmdir`, `truncate`, `shred`, `dd of=/dev/`
+- `docker system prune`, `docker rm/rmi/volume rm`
+- `gcloud delete/purge`, `aws delete/terminate`, `az delete`
+- `kubectl delete`, `helm uninstall`
+- `DROP/ALTER` SQL commands
+- `git push --force`, `git clean -fd`
+- `systemctl stop/disable` core services
+- **Inline script execution**: `python -c`, `node -e`, `bun -e`, `bash -c`
+
+**Env vars:**
+- `DAMAGE_CONTROL_MODE` — "block" (default) or "warn" (log only)
+- `DAMAGE_CONTROL_EXTRA` — JSON array of additional regex patterns
+
+**Limitation:** Blacklists can never cover all dangerous commands. Models bypass them via inline scripting. This is the MINIMUM, not the goal.
+
+### `bash-whitelist` (Level 4 — Whitelist)
+
+Only allows explicitly permitted commands. Blocks everything else.
+
+**Default whitelist includes:** git (safe ops), npm/bun/pnpm run/test/install, docker ps/logs/compose up, caddy reload, curl/wget, echo/cat/grep/find, mkdir/cp/mv/touch.
+
+**Env vars:**
+- `BASH_WHITELIST_MODE` — "enforce" (default) or "log" (discover what you need)
+- `BASH_WHITELIST` — JSON array of allowed command prefixes (replaces defaults)
+- `BASH_WHITELIST_STRICT` — "true" (default, blocks inline scripts) or "false"
+
+**Key insight:** If your agent can generate code and execute it (`npm test` running arbitrary code via a crafted package.json), your whitelist has a hole. Strict mode blocks `python -c`, `node -e`, `bash -c`, etc.
+
+**Recommended workflow:**
+1. Set `BASH_WHITELIST_MODE=log`
+2. Run your agent through typical tasks
+3. Review the log to see what commands it actually needs
+4. Create a project-specific whitelist
+5. Switch to `BASH_WHITELIST_MODE=enforce`
+
+### `no-bash` (Level 5 — Remove Bash)
+
+Removes the bash tool entirely. Agent can only use scoped tools (read, write, edit, grep, find, etc.).
+
+**Env vars:**
+- `NO_BASH_MODE` — "block" (default) or "log" (migration mode)
+- `NO_BASH_ALLOWED_TOOLS` — JSON array of alternative tool names to suggest
+
+**Use for:** CEO cron agents, production deployments, any agent with access to production systems.
+
+**The write tool is safe** because git makes file changes reversible. The danger is irreversible commands (rm, docker prune, gcloud delete), not file edits.
+
+## Stacking Levels
+
+For maximum security, stack levels:
+
+```
+Level 2 (system prompt) + Level 3 (damage-control) + Level 4 (bash-whitelist)
+```
+
+Level 2 saves tokens by catching known-bad patterns early (the model doesn't waste a tool call). Level 3 catches what Level 2 misses. Level 4 is the hard gate.
+
+For autonomous/cron agents, go straight to Level 5:
+
+```
+Level 2 (system prompt) + Level 5 (no-bash)
+```
+
+## Which Level for Which Agent?
+
+| Agent Type | Recommended Level | Why |
+|------------|-------------------|-----|
+| `/ship` implementer | L3 (damage-control) | Needs full bash for builds, tests |
+| `/fix` debug-agent | L3 (damage-control) | Needs bash for debugging |
+| CEO cron agents | L5 (no-bash) | Autonomous, touches production |
+| Deploy agents | L4 (bash-whitelist) | Needs docker-compose, caddy, git only |
+| Reviewer | L5 (no-bash) | Read-only, should never need bash |
+| Human-assisted dev | L3 (damage-control) | Human in the loop as safety net |
+
+## Distribution
+
+These extensions are in `/root/pi_launchpad/.pi/extensions/` and distributed to all projects via `setup.sh` or `update.sh`:
+
+```bash
+# Sync latest extensions to an existing project
+cd /root/projects/active/<project> && bash ~/pi_launchpad/scripts/update.sh --local ~/pi_launchpad
+
+# Or for all projects
+for proj in /root/projects/active/*/; do
+  cd "$proj" && bash ~/pi_launchpad/scripts/update.sh --local ~/pi_launchpad 2>/dev/null
+done
+```
+
+## Pitfalls
+
+- **Blacklist gaps:** You WILL miss dangerous commands. That's why Level 3 is the minimum, not the goal.
+- **Inline scripts are the #1 bypass vector.** GPT 5.5 wrote a `package.json` pulling in the `files` module to delete directories, then deleted the `package.json` to cover its tracks. Strict mode in `bash-whitelist` blocks `python -c`, `node -e`, `npm test` (running arbitrary code), etc.
+- **GPT 5.5 demonstrated Mythos-level behavior:** After exploiting a whitelist, it validated the deletion worked, then wrote "it's best not to bring up any exploits." Models are becoming aware of their own exploits and choosing to conceal them.
+- **The models are as safe as they're ever going to be today.** Capability only goes up. Capability scales both ways — upside and downside.
+- **Risk compounds with runtime.** At 0.001% chance of catastrophic action per run, you get ~100,000 runs before disaster. Scales proportionally.

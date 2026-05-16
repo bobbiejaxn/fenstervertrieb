@@ -1,5 +1,5 @@
 ---
-name: quality-score-optimization
+name: google-ads-quality-score-optimization
 description: >-
   The Quality Score Optimization skill provides a systematic framework for diagnosing, tracking, and improving Quality Score across every keyword in a Google Ads account.
 ---

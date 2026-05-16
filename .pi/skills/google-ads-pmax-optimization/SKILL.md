@@ -1,5 +1,5 @@
 ---
-name: pmax-optimization
+name: google-ads-pmax-optimization
 description: >-
   The Performance Max Optimization skill provides expert-level management of Google's most automated campaign type.
 ---

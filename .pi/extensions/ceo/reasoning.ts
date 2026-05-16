@@ -81,6 +81,19 @@ Produce a JSON object with this exact schema:
 
 Available agents: architect, software-architect, implementer, fixer, test-writer, unit-test-writer, reviewer, security-reviewer, web-researcher, researcher, deep-researcher, debug-agent.
 
+Team lead agents (use when tasks span 2+ domains or touch 3+ files):
+- frontend-lead — use when tasks touch UI components, routes, styles, or client-side logic
+- backend-lead — use when tasks touch API routes, database schema, server logic
+- validation-lead — use when tasks need coordinated review (code + security + readiness)
+
+Complexity routing rules:
+1. If a task touches ONLY frontend files → agent: "implementer" (flat)
+2. If a task touches ONLY backend/schema files → agent: "implementer" (flat)
+3. If tasks span BOTH frontend AND backend → split into sub-tasks OR assign to the relevant team lead
+4. If 3+ files across 2+ domains → prefer team leads (frontend-lead, backend-lead)
+5. Final validation always goes to validation-lead for multi-domain features
+6. Simple single-domain tasks stay flat (implementer, reviewer, etc.)
+
 Respond with ONLY the JSON object.`;
 }
 
